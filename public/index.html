@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="./library/jquery-3.4.1.min.js"></script>
+    <script src="./library/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./library/bootstrap.min.css">
+    <link rel="stylesheet" href="./stylesheets/style.css">
+
+</head>
+
+<body>
+    <form role="form">
+        <div class="container-fluid">
+            <h1>基本資料填寫</h1>
+            <div class="form-group">
+                <label>研究成果主題</label>
+                <input class="form-control col-md-10" type="text">
+            </div>
+            <div class="form-group">
+                <label>HIGHER研究導向</label>
+                <select class="form-control col-md-10">
+                    <option>請選擇</option>
+                    <option>Health</option>
+                    <option>Intelligent</option>
+                    <option>Green</option>
+                    <option>Humanities & Creativity</option>
+                    <option>Emerging</option>
+                    <option>Recycle</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>所屬產業類別</label>
+                <select class="form-control col-md-10">
+                    <option>請選擇</option>
+                    <option>運輸及倉儲業</option>
+                    <option>礦業及土石採取業</option>
+                    <option>製造業</option>
+                    <option>電力及然氣供應業</option>
+                    <option>營建工程業</option>
+                    <option>用水供應及汙染整治業</option>
+                    <option>批發與零售業</option>
+                    <option>農、林、漁、牧業</option>
+                    <option>住宿及餐飲業</option>
+                    <option>出版、影音製作、傳播集資通訊服務業</option>
+                    <option>金融及保險業</option>
+                    <option>醫療保健及社會工作服務業</option>
+                    <option>支援服務業</option>
+                    <option>專業、科學及技術服務業</option>
+                    <option>教育業</option>
+                    <option>公共行政及國防；強制性社會安全</option>
+                    <option>不動產業</option>
+                    <option>藝術、娛樂及休閒服務業</option>
+                    <option>其他服務業</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>5+N產業類別</label>
+                <select class="form-control col-md-10">
+                    <option>請選擇</option>
+                    <option>「智慧機械」</option>
+                    <option>「亞洲‧矽谷」</option>
+                    <option>「綠能科技」</option>
+                    <option>「生醫產業」</option>
+                    <option>「國防產業」</option>
+                    <option>「新農業」</option>
+                    <option>「循環經濟」</option>
+                    <option>「數位國家‧創新經濟」</option>
+                    <option>「文化創意產業科技創新」</option>
+                    <option>「晶片設計與半導體產業」</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>研究教師姓名</label>
+                <input class="form-control col-md-10" type="text">
+            </div>
+            <div class="form-group">
+                <label>教師隸屬學院</label>
+                <select class="form-control col-md-10" id="college">
+                    <option>請選擇</option>
+                    <option>機電學院</option>
+                    <option>電資學院</option>
+                    <option>工程學院</option>
+                    <option>管理學院</option>
+                    <option>設計學院</option>
+                    <option>人文與社會科學學院</option>
+                    <option>體育室</option>
+                    <option>通識中心</option>
+                    <option>師培中心</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>教師隸屬系所</label>
+                <select class="form-control col-md-10" id="department">
+                    <option>請先選擇學院</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>教師員工編號</label>
+                <input class="form-control col-md-10" type="text">
+            </div>
+            <div class="form-group">
+                <label>教師連絡電話</label>
+                <input class="form-control col-md-10" type="text">
+            </div>
+            <div class="form-group">
+                <label>教師電子郵件</label>
+                <input class="form-control col-md-10" type="text">
+            </div>
+
+            <!-- <h1>成果相關專利</h1> -->
+            <label>專利相關資訊</label>
+            <div class="form-group">
+                <label class="radio-inline"></label>
+                <input type="radio" name="patentRadio" class="PatentInfoRadio">有
+                <label class="radio-inline"></label>
+                <input type="radio" name="patentRadio" class="PatentInfoRadio" checked>無
+            </div>
+
+            <div id="patentInfo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>專利主題名稱</label>
+                        <input class="form-control col-md-10" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>專利申請國籍</label>
+                        <input class="form-control col-md-10" type="text">
+                    </div>
+                    <label>專利申請狀況</label>
+                    <div class="form-group">
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="patentStatusRadio">已核准
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="patentStatusRadio">申請中
+                    </div>
+                </div>
+            </div>
+
+            <!-- <h1>成果相關論文</h1> -->
+            <label>論文相關資訊</label>
+            <div class="form-group">
+                <label class="radio-inline"></label>
+                <input type="radio" name="paperRadio" class="PaperInfoRadio">有
+                <label class="radio-inline"></label>
+                <input type="radio" name="paperRadio" class="PaperInfoRadio" checked>無
+            </div>
+
+            <div id="paperInfo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>論文主題名稱</label>
+                        <input class="form-control col-md-10" type="text">
+                    </div>
+                    <label>學術期刊領域</label>
+                    <div class="form-group">
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="paperFieldRadio">SCI
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="paperFieldRadio">SSCI
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="paperFieldRadio">EI
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="paperFieldRadio">研討會
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="paperFieldRadio">其他
+                    </div>
+                    <label>論文申請狀況</label>
+                    <div class="form-group">
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="paperStatusRadio">已核准
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="paperStatusRadio">申請中
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <script src="./javascripts/index.js"></script>
+</body>
+
+</html>
