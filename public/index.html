@@ -11,12 +11,14 @@
     <script src="./library/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./library/bootstrap.min.css">
     <link rel="stylesheet" href="./stylesheets/style.css">
+    <script src="./library/jquery.dm-uploader.min.js"></script>
+    <link rel="stylesheet" href="./library/jquery.dm-uploader.min.css">
 
 </head>
 
 <body>
     <form role="form">
-        <div class="container-fluid">
+        <div class="container-fluid offset-md-1">
             <h1>基本資料填寫</h1>
             <div class="form-group">
                 <label>研究成果主題</label>
@@ -123,14 +125,14 @@
             </div>
 
             <div id="patentInfo" class="panel-collapse collapse">
-                <div class="panel-body">
+                <div class="panel-body border border-warning fit-content rounded col-md-10">
                     <div class="form-group">
                         <label>專利主題名稱</label>
-                        <input class="form-control col-md-10" type="text">
+                        <input class="form-control" type="text">
                     </div>
                     <div class="form-group">
                         <label>專利申請國籍</label>
-                        <input class="form-control col-md-10" type="text">
+                        <input class="form-control" type="text">
                     </div>
                     <label>專利申請狀況</label>
                     <div class="form-group">
@@ -139,6 +141,43 @@
                         <label class="radio-inline"></label>
                         <input type="radio" name="patentStatusRadio">申請中
                     </div>
+                    <div class="form-group">
+                        <label>佐證資料上傳(限pdf)</label>
+                        <div id="drop-area" class="dm-uploader">
+                            <input type="file" title="選擇檔案" accept=".pdf" id="patent-file">
+                        </div>
+                    </div>
+                    <div id="link-holder">
+
+                    </div>
+                    <div class="col-md-2 offset-md-5 form-group">
+                        <button class="btn-warning" id="btn-patent" type="button"><h5>新增資料</h5></button>
+                    </div>
+                    
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">序號</th>
+                                <th scope="col">名稱</th>
+                                <th scope="col">國籍</th>
+                                <th scope="col">狀況</th>
+                                <th scope="col">檢視</th>
+                                <th scope="col">修改</th>
+                                <th scope="col">移除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>XXX</td>
+                                <td>中華民國</td>
+                                <td>申請中</td>
+                                <td>點選</td>
+                                <td>點選</td>
+                                <td>點選</td>
+                            </tr>                            
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -152,7 +191,7 @@
             </div>
 
             <div id="paperInfo" class="panel-collapse collapse">
-                <div class="panel-body">
+                <div class="panel-body border border-warning fit-content rounded col-md-10">
                     <div class="form-group">
                         <label>論文主題名稱</label>
                         <input class="form-control col-md-10" type="text">
@@ -173,10 +212,50 @@
                     <label>論文申請狀況</label>
                     <div class="form-group">
                         <label class="radio-inline"></label>
-                        <input type="radio" name="paperStatusRadio">已核准
+                        <input type="radio" name="paperStatusRadio">已發表
                         <label class="radio-inline"></label>
-                        <input type="radio" name="paperStatusRadio">申請中
+                        <input type="radio" name="paperStatusRadio">審查中
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="paperStatusRadio">撰寫中
                     </div>
+
+                    <div class="form-group">
+                        <label>佐證資料上傳(限pdf)</label>
+                        <div id="drop-area" class="dm-uploader">
+                            <input type="file" title="選擇檔案" accept=".pdf" id="patent-file">
+                        </div>
+                    </div>
+                    <div id="link-holder">
+
+                    </div>
+                    <div class="col-md-2 offset-md-5 form-group">
+                        <button class="btn-warning" id="btn-patent" type="button"><h5>新增資料</h5></button>
+                    </div>
+                    
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">序號</th>
+                                <th scope="col">名稱</th>
+                                <th scope="col">領域</th>
+                                <th scope="col">狀況</th>
+                                <th scope="col">檢視</th>
+                                <th scope="col">修改</th>
+                                <th scope="col">移除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>XXX</td>
+                                <td>中華民國</td>
+                                <td>申請中</td>
+                                <td>點選</td>
+                                <td>點選</td>
+                                <td>點選</td>
+                            </tr>                            
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

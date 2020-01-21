@@ -22,12 +22,9 @@ $('#college').change(function(){
 });
 
 $('.PatentInfoRadio').change(function(){
-    $('#patentInfo').collapse('toggle');    
+    $('#patentInfo').collapse('toggle');
 });
 
 $('.PaperInfoRadio').change(function(){
-    $('#paperInfo').collapse('toggle');    
+    $('#paperInfo').collapse('toggle');
 });
-
-
-//alert(departmentDict['電資學院']);
