@@ -13,13 +13,15 @@
     <link rel="stylesheet" href="./stylesheets/style.css">
     <script src="./library/jquery.dm-uploader.min.js"></script>
     <link rel="stylesheet" href="./library/jquery.dm-uploader.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
+        integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./stylesheets/index-style.css">
 
 </head>
 
 <body>
     <form role="form">
         <div class="container-fluid offset-md-1">
-            <h1>基本資料填寫</h1>
             <div class="form-group">
                 <label>研究成果主題</label>
                 <input class="form-control col-md-10" type="text">
@@ -151,9 +153,11 @@
 
                     </div>
                     <div class="col-md-2 offset-md-5 form-group">
-                        <button class="btn-warning" id="btn-patent" type="button"><h5>新增資料</h5></button>
+                        <button class="btn-warning" id="btn-patent" type="button">
+                            <h5>新增資料</h5>
+                        </button>
                     </div>
-                    
+
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
@@ -175,7 +179,7 @@
                                 <td>點選</td>
                                 <td>點選</td>
                                 <td>點選</td>
-                            </tr>                            
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -222,16 +226,18 @@
                     <div class="form-group">
                         <label>佐證資料上傳(限pdf)</label>
                         <div id="drop-area" class="dm-uploader">
-                            <input type="file" title="選擇檔案" accept=".pdf" id="patent-file">
+                            <input type="file" title="選擇檔案" accept=".pdf" id="paper-file">
                         </div>
                     </div>
                     <div id="link-holder">
 
                     </div>
                     <div class="col-md-2 offset-md-5 form-group">
-                        <button class="btn-warning" id="btn-patent" type="button"><h5>新增資料</h5></button>
+                        <button class="btn-warning" id="btn-paper" type="button">
+                            <h5>新增資料</h5>
+                        </button>
                     </div>
-                    
+
                     <table class="table">
                         <thead class="thead-dark">
                             <tr>
@@ -248,21 +254,214 @@
                             <tr>
                                 <th scope="row">1</th>
                                 <td>XXX</td>
-                                <td>中華民國</td>
+                                <td>SCI</td>
                                 <td>申請中</td>
                                 <td>點選</td>
                                 <td>點選</td>
                                 <td>點選</td>
-                            </tr>                            
+                            </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>成果技術摘要說明</label>
+                <textarea class="form-control col-md-10" rows="5" id="description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>應用範圍及產業效益評估</label>
+                <textarea class="form-control col-md-10" rows="5" id="evaluation"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>成果照片上傳</label>
+                <div id="drop-area" class="dm-uploader">
+                    <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" id="image-file">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>成果影片上傳</label>
+                <div id="drop-area" class="dm-uploader">
+                    <input type="file" title="選擇檔案" accept=".AVI,.FLV,.WMV,.MOV,.MP4" id="film-file">
+                </div>
+            </div>
+
+            <div class="col-md-10">
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="table-primary">需求成熟度</th>
+                            <th class="table-primary">市場成熟度</th>
+                            <th class="table-primary">投資成熟度</th>
+                            <th class="table-primary">製造成熟度</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="table-warning">Level 0</th>
+                            <td class="table-info">尚未填寫</td>
+                            <td class="table-info">尚未填寫</td>
+                            <td class="table-info">尚未填寫</td>
+                            <td class="table-info">尚未填寫</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 1</th>
+                            <td>發現需求</td>
+                            <td>潛在商機</td>
+                            <td>研發探究</td>
+                            <td>製造分析</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 2</th>
+                            <td>需求確認</td>
+                            <td>市場分析</td>
+                            <td>自籌款項</td>
+                            <td>製程評估</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 3</th>
+                            <td>功能預期</td>
+                            <td>市場預測</td>
+                            <td>創業投資</td>
+                            <td>實驗試做</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 4</th>
+                            <td>量產預期</td>
+                            <td>客群確認</td>
+                            <td>政府投資</td>
+                            <td>組件製造</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 5</th>
+                            <td>品質確認</td>
+                            <td>成效分析</td>
+                            <td>產學投資</td>
+                            <td>原型製造</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 6</th>
+                            <td>需求驗證</td>
+                            <td>競爭分析</td>
+                            <td>天使投資</td>
+                            <td>量產評估</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 7</th>
+                            <td>資源挹注</td>
+                            <td>價值創造</td>
+                            <td>投資機構</td>
+                            <td>試少量產</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 8</th>
+                            <td>需求延續</td>
+                            <td>服務模式</td>
+                            <td>私募基金</td>
+                            <td>全速量產</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 9</th>
+                            <td>需求成熟</td>
+                            <td>商業模式</td>
+                            <td>國際財團</td>
+                            <td>品質控管</td>
+                        </tr>
+
+                        <tr>
+                            <th></th>
+                            <th class="table-primary">技術成熟度</th>
+                            <th class="table-primary">組織成熟度</th>
+                            <th class="table-primary">科學成熟度</th>
+                            <th class="table-primary">社會貢獻成熟度</th>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 0</th>
+                            <td class="table-info">尚未填寫</td>
+                            <td class="table-info">尚未填寫</td>
+                            <td class="table-info">尚未填寫</td>
+                            <td class="table-info">尚未填寫</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 1</th>
+                            <td>創意發現</td>
+                            <td>組織目標</td>
+                            <td>科學發想</td>
+                            <td>問題評調</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 2</th>
+                            <td>構想產生</td>
+                            <td>體系建立</td>
+                            <td>文獻探究</td>
+                            <td>影響評估</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 3</th>
+                            <td>構想驗證</td>
+                            <td>團隊形成</td>
+                            <td>觀察理解</td>
+                            <td>方案試擬</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 4</th>
+                            <td>基礎技術</td>
+                            <td>關鍵人物</td>
+                            <td>概念假設</td>
+                            <td>初步測試</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 5</th>
+                            <td>技術整合</td>
+                            <td>團隊整合</td>
+                            <td>系統模擬</td>
+                            <td>試點驗證</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 6</th>
+                            <td>原型製作</td>
+                            <td>組織試行</td>
+                            <td>產品試作</td>
+                            <td>利益驗修</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 7</th>
+                            <td>應用測試</td>
+                            <td>經營運作</td>
+                            <td>科學驗證</td>
+                            <td>場域示範</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 8</th>
+                            <td>系統驗證</td>
+                            <td>效能控管</td>
+                            <td>理論確定</td>
+                            <td>成效反饋</td>
+                        </tr>
+                        <tr>
+                            <th class="table-warning">Level 9</th>
+                            <td>技術成熟</td>
+                            <td>組織改造</td>
+                            <td>衝擊影響</td>
+                            <td>問題解決</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="chart">
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
 
         </div>
     </form>
 
+
     <script src="./javascripts/index.js"></script>
+    <script src="./javascripts/index-chart.js"></script>
 </body>
 
 </html>
