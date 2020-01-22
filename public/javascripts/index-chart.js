@@ -42,14 +42,24 @@ $('td').click(function () {
     var $this = $(this);
     var col = $this.index();
     var row = $this.closest('tr').index();
+    var chartRow;
+    var chartCol;
+    var part = '';
     if (row > 9) {
-        row -= 11;
-        col += 4;
-    }    
-    radarChart.data.datasets[0].data[col - 1] = row;
+        chartRow = row - 11;
+        chartCol = col + 4;
+        part = 'td2';
+    }
+    else {
+        chartRow = row;
+        chartCol = col;
+        part = 'td1';
+    }
+    radarChart.data.datasets[0].data[chartCol - 1] = chartRow;
     radarChart.update();
 
-    $('table tr:nth-child('+(row+1)+') td:nth-child('+(col+1)+')').css('font-size', '20px');
+    //console.log($('table tr td[class="' + part + '"]:nth-child(' + (col + 1) + ')'));
+    $('table tr td[class="' + part + ' table-info"]:nth-child(' + (col + 1) + ')').removeClass('table-info');
+    $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')').addClass('table-info');
 });
 
-console.log($('table tr td:nth-child('+4+')'));
