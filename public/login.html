@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登入</title>
+
+    <script src="./library/jquery-3.4.1.min.js"></script>
+    <script src="./library/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./library/bootstrap.min.css">
+    <link rel="stylesheet" href="./stylesheets/style.css">
+    <script src="./library/jquery.dm-uploader.min.js"></script>
+    <link rel="stylesheet" href="./library/jquery.dm-uploader.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
+        integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <form role="form">
+        <div class="container-fluid offset-md-1">
+            <div class="form-group">
+                <label for="">員工編號</label>
+                <input type="text" class="form-control col-md-10" id="account">                
+            </div>
+            <div class="form-group">
+                <label for="">登入代碼</label>
+                <input type="text" class="form-control col-md-10" id="password">                
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-login">
+                登入
+            </button>            
+        </div>
+    </form>
+    
+    <script src="./javascripts/login.js"></script>
+</body>
+</html>
