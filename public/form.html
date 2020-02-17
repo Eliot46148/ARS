@@ -24,11 +24,11 @@
         <div class="container-fluid offset-md-1">
             <div class="form-group">
                 <label>研究成果主題</label>
-                <input class="form-control col-md-10" type="text">
+                <input class="form-control col-md-10" type="text" id="ResearchTopic">
             </div>
             <div class="form-group">
                 <label>HIGHER研究導向</label>
-                <select class="form-control col-md-10">
+                <select class="form-control col-md-10" id="HIGHER">
                     <option>請選擇</option>
                     <option>Health</option>
                     <option>Intelligent</option>
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label>所屬產業類別</label>
-                <select class="form-control col-md-10">
+                <select class="form-control col-md-10" id="Industry">
                     <option>請選擇</option>
                     <option>運輸及倉儲業</option>
                     <option>礦業及土石採取業</option>
@@ -65,7 +65,7 @@
             </div>
             <div class="form-group">
                 <label>5+N產業類別</label>
-                <select class="form-control col-md-10">
+                <select class="form-control col-md-10" id="Industry5n">
                     <option>請選擇</option>
                     <option>「智慧機械」</option>
                     <option>「亞洲‧矽谷」</option>
@@ -81,7 +81,7 @@
             </div>
             <div class="form-group">
                 <label>研究教師姓名</label>
-                <input class="form-control col-md-10" type="text">
+                <input class="form-control col-md-10" type="text" id="Name">
             </div>
             <div class="form-group">
                 <label>教師隸屬學院</label>
@@ -106,15 +106,15 @@
             </div>
             <div class="form-group">
                 <label>教師員工編號</label>
-                <input class="form-control col-md-10" type="text">
+                <input class="form-control col-md-10" type="text" id="TeacherNum" required>
             </div>
             <div class="form-group">
                 <label>教師連絡電話</label>
-                <input class="form-control col-md-10" type="text">
+                <input class="form-control col-md-10" type="text" id="Phone">
             </div>
             <div class="form-group">
                 <label>教師電子郵件</label>
-                <input class="form-control col-md-10" type="text">
+                <input class="form-control col-md-10" type="text" id="Email">
             </div>
 
             <!-- <h1>成果相關專利</h1> -->
@@ -130,18 +130,18 @@
                 <div class="panel-body border border-warning fit-content rounded col-md-10">
                     <div class="form-group">
                         <label>專利主題名稱</label>
-                        <input class="form-control" type="text">
+                        <input class="form-control" type="text" id="patent-name">
                     </div>
                     <div class="form-group">
                         <label>專利申請國籍</label>
-                        <input class="form-control" type="text">
+                        <input class="form-control" type="text" id="patent-country">
                     </div>
                     <label>專利申請狀況</label>
                     <div class="form-group">
                         <label class="radio-inline"></label>
-                        <input type="radio" name="patentStatusRadio">已核准
+                        <input type="radio" name="patentStatusRadio" value="applied">已核准
                         <label class="radio-inline"></label>
-                        <input type="radio" name="patentStatusRadio">申請中
+                        <input type="radio" name="patentStatusRadio" value="applying">申請中
                     </div>
                     <div class="form-group">
                         <label>佐證資料上傳(限pdf)</label>
@@ -454,6 +454,9 @@
                 <div class="chart">
                     <canvas id="myChart"></canvas>
                 </div>
+                <button type="submit" class="btn btn-warning m-auto col-md-2" id="btn-save">暫存</button>
+                <button type="submit" class="btn btn-primary m-auto col-md-2" id="btn-submit">提交</button>
+                <button type="submit" class="btn btn-primary m-auto col-md-2" id="btn-test">測試用</button>
             </div>
 
         </div>
@@ -462,6 +465,7 @@
 
     <script src="./javascripts/form.js"></script>
     <script src="./javascripts/index-chart.js"></script>
+
 </body>
 
 </html>

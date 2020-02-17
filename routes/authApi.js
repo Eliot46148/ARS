@@ -8,7 +8,7 @@ router.post('/login', function (req, res) {
         password: req.body.password
     }, function (err, data) {
         if (data == null)
-            res.json({ "status": 1, "msg": "帳號密碼錯誤!" });
+            res.json({ "status": 1, "msg": "員工號碼或代碼錯誤!" });
         else {
             if (err)
                 res.json({ "status": 1, "msg": "Error" });
