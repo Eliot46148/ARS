@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./library/jquery.dm-uploader.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
         integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
+    <script src="./library/jquery.cookie.js"></script>
     <link rel="stylesheet" href="./stylesheets/index-style.css">
 
 </head>
@@ -22,6 +23,10 @@
 <body>
     <form role="form">
         <div class="container-fluid offset-md-1">
+            <div class="form-group">
+                <label>教師員工編號</label>
+                <h2 id="TeacherNum"></h2>
+            </div>
             <div class="form-group">
                 <label>研究成果主題</label>
                 <input class="form-control col-md-10" type="text" id="ResearchTopic">
@@ -104,10 +109,10 @@
                     <option>請先選擇學院</option>
                 </select>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label>教師員工編號</label>
                 <input class="form-control col-md-10" type="text" id="TeacherNum" required>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label>教師連絡電話</label>
                 <input class="form-control col-md-10" type="text" id="Phone">
@@ -127,38 +132,8 @@
             </div>
 
             <div id="patentInfo" class="panel-collapse collapse">
-                <div class="panel-body border border-warning fit-content rounded col-md-10">
-                    <div class="form-group">
-                        <label>專利主題名稱</label>
-                        <input class="form-control" type="text" id="patent-name">
-                    </div>
-                    <div class="form-group">
-                        <label>專利申請國籍</label>
-                        <input class="form-control" type="text" id="patent-country">
-                    </div>
-                    <label>專利申請狀況</label>
-                    <div class="form-group">
-                        <label class="radio-inline"></label>
-                        <input type="radio" name="patentStatusRadio" value="applied">已核准
-                        <label class="radio-inline"></label>
-                        <input type="radio" name="patentStatusRadio" value="applying">申請中
-                    </div>
-                    <div class="form-group">
-                        <label>佐證資料上傳(限pdf)</label>
-                        <div id="drop-area" class="dm-uploader">
-                            <input type="file" title="選擇檔案" accept=".pdf" id="patent-file">
-                        </div>
-                    </div>
-                    <div id="link-holder">
-
-                    </div>
-                    <div class="col-md-2 offset-md-5 form-group">
-                        <button class="btn btn-warning" id="btn-patent" type="button">
-                            <h5>新增資料</h5>
-                        </button>
-                    </div>
-
-                    <table class="table">
+                <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
+                    <table class="table mt-3">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">序號</th>
@@ -182,6 +157,55 @@
                             </tr>
                         </tbody>
                     </table>
+
+                    <div class="col-md-2 offset-md-5 form-group mt-3">
+                        <button class="btn btn-primary" id="btn-patent" type="button" data-toggle="modal"
+                            data-target="#addPatent">
+                            <h5>新增資料</h5>
+                        </button>
+                    </div>
+
+                    <div class="modal fade" id="addPatent" tabindex="-1" role="dialog" aria-labelledby="addPatentTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addPatentTitle">新增專利資訊</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>專利主題名稱</label>
+                                        <input class="form-control" type="text" id="patent-name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>專利申請國籍</label>
+                                        <input class="form-control" type="text" id="patent-country">
+                                    </div>
+                                    <label>專利申請狀況</label>
+                                    <div class="form-group">
+                                        <label class="radio-inline"></label>
+                                        <input type="radio" name="patentStatusRadio" value="applied">已核准
+                                        <label class="radio-inline"></label>
+                                        <input type="radio" name="patentStatusRadio" value="applying">申請中
+                                    </div>
+                                    <div class="form-group">
+                                        <label>佐證資料上傳(限pdf)</label>
+                                        <div id="drop-area" class="dm-uploader">
+                                            <input type="file" title="選擇檔案" accept=".pdf" id="patent-file">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary">送出</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -278,8 +302,9 @@
             <div class="form-group">
                 <label>成果照片上傳</label>
                 <div id="drop-area" class="dm-uploader">
-                    <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" id="image-file">
+                    <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" id="image-file" name="myImage">
                 </div>
+                <img src="" id="image-preview">
             </div>
 
             <div class="form-group">
@@ -451,12 +476,13 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="chart">
+                <div class="chart m-5">
                     <canvas id="myChart"></canvas>
                 </div>
-                <button type="submit" class="btn btn-warning m-auto col-md-2" id="btn-save">暫存</button>
+                <button type="submit" class="btn btn-secondary m-auto col-md-2" id="btn-save">暫存</button>
                 <button type="submit" class="btn btn-primary m-auto col-md-2" id="btn-submit">提交</button>
-                <button type="submit" class="btn btn-primary m-auto col-md-2" id="btn-test">測試用</button>
+                <button type="button" class="btn btn-primary m-auto col-md-2" id="btn-test">測試用</button>
+                <button type="button" class="btn btn-primary m-auto col-md-2" id="btn-image">照片</button>
             </div>
 
         </div>

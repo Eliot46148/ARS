@@ -14,8 +14,13 @@ var formSchema = new mongoose.Schema({
     Email: String,
     Description: String,
     Evaluation: String,
-    //Image: [],
-    //Video: []
+    UploadDate: {
+        type: Date,
+        default: Date.now
+    },
+    FormCode: String,
+    Image: String,
+    Video: []
 });
 
 module.exports = mongoose.model('form', formSchema);

@@ -9,6 +9,10 @@ departmentDict['體育室'] = ['體育室'];
 departmentDict['通識中心'] = ['通識中心'];
 departmentDict['師培中心'] = ['師培中心'];
 
+$(document).ready(function(){
+    $('#TeacherNum').text($.cookie('id')); 
+})
+
 $('#college').change(function () {
     $('#department').empty();
     var selected = $('#college').find(":selected").text();
@@ -46,36 +50,59 @@ $('#btn-submit').click(function () {
     console.log([_Higher]);
     $.post("/form/save",
         {
-            'ResearchTopic' :_ResearchTopic,
-            'HIGHER': _Higher,                       
-            'Industry':_Industry,
+            'ResearchTopic': _ResearchTopic,
+            'HIGHER': _Higher,
+            'Industry': _Industry,
             'Industry5n': _Industry5n,
             'Name': _Name,
             'College': _college,
             'Department': _department,
             'TeacherNum': _TeacherNum,
             'Phone': _Phone,
-            'Email':_Email,
-            'Description':_description,
-            'Evaluation':_evaluation
+            'Email': _Email,
+            'Description': _description,
+            'Evaluation': _evaluation
         }, function (res) {
             alert(res.msg);
         });
 });
 
-$('#btn-patent').click(function () {
-    var _name = $('#patent-name').val();
-    var _country = $('#patent-country').val();
-    var _status = $("input[name='patentStatusRadio']:checked").val();
-    var _pdf = $('#patent-file').prop('files')[0];
-    console.log([_name, _country, _status, _pdf]);
+// $('#btn-patent').click(function () {
+//     var _name = $('#patent-name').val();
+//     var _country = $('#patent-country').val();
+//     var _status = $("input[name='patentStatusRadio']:checked").val();
+//     var _pdf = $('#patent-file').prop('files')[0];
+//     console.log([_name, _country, _status, _pdf]);
 
-    $.post("/form/patent/save", { 'Name': _name, 'Country': _country, 'Status': _status, 'Pdf': _pdf }, function (res) {
-        if (res.status == 1)
-            alert(res.msg);
-        else {
-            alert(res.msg);
-        }
-    });
+//     $.post("/form/patent/save", { 'Name': _name, 'Country': _country, 'Status': _status, 'Pdf': _pdf }, function (res) {
+//         if (res.status == 1)
+//             alert(res.msg);
+//         else {
+//             alert(res.msg);
+//         }
+//     });
+// });
 
+$('#image-file').change(function(){
+    readURL(this);
 });
+
+$('#btn-test').click(function(){
+    $.cookie('id', '22222');
+});
+
+$('#btn-image').click(function(){
+    var img = $('#image-file');
+    var formData = new FormData();
+    formData.append('file', img.files[0]);
+});
+
+function readURL(input){
+    if(input.files && input.files[0]){
+        var reader = new FileReader();
+        reader.onload = function(e){
+            $('#image-preview').attr('src',e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}

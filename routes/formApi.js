@@ -15,6 +15,19 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
+router.post('/create', function (req, res, next) {
+  var newForm = new formModel({
+    TeacherNum: req.body.TeacherNum,
+    UploadDate: req.body.UploadDate
+  });
+  newForm.save(function (err, data) {
+    if (err)
+      res.json({ "status": 1, "msg": "Error" });
+    else
+      res.json({ "status": 0, "msg": "success", "data": data });
+  });
+});
+
 router.post('/save', function (req, res, next) {
   var newForm = new formModel({
     ResearchTopic: req.body.ResearchTopic,
@@ -50,6 +63,21 @@ router.post('/patent/save', function (req, res, next) {
       res.json({ "status": 1, "msg": "Error" });
     else
       res.json({ "status": 0, "msg": "success", "data": data });
+  });
+});
+
+router.post('/image/upload',upload.single('myImage'), function(req, res, next){
+  formModel.findOne({ TeacherNum: req.query.id}, function(err, data){
+    data.Image = req.file.filename;
+    data.markModified('Image');
+    data.save(function(err){
+      if(err){
+        res.json({'status': 1, 'msg':'error'});
+      }
+      else{
+        res.json({'status': 0, 'msg':'success', 'Image':data.Image});
+      }
+    });    
   });
 });
 
