@@ -28,56 +28,57 @@ router.post('/create', function (req, res, next) {
   });
 });
 
-router.post('/save', function (req, res, next) {
-  var newForm = new formModel({
-    ResearchTopic: req.body.ResearchTopic,
-    HIGHER: req.body.HIGHER,
-    Industry: req.body.Industry,
-    Industry5n: req.body.Industry5n,
-    Name: req.body.Name,
-    College: req.body.College,
-    Department: req.body.Department,
-    TeacherNum: req.body.TeacherNum,
-    Phone: req.body.Phone,
-    Email: req.body.Email,
-    Description: req.body.Description,
-    Evaluation: req.body.Evaluation
-  });
-  newForm.save(function (err, data) {
-    if (err)
-      res.json({ "status": 1, "msg": "Error" });
-    else
-      res.json({ "status": 0, "msg": "success", "data": data });
-  });
+router.post('/save', function (req, res, next) {  
+  formModel.update({ TeacherNum: req.body.TeacherNum },
+    {
+      ResearchTopic: req.body.ResearchTopic,
+      HIGHER: req.body.HIGHER,
+      Industry: req.body.Industry,
+      Industry5n: req.body.Industry5n,
+      Name: req.body.Name,
+      College: req.body.College,
+      Department: req.body.Department,
+      Phone: req.body.Phone,
+      Email: req.body.Email,
+      Description: req.body.Description,
+      Evaluation: req.body.Evaluation
+    }, function (err,data) {
+      if (err)
+        res.json({ "status": 1, "msg": "Error", 'data':data});
+      else
+        res.json({ "status": 0, "msg": "success", 'data':req.body});
+    });
 });
 
-router.post('/patent/save', function (req, res, next) {
-  var newForm = new formModel({
-    Name: req.body.HIGHER,
-    Country: req.body.Country,
-    Status: req.body.Status,
-    Pdf: req.body.Pdf
-  });
-  newForm.save(function (err, data) {
-    if (err)
-      res.json({ "status": 1, "msg": "Error" });
-    else
-      res.json({ "status": 0, "msg": "success", "data": data });
-  });
+router.post('/patent/upload',upload.single('myPatent'), function (req, res, next) {
+  formModel.update({ TeacherNum: req.query.id },
+    {
+      Patent:{
+        Name: req.query.Name,
+        Country: req.query.Country,
+        status: req.query.Status,
+        File: req.file.filename
+      }
+    }, function (err,data) {
+      if (err)
+        res.json({ "status": 1, "msg": "Error" });
+      else
+        res.json({ "status": 0, "msg": "success", 'data':data});
+    });
 });
 
-router.post('/image/upload',upload.single('myImage'), function(req, res, next){
-  formModel.findOne({ TeacherNum: req.query.id}, function(err, data){
+router.post('/image/upload', upload.single('myImage'), function (req, res, next) {
+  formModel.findOne({ TeacherNum: req.query.id }, function (err, data) {
     data.Image = req.file.filename;
     data.markModified('Image');
-    data.save(function(err){
-      if(err){
-        res.json({'status': 1, 'msg':'error'});
+    data.save(function (err) {
+      if (err) {
+        res.json({ 'status': 1, 'msg': err });
       }
-      else{
-        res.json({'status': 0, 'msg':'success', 'Image':data.Image});
+      else {
+        res.json({ 'status': 0, 'msg': 'success', 'data': data });
       }
-    });    
+    });
   });
 });
 

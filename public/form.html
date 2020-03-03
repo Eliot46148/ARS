@@ -133,7 +133,7 @@
 
             <div id="patentInfo" class="panel-collapse collapse">
                 <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
-                    <table class="table mt-3">
+                    <table class="table mt-3" id="patent-table">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">序號</th>
@@ -146,15 +146,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>XXX</td>
-                                <td>中華民國</td>
-                                <td>申請中</td>
-                                <td>點選</td>
-                                <td>點選</td>
-                                <td>點選</td>
-                            </tr>
+                            
                         </tbody>
                     </table>
 
@@ -194,13 +186,13 @@
                                     <div class="form-group">
                                         <label>佐證資料上傳(限pdf)</label>
                                         <div id="drop-area" class="dm-uploader">
-                                            <input type="file" title="選擇檔案" accept=".pdf" id="patent-file">
+                                            <input type="file" title="選擇檔案" accept=".pdf" id="patent-file" name="myPatent">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                    <button type="button" class="btn btn-primary">送出</button>
+                                    <button type="button" class="btn btn-primary" id="btn-patent-upload">送出</button>
                                 </div>
                             </div>
                         </div>

@@ -9,8 +9,8 @@ departmentDict['體育室'] = ['體育室'];
 departmentDict['通識中心'] = ['通識中心'];
 departmentDict['師培中心'] = ['師培中心'];
 
-$(document).ready(function(){
-    $('#TeacherNum').text($.cookie('id')); 
+$(document).ready(function () {
+    $('#TeacherNum').text($.cookie('id'));
 })
 
 $('#college').change(function () {
@@ -41,13 +41,12 @@ $('#btn-submit').click(function () {
     var _Name = $('#Name').val();
     var _college = $('#college').val();
     var _department = $('#department').val();
-    var _TeacherNum = $('#TeacherNum').val();
+    var _TeacherNum = $.cookie('id');
     var _Phone = $('#Phone').val();
     var _Email = $('#Email').val();
     var _description = $('#description').val();
     var _evaluation = $('#evaluation').val();
-
-    console.log([_Higher]);
+    
     $.post("/form/save",
         {
             'ResearchTopic': _ResearchTopic,
@@ -63,8 +62,9 @@ $('#btn-submit').click(function () {
             'Description': _description,
             'Evaluation': _evaluation
         }, function (res) {
+            console.log(res);
             alert(res.msg);
-        });
+        });    
 });
 
 // $('#btn-patent').click(function () {
@@ -83,26 +83,86 @@ $('#btn-submit').click(function () {
 //     });
 // });
 
-$('#image-file').change(function(){
-    readURL(this);
+$('#image-file').change(function () {
+    readURL(this);    
+    var formData = new FormData();
+    formData.append('myImage', this.files[0]);
+    var url = '/form/image/upload?id=' + $.cookie('id');
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            console.log(res);
+        },
+        error: function (res) {
+            console.log(res);
+        }
+    });
 });
 
-$('#btn-test').click(function(){
+$('#btn-test').click(function () {
     $.cookie('id', '22222');
 });
 
-$('#btn-image').click(function(){
+$('#btn-image').click(function () {
     var img = $('#image-file');
     var formData = new FormData();
-    formData.append('file', img.files[0]);
+    formData.append('myImage', img[0].files[0]);
+    var url = '/form/image/upload?id=' + $.cookie('id');
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            console.log(res);
+        },
+        error: function (res) {
+            console.log(res);
+        }
+    });
 });
 
-function readURL(input){
-    if(input.files && input.files[0]){
+function readURL(input) {
+    if (input.files && input.files[0]) {
         var reader = new FileReader();
-        reader.onload = function(e){
-            $('#image-preview').attr('src',e.target.result);
+        reader.onload = function (e) {
+            $('#image-preview').attr('src', e.target.result);
         }
         reader.readAsDataURL(input.files[0]);
     }
 }
+var patentCounter = 1;
+$('#btn-patent-upload').click(function(){
+    var _name = $('#patent-name');
+    var _country = $('#patent-country');
+    var _status = $("input[name='patentStatusRadio']:checked");
+    var _file = $('#patent-file');
+    var formData = new FormData();
+    formData.append('myPatent', _file[0].files[0]);
+    var url = `/form/patent/upload?id=${$.cookie('id')}&Name=${_name.val()}&Country=${_country.val()}&Status=${_status.val()}`;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            console.log(res);
+            alert('送出成功');
+            $('#addPatent').modal('hide');
+            $('#patent-table').append(`<tr><th scope="row">${patentCounter}</th><td>${_name.val()}</td><td>${_country.val()}</td><td>申請中</td><td>點選</td><td>點選</td><td>點選</td></tr>`);
+            _name.val('');
+            _country.val('');            
+            patentCounter +=1;
+        },
+        error: function (res) {
+            console.log(res);
+            alert('送出失敗');
+        }
+    });
+});
