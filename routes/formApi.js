@@ -82,4 +82,19 @@ router.post('/image/upload', upload.single('myImage'), function (req, res, next)
   });
 });
 
+router.post('/video/upload', upload.single('myVideo'), function (req, res, next) {
+  formModel.findOne({ TeacherNum: req.query.id }, function (err, data) {
+    data.Video = req.file.filename;
+    data.markModified('Image');
+    data.save(function (err) {
+      if (err) {
+        res.json({ 'status': 1, 'msg': err });
+      }
+      else {
+        res.json({ 'status': 0, 'msg': 'success', 'data': data });
+      }
+    });
+  });
+});
+
 module.exports = router;

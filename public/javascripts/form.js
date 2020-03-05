@@ -103,6 +103,31 @@ $('#image-file').change(function () {
     });
 });
 
+$('#video-file').change(function () {        
+    var formData = new FormData();
+    file = this.files[0];
+    formData.append('myVideo', this.files[0]);
+    var url = '/form/video/upload?id=' + $.cookie('id');
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            console.log(res);
+            alert('上傳成功!');
+            fileUrl = window.URL.createObjectURL(file);
+            $('#video-preview').append(`<video src="${fileUrl}" style="height: auto; width: 80%" controls>`);
+        },
+        error: function (res) {
+            console.log(res);
+            alert('上傳失敗!');
+        }        
+    });
+    
+});
+
 $('#btn-test').click(function () {
     $.cookie('id', '22222');
 });
