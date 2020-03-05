@@ -103,6 +103,17 @@ $('#image-file').change(function () {
     });
 });
 
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#image-preview').attr('src', e.target.result);
+            $('#image-preview').show();
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 $('#video-file').change(function () {        
     var formData = new FormData();
     file = this.files[0];
@@ -118,7 +129,8 @@ $('#video-file').change(function () {
             console.log(res);
             alert('上傳成功!');
             fileUrl = window.URL.createObjectURL(file);
-            $('#video-preview').append(`<video src="${fileUrl}" style="height: auto; width: 80%" controls>`);
+            $('#video-preview').attr('src',fileUrl);
+            $('#video-preview').show();
         },
         error: function (res) {
             console.log(res);
@@ -152,15 +164,6 @@ $('#btn-image').click(function () {
     });
 });
 
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#image-preview').attr('src', e.target.result);
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
 var patentCounter = 1;
 $('#btn-patent-upload').click(function(){
     var _name = $('#patent-name');
