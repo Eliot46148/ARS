@@ -1,4 +1,4 @@
-var app = angular.module('Mediator', []);
+var app = angular.module('ReceptionOverview', []);
 
 app.controller('MainCtrl', function($scope, $http) {
     var system = function(name, href){
@@ -9,7 +9,7 @@ app.controller('MainCtrl', function($scope, $http) {
     }
 
     $scope.systems = [
-        system('研發能量展現平台', '/mediator/overview/sys1/index.html'),
+        system('研發能量展現平台', '/mediator/overview/sys1/'),
         system('PBL學習申請', '#'),
         system('師生社群申請', '#'),
         system('待新增', '#'),

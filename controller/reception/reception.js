@@ -1,10 +1,10 @@
-var app = angular.module('Mediator', []);
+var app = angular.module('Reception', []);
 
 app.controller('MainCtrl', function($scope, $http) {
     $scope.login = function(){
         $http({
             method:'POST',
-            url:'/user/login',
+            url:'/users/login',
             data: {
                 account: $scope.account,
                 password: $scope.password

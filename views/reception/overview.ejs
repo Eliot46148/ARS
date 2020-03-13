@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>查詢/修改資料</title>
+
+    <script src="/library/jquery-3.4.1.min.js"></script>
+    <script src="/library/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/library/bootstrap.min.css">
+    <script src="/library/jquery.dm-uploader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
+        integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
+    <script src="/library/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="/library/fontawesome-free-5.12.1-web/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/function-style.css">
+    <script src="/library/angular.js"></script>
+    <script src="/reception/overview.js"></script>
+</head>
+
+<body ng-app="ReceptionOverview"  ng-controller="MainCtrl">
+    <div class="container">
+        <div class="row">
+            <h1>查詢/修改資料</h1>
+        </div>
+
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-12" ng-repeat="system in systems">
+            <button ng-click="redirect(system.href)" class="btn btn-sq-lg btn btn-secondary center-vertical" ng-disabled="disabled">
+                    {{system.name}}
+                </button>
+            </div>
+        </div>
+        <button onclick="location.href='/reception/'" class="btn btn-sq-lg btn-danger">
+            <i class="fa fa-reply fa-5x"></i><br />
+            <br>返回
+        </button>
+    </div>
+
+</body>
+
+</html>
