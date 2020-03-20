@@ -16,10 +16,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
         integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
     <script src="./library/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="./stylesheets/index-style.css">
+    <script src="/library/angular.js"></script>    
 </head>
 
-<body>
+<body ng-app="form"  ng-controller="formControl">
     <form role="form">
         <div class="container offset-md-1">
             <div class="form-group">
@@ -28,8 +28,9 @@
             </div>
             <div class="form-group">
                 <label>研究成果主題</label>
-                <input class="form-control col-md-10" type="text" id="ResearchTopic">
+                <input class="form-control col-md-10" type="text" id="ResearchTopic" ng-model="ResearchTopic">
             </div>
+            <p ng-bind="ResearchTopic"></p>
             <div class="form-group">
                 <label>HIGHER研究導向</label>
                 <select class="form-control col-md-10" id="HIGHER">
@@ -488,6 +489,7 @@
 
 
     <script src="./javascripts/form.js"></script>
+    <script src="./formController.js"></script>
     <script src="./javascripts/index-chart.js"></script>
 
 </body>

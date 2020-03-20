@@ -1,11 +1,8 @@
 $('#createNewFormBtn').click(function(){
     var _TeacherNum = $('#createNewFormNum').val();
-    $.post("/form/create",
+    $.post("/form",
     {        
-        'TeacherNum': _TeacherNum,        
-    }, function (res) {
-        alert(res.msg);
-    });
+        'TeacherNum': _TeacherNum 
+    },data=>window.location.assign('/form'))
     $.cookie('id', _TeacherNum);
-    window.location.pathname = '/form.html';
 });

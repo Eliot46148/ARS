@@ -9,6 +9,7 @@ var authRouter = require('./routes/authApi');
 var formRouter = require('./routes/formApi');
 var userRouter = require('./routes/users');
 var receptionRouter = require('./routes/reception');
+var functionRouter = require('./routes/functionApi');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use('/auth', authRouter);
 app.use('/form', formRouter);
 app.use('/users', userRouter);
 app.use('/reception', receptionRouter);
+app.use('/function', functionRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
