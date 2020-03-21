@@ -17,10 +17,11 @@
     <link rel="stylesheet" href="/library/fontawesome-free-5.12.1-web/css/all.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/function-style.css">
     <script src="/library/angular.js"></script>
-    <script src="/reception/reception.js"></script>
+    <script src="/processor/processor.js"></script>
+    <script src="/processor/overview.js"></script>
 </head>
 
-<body ng-app="Reception"  ng-controller="MainCtrl">
+<body ng-app="Processor"  ng-controller="MainCtrl"  ui-view>
     <div class="container">
         <div class="row">
             <h1>專責人員頁面</h1>
@@ -28,27 +29,19 @@
 
         <div class="row justify-content-center align-items-center">
             <div class="col-lg-12">
-                <a href="./overview/" class="btn btn-sq-lg btn-primary center-vertical" ng-hide="disabled">
-                    <i class="fa fa-plus-circle fa-5x"></i><br />
-                    <br>查詢/修改資料
+                <a ng-repeat="system in systems" href="{{system.href}}" class="m-1 btn btn-sq-lg btn-primary text-white" ng-hide="disabled">
+                    <i class="fa fa-cogs fa-5x"></i>
+                    <br/><br>{{system.name}}
                 </a>
-                <a href="./examination" class="btn btn-sq-lg btn-success" ng-hide="disabled">
-                    <i class="fa fa-user fa-5x"></i><br />
-                    <br>審查發放/回收
-                </a>
-                <a href="./data-download" class="btn btn-sq-lg btn-info" ng-hide="disabled">
-                    <i class="fa fa-file-alt fa-5x"></i><br />
-                    <br>資料數據下載
-                </a>
-                <a href="" class="btn btn-sq-lg btn-warning text-white" ng-hide="!disabled" data-toggle="modal" data-target="#login">
+                <a href="" class="m-1 btn btn-sq-lg btn-warning text-white" ng-hide="!disabled" data-toggle="modal" data-target="#login">
                     <i class="fa fa-address-book fa-5x"></i><br />
                     <br>登入
                 </a>
-                <a href="" class="btn btn-sq-lg btn-warning text-white" ng-hide="disabled" ng-click="logout()">
+                <a href="" class="m-1 btn btn-sq-lg btn-warning text-white" ng-hide="disabled" ng-click="logout()">
                     <i class="fa fa-address-book fa-5x"></i><br />
                     <br>登出
                 </a>
-                <a href="/" class="btn btn-sq-lg btn-danger">
+                <a href="/" class="m-1 btn btn-sq-lg btn-danger">
                     <i class="fa fa-reply fa-5x"></i><br />
                     <br>返回
                 </a>
@@ -68,13 +61,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="loginMediatorAccount">帳號</label>
-                        <input class="form-control" type="text" id="loginMediatorAccount" ng-model="account">
+                        <label for="loginAccount">帳號</label>
+                        <input class="form-control" type="text" id="loginAccount" ng-model="account">
                     </div>
                     <div class="form-group">
-                        <label for="loginMediatorPassword">密碼</label>
-                        <input class="form-control" type="password" id="loginMediatorPassword" ng-model="password">
+                        <label for="loginPassword">密碼</label>
+                        <input class="form-control" type="password" id="loginPassword" ng-model="password">
                     </div>
+                    <p ng-bind="msg" ng-hide="!msg" class="text-danger"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="loginBtn" ng-click="login()">送出</button>

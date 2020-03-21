@@ -7,8 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/authApi');
 var formRouter = require('./routes/formApi');
-var userRouter = require('./routes/users');
-var receptionRouter = require('./routes/reception');
+var processorRouter = require('./routes/processor');
 var functionRouter = require('./routes/functionApi');
 var committeeRouter = require('./routes/committeeLogApi');
 
@@ -28,8 +27,7 @@ app.use(express.static(path.join(__dirname, 'controller')));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/form', formRouter);
-app.use('/users', userRouter);
-app.use('/reception', receptionRouter);
+app.use('/processor', processorRouter);
 app.use('/function', functionRouter);
 app.use('/committee', committeeRouter);
 
