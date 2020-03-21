@@ -15,7 +15,9 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-router.post('/create', function (req, res, next) {
+router.get('/', (req, res, next) => res.render('form', { title: 'Express' }));
+
+router.post('/', function (req, res, next) {
   var newForm = new formModel({
     TeacherNum: req.body.TeacherNum,
     UploadDate: req.body.UploadDate
@@ -24,11 +26,11 @@ router.post('/create', function (req, res, next) {
     if (err)
       res.json({ "status": 1, "msg": "Error" });
     else
-      res.json({ "status": 0, "msg": "success", "data": data });
+      res.redirect('form');
   });
 });
 
-router.post('/save', function (req, res, next) {  
+router.post('/save', function (req, res, next) {
   formModel.update({ TeacherNum: req.body.TeacherNum },
     {
       ResearchTopic: req.body.ResearchTopic,
@@ -42,28 +44,28 @@ router.post('/save', function (req, res, next) {
       Email: req.body.Email,
       Description: req.body.Description,
       Evaluation: req.body.Evaluation
-    }, function (err,data) {
+    }, function (err, data) {
       if (err)
-        res.json({ "status": 1, "msg": "Error", 'data':data});
+        res.json({ "status": 1, "msg": "Error", 'data': data });
       else
-        res.json({ "status": 0, "msg": "success", 'data':req.body});
+        res.json({ "status": 0, "msg": "success", 'data': req.body });
     });
 });
 
-router.post('/patent/upload',upload.single('myPatent'), function (req, res, next) {
+router.post('/patent/upload', upload.single('myPatent'), function (req, res, next) {
   formModel.update({ TeacherNum: req.query.id },
     {
-      Patent:{
+      Patent: {
         Name: req.query.Name,
         Country: req.query.Country,
         status: req.query.Status,
         File: req.file.filename
       }
-    }, function (err,data) {
+    }, function (err, data) {
       if (err)
         res.json({ "status": 1, "msg": "Error" });
       else
-        res.json({ "status": 0, "msg": "success", 'data':data});
+        res.json({ "status": 0, "msg": "success", 'data': data });
     });
 });
 
