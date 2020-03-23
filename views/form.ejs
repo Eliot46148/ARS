@@ -165,18 +165,18 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label>專利主題名稱</label>
-                                        <input class="form-control" type="text" id="patent-name">
+                                        <input class="form-control" type="text" ng-model="patentName">
                                     </div>
                                     <div class="form-group">
                                         <label>專利申請國籍</label>
-                                        <input class="form-control" type="text" id="patent-country">
+                                        <input class="form-control" type="text" ng-model="patentCountry">
                                     </div>
                                     <label>專利申請狀況</label>
                                     <div class="form-group">
                                         <label class="radio-inline"></label>
-                                        <input type="radio" name="patentStatusRadio" value="applied">已核准
+                                        <input type="radio" name="patentStatusRadio" value="已核准" ng-model="patentStatus">已核准
                                         <label class="radio-inline"></label>
-                                        <input type="radio" name="patentStatusRadio" value="applying">申請中
+                                        <input type="radio" name="patentStatusRadio" value="申請中" ng-model="patentStatus">申請中
                                     </div>
                                     <div class="form-group">
                                         <label>佐證資料上傳(限pdf)</label>
@@ -290,7 +290,7 @@
             <div class="form-group">
                 <label>成果照片上傳</label>
                 <div id="drop-area" class="dm-uploader">
-                    <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="image" name="myImage">
+                    <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="image" id="image" name="myImage">
                 </div>
                 <img src="" id="image-preview" style="width: 40%; height: auto; display: none;">
             </div>
@@ -298,7 +298,7 @@
             <div class="form-group">
                 <label>成果影片上傳</label>
                 <div id="drop-area" class="dm-uploader">
-                    <input type="file" title="選擇檔案" accept=".AVI,.FLV,.WMV,.MOV,.MP4" id="video-file" name='myVideo'>
+                    <input type="file" title="選擇檔案" accept=".AVI,.FLV,.WMV,.MOV,.MP4" id="video" name='myVideo'>
                 </div>
                 <div class="progress my-1">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"

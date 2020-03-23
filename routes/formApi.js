@@ -111,6 +111,21 @@ router.patch('/image', upload.single('myImage'), function (req, res, next) {
   });
 });
 
+router.post('/image', upload.single('myImage'), function (req, res, next) {
+  formModel.findOne({ TeacherNum: req.query.TeacherNum }, function (err, data) {
+    data.Image = req.file.filename;
+    data.markModified('Image');
+    data.save(function (err) {
+      if (err) {
+        res.json({ 'status': 1, 'msg': err });
+      }
+      else {
+        res.json({ 'status': 0, 'msg': 'success', 'data': data });
+      }
+    });
+  });
+});
+
 router.patch('/video', upload.single('myVideo'), function (req, res, next) {
   formModel.findOne({ TeacherNum: req.query.TeacherNum }, function (err, data) {
     data.Video = req.file.filename;
