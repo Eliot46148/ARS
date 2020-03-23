@@ -188,7 +188,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                    <button type="button" class="btn btn-primary" id="btn-patent-upload">送出</button>
+                                    <button type="button" class="btn btn-primary" ng-click="UploadPatent()">送出</button>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +197,7 @@
                 </div>
             </div>
 
-            <!-- <h1>成果相關論文</h1> -->
+            
             <label>論文相關資訊</label>
             <div class="form-group">
                 <label class="radio-inline"></label>
@@ -474,9 +474,9 @@
                     <canvas id="myChart"></canvas>
                 </div>
                 <button type="submit" class="btn btn-secondary m-auto col-md-2" ng-click="save()">暫存</button>
-                <button type="submit" class="btn btn-primary m-auto col-md-2" id="btn-submit">提交</button>
-                <button type="button" class="btn btn-primary m-auto col-md-2" id="btn-test">測試用</button>
-                <button type="button" class="btn btn-primary m-auto col-md-2" id="btn-test" ng-click="test()">測試用</button>
+                <button type="submit" class="btn btn-primary m-auto col-md-2" ng-click="submit()">提交</button>
+                <!-- <button type="button" class="btn btn-primary m-auto col-md-2" id="btn-test">測試用</button>
+                <button type="button" class="btn btn-primary m-auto col-md-2" id="btn-test" ng-click="test()">測試用</button> -->
             </div>
 
         </div>

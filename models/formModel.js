@@ -33,8 +33,9 @@ var formSchema = new mongoose.Schema({
     FormCode: String,
     Image: String,
     Video: String,
-    Submitted: Boolean,
-    Ended: Boolean
+    Submitted: Boolean,     // 使用者已確認送出
+    Ended: Boolean,         // 審查流程結束
+    ChartData:[]            // 成熟度數值
 });
 
 module.exports = mongoose.model('form', formSchema);

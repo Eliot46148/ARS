@@ -45,7 +45,34 @@ router.put('/', function (req, res, next) {
       Phone: req.body.Phone,
       Email: req.body.Email,
       Description: req.body.Description,
-      Evaluation: req.body.Evaluation
+      Evaluation: req.body.Evaluation,
+      ChartData: req.body.ChartData
+    }, function (err, data) {
+      if (err)
+        res.json({ "status": 1, "msg": "Error", 'data': data });
+      else{
+        res.json({ "status": 0, "msg": "success", 'data': req.body });
+        console.log(req.body);
+      }
+    });
+});
+
+router.put('/submit', function (req, res, next) {
+  formModel.update({ TeacherNum: req.body.TeacherNum },
+    {
+      ResearchTopic: req.body.ResearchTopic,
+      HIGHER: req.body.HIGHER,
+      Industry: req.body.Industry,
+      Industry5n: req.body.Industry5n,
+      Name: req.body.Name,
+      College: req.body.College,
+      Department: req.body.Department,
+      Phone: req.body.Phone,
+      Email: req.body.Email,
+      Description: req.body.Description,
+      Evaluation: req.body.Evaluation,
+      Submitted: true,
+      ChartData: req.body.ChartData
     }, function (err, data) {
       if (err)
         res.json({ "status": 1, "msg": "Error", 'data': data });
@@ -69,7 +96,7 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
       if (err)
         res.json({ "status": 1, "msg": "Error" });
       else {
-        res.json({ "status": 0, "msg": "success", 'data': data });
+        res.json({ "status": 0, "msg": "success", 'data': data, 'filename':req.file.filename });
         console.log(req.query.Status);
       }
     });
@@ -97,21 +124,6 @@ router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
 });
 
 router.patch('/image', upload.single('myImage'), function (req, res, next) {
-  formModel.findOne({ TeacherNum: req.query.TeacherNum }, function (err, data) {
-    data.Image = req.file.filename;
-    data.markModified('Image');
-    data.save(function (err) {
-      if (err) {
-        res.json({ 'status': 1, 'msg': err });
-      }
-      else {
-        res.json({ 'status': 0, 'msg': 'success', 'data': data });
-      }
-    });
-  });
-});
-
-router.post('/image', upload.single('myImage'), function (req, res, next) {
   formModel.findOne({ TeacherNum: req.query.TeacherNum }, function (err, data) {
     data.Image = req.file.filename;
     data.markModified('Image');

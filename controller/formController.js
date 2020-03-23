@@ -17,7 +17,27 @@ app.controller('formCtrl', ($scope, $http) => {
                 "Phone": $scope.phone,
                 "Email": $scope.email,
                 "Description": $scope.description,
-                "Evaluation": $scope.evaluation
+                "Evaluation": $scope.evaluation,
+                "ChartData": chartData
+            })
+            .then((res) => console.log(res), (err) => alert(err.msg));
+    }
+    $scope.submit = () => {
+        $http.put('/form/submit',
+            {
+                'TeacherNum': $scope.TeacherNum,
+                "ResearchTopic": $scope.ResearchTopic,
+                "HIGHER": $scope.HIGHER,
+                "Industry": $scope.Industry,
+                "Industry5n": $scope.Industry5n,
+                "Name": $scope.name,
+                "College": $scope.college,
+                "Department": $scope.department,
+                "Phone": $scope.phone,
+                "Email": $scope.email,
+                "Description": $scope.description,
+                "Evaluation": $scope.evaluation,
+                "ChartData": chartData                
             })
             .then((res) => console.log(res), (err) => alert(err.msg));
     }
@@ -80,7 +100,7 @@ app.controller('formCtrl', ($scope, $http) => {
         });
     });
     var patentCounter = 1;
-    $('#btn-patent-upload').click(function () {
+    $scope.UploadPatent = () => {
         var formData = new FormData();
         formData.append('myPatent', $('#patent-file')[0].files[0]);
         var url = `/form/patent?TeacherNum=${$scope.TeacherNum}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
@@ -94,7 +114,7 @@ app.controller('formCtrl', ($scope, $http) => {
                 console.log(res);
                 alert('送出成功');
                 $('#addPatent').modal('hide');
-                $('#patent-table').append(`<tr><th scope="row">${patentCounter}</th><td>${$scope.patentName}</td><td>${$scope.patentCountry}</td><td>${$scope.patentStatus}</td><td>點選</td><td>點選</td><td>點選</td></tr>`);
+                $('#patent-table').append(`<tr><th scope="row">${patentCounter}</th><td>${$scope.patentName}</td><td>${$scope.patentCountry}</td><td>${$scope.patentStatus}</td><td><a href=./files/${res.filename} target="_blank">點選</a></td><td>點選</td><td>點選</td></tr>`);
                 $scope.patentName='';
                 $scope.patentCountry='';
                 patentCounter += 1;
@@ -104,5 +124,5 @@ app.controller('formCtrl', ($scope, $http) => {
                 alert('送出失敗');
             }
         });
-    });
+    };
 });

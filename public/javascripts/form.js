@@ -9,6 +9,8 @@ departmentDict['體育室'] = ['體育室'];
 departmentDict['通識中心'] = ['通識中心'];
 departmentDict['師培中心'] = ['師培中心'];
 
+var chartData = [0,0,0,0,0,0,0,0];
+
 var ctx = document.getElementById('myChart');
 var marksData = {
     labels: ["需求成熟度", "市場成熟度", "投資成熟度", "製造成熟度", "技術成熟度", "組織成熟度", "科學成熟度", "社會貢獻成熟度"],
@@ -48,11 +50,10 @@ var radarChart = new Chart(ctx, {
 });
 radarChart.options.legend.display = false;
 
-
 $('td').click(function () {
     var $this = $(this);
     var col = $this.index();
-    var row = $this.closest('tr').index();
+    var row = $this.closest('tr').index();    
     var chartRow;
     var chartCol;
     var part = '';
@@ -65,9 +66,10 @@ $('td').click(function () {
         chartRow = row;
         chartCol = col;
         part = 'td1';
-    }
+    }    
     radarChart.data.datasets[0].data[chartCol - 1] = chartRow;
     radarChart.update();
+    chartData[chartCol-1]=chartRow;    
     
     $('table tr td[class="' + part + ' table-info"]:nth-child(' + (col + 1) + ')').removeClass('table-info');
     $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')').addClass('table-info');
