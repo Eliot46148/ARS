@@ -20,17 +20,19 @@ router.get('/', (req, res, next) => res.render('form', { title: 'Express' }));
 router.post('/', function (req, res, next) {
   var newForm = new formModel({
     TeacherNum: req.body.TeacherNum,
-    UploadDate: req.body.UploadDate
+    UploadDate: req.body.UploadDate,
+    Submitted: false,
+    Ended: false
   });
   newForm.save(function (err, data) {
     if (err)
       res.json({ "status": 1, "msg": "Error" });
     else
-      res.redirect('form');
+      res.redirect('/form');
   });
 });
 
-router.post('/save', function (req, res, next) {
+router.put('/', function (req, res, next) {
   formModel.update({ TeacherNum: req.body.TeacherNum },
     {
       ResearchTopic: req.body.ResearchTopic,
@@ -52,25 +54,50 @@ router.post('/save', function (req, res, next) {
     });
 });
 
-router.post('/patent/upload', upload.single('myPatent'), function (req, res, next) {
-  formModel.update({ TeacherNum: req.query.id },
+router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
+  formModel.updateOne({ TeacherNum: req.query.TeacherNum },
     {
-      Patent: {
-        Name: req.query.Name,
-        Country: req.query.Country,
-        status: req.query.Status,
-        File: req.file.filename
+      $push: {
+        Patent: {
+          Name: req.query.Name,
+          Country: req.query.Country,
+          Status: req.query.Status,
+          File: req.file.filename
+        }
       }
     }, function (err, data) {
       if (err)
         res.json({ "status": 1, "msg": "Error" });
-      else
+      else {
         res.json({ "status": 0, "msg": "success", 'data': data });
+        console.log(req.query.Status);
+      }
     });
 });
 
-router.post('/image/upload', upload.single('myImage'), function (req, res, next) {
-  formModel.findOne({ TeacherNum: req.query.id }, function (err, data) {
+router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
+  formModel.updateOne({ TeacherNum: req.query.TeacherNum },
+    {
+      $push: {
+        Paper: {
+          Name: req.query.Name,
+          Journal: req.query.Journal,
+          Status: req.query.Status,
+          File: req.file.filename
+        }
+      }
+    }, function (err, data) {
+      if (err)
+        res.json({ "status": 1, "msg": "Error" });
+      else {
+        res.json({ "status": 0, "msg": "success", 'data': data });
+        console.log(req.query.Status);
+      }
+    });
+});
+
+router.patch('/image', upload.single('myImage'), function (req, res, next) {
+  formModel.findOne({ TeacherNum: req.query.TeacherNum }, function (err, data) {
     data.Image = req.file.filename;
     data.markModified('Image');
     data.save(function (err) {
@@ -84,8 +111,8 @@ router.post('/image/upload', upload.single('myImage'), function (req, res, next)
   });
 });
 
-router.post('/video/upload', upload.single('myVideo'), function (req, res, next) {
-  formModel.findOne({ TeacherNum: req.query.id }, function (err, data) {
+router.patch('/video', upload.single('myVideo'), function (req, res, next) {
+  formModel.findOne({ TeacherNum: req.query.TeacherNum }, function (err, data) {
     data.Video = req.file.filename;
     data.markModified('Image');
     data.save(function (err) {

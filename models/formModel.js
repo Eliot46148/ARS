@@ -18,15 +18,23 @@ var formSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    Patent:{
+    Patent:[{
         Name: String,
         Country: String,
         Status: String,
         File: String
-    },
+    }],
+    Paper:[{
+        Name: String,    
+        Journal: String,
+        Status: String,
+        File: String
+    }],
     FormCode: String,
     Image: String,
-    Video: String
+    Video: String,
+    Submitted: Boolean,
+    Ended: Boolean
 });
 
 module.exports = mongoose.model('form', formSchema);

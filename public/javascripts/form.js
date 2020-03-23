@@ -9,9 +9,69 @@ departmentDict['體育室'] = ['體育室'];
 departmentDict['通識中心'] = ['通識中心'];
 departmentDict['師培中心'] = ['師培中心'];
 
-$(document).ready(function () {
-    $('#TeacherNum').text($.cookie('id'));
-})
+var ctx = document.getElementById('myChart');
+var marksData = {
+    labels: ["需求成熟度", "市場成熟度", "投資成熟度", "製造成熟度", "技術成熟度", "組織成熟度", "科學成熟度", "社會貢獻成熟度"],
+    datasets: [{
+        backgroundColor: "rgba(0,200,200,0.2)",
+
+        data: [0, 0, 0, 0, 0, 0, 0, 0],
+    }]
+};
+
+var radarChart = new Chart(ctx, {
+    type: 'radar',
+    data: marksData,
+    options: {
+        title: {
+            display: false,
+        },
+        legend: {
+            display: false
+        },
+        tooltips: {
+            enabled: false
+        },
+        scale: {
+            ticks: {
+                beginAtZero: true,
+                max: 9,
+                min: 0,
+                stepSize: 1,
+                display: false
+            },
+            pointLabels: {
+                fontSize: 18
+            }
+        }
+    }
+});
+radarChart.options.legend.display = false;
+
+
+$('td').click(function () {
+    var $this = $(this);
+    var col = $this.index();
+    var row = $this.closest('tr').index();
+    var chartRow;
+    var chartCol;
+    var part = '';
+    if (row > 9) {
+        chartRow = row - 11;
+        chartCol = col + 4;
+        part = 'td2';
+    }
+    else {
+        chartRow = row;
+        chartCol = col;
+        part = 'td1';
+    }
+    radarChart.data.datasets[0].data[chartCol - 1] = chartRow;
+    radarChart.update();
+    
+    $('table tr td[class="' + part + ' table-info"]:nth-child(' + (col + 1) + ')').removeClass('table-info');
+    $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')').addClass('table-info');
+});
 
 $('#college').change(function () {
     $('#department').empty();
@@ -25,6 +85,7 @@ $('#college').change(function () {
         $('#department').append("<option>請先選擇學院</option>");
 });
 
+
 $('.PatentInfoRadio').change(function () {
     $('#patentInfo').collapse('toggle');
 });
@@ -33,177 +94,127 @@ $('.PaperInfoRadio').change(function () {
     $('#paperInfo').collapse('toggle');
 });
 
-$('#btn-submit').click(function () {
-    var _ResearchTopic = $('#ResearchTopic').val();
-    var _Higher = $('#HIGHER').val();
-    var _Industry = $('#Industry').val();
-    var _Industry5n = $('#Industry5n').val();
-    var _Name = $('#Name').val();
-    var _college = $('#college').val();
-    var _department = $('#department').val();
-    var _TeacherNum = $.cookie('id');
-    var _Phone = $('#Phone').val();
-    var _Email = $('#Email').val();
-    var _description = $('#description').val();
-    var _evaluation = $('#evaluation').val();
-
-    $.post("/form/save",
-        {
-            'ResearchTopic': _ResearchTopic,
-            'HIGHER': _Higher,
-            'Industry': _Industry,
-            'Industry5n': _Industry5n,
-            'Name': _Name,
-            'College': _college,
-            'Department': _department,
-            'TeacherNum': _TeacherNum,
-            'Phone': _Phone,
-            'Email': _Email,
-            'Description': _description,
-            'Evaluation': _evaluation
-        }, function (res) {
-            console.log(res);
-            alert(res.msg);
-        });
-});
-
-// $('#btn-patent').click(function () {
-//     var _name = $('#patent-name').val();
-//     var _country = $('#patent-country').val();
-//     var _status = $("input[name='patentStatusRadio']:checked").val();
-//     var _pdf = $('#patent-file').prop('files')[0];
-//     console.log([_name, _country, _status, _pdf]);
-
-//     $.post("/form/patent/save", { 'Name': _name, 'Country': _country, 'Status': _status, 'Pdf': _pdf }, function (res) {
-//         if (res.status == 1)
-//             alert(res.msg);
-//         else {
-//             alert(res.msg);
+// $('#image-file').change(function () {
+//     readURL(this);
+//     var formData = new FormData();
+//     formData.append('myImage', this.files[0]);
+//     var url = '/form/image/upload?id=' + $.cookie('id');
+//     $.ajax({
+//         url: url,
+//         type: 'POST',
+//         data: formData,
+//         processData: false,
+//         contentType: false,
+//         success: function (res) {
+//             console.log(res);
+//         },
+//         error: function (res) {
+//             console.log(res);
 //         }
 //     });
 // });
 
-$('#image-file').change(function () {
-    readURL(this);
-    var formData = new FormData();
-    formData.append('myImage', this.files[0]);
-    var url = '/form/image/upload?id=' + $.cookie('id');
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (res) {
-            console.log(res);
-        },
-        error: function (res) {
-            console.log(res);
-        }
-    });
-});
+// function readURL(input) {
+//     if (input.files && input.files[0]) {
+//         var reader = new FileReader();
+//         reader.onload = function (e) {
+//             $('#image-preview').attr('src', e.target.result);
+//             $('#image-preview').show();
+//         }
+//         reader.readAsDataURL(input.files[0]);
+//     }
+// }
 
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $('#image-preview').attr('src', e.target.result);
-            $('#image-preview').show();
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
+// $('#video-file').change(function () {
+//     $('#progress-bar').show();
+//     var formData = new FormData();
+//     file = this.files[0];
+//     formData.append('myVideo', this.files[0]);
+//     var url = '/form/video/upload?id=' + $.cookie('id');
+//     $.ajax({
+//         xhr: function () {
+//             var xhr = new window.XMLHttpRequest();
+//             xhr.upload.addEventListener("progress", function (evt) {
+//                 if (evt.lengthComputable) {
+//                     var percentComplete = evt.loaded / evt.total;
+//                     percentComplete = parseInt(percentComplete * 100);
+//                     console.log(percentComplete);             
+//                     $('#progress-bar').css('width', percentComplete+'%');
+//                 }
+//             }, false);
+//             return xhr;
+//         },
+//         url: url,
+//         type: 'POST',
+//         data: formData,
+//         processData: false,
+//         contentType: false,
+//         success: function (res) {
+//             console.log(res);
+//             alert('影片上傳成功!');
+//             fileUrl = window.URL.createObjectURL(file);
+//             $('#video-preview').attr('src', fileUrl);
+//             $('#video-preview').show();            
+//         },
+//         error: function (res) {
+//             console.log(res);
+//             alert('上傳失敗!');
+//         }
+//     });
 
-$('#video-file').change(function () {
-    $('#progress-bar').show();
-    var formData = new FormData();
-    file = this.files[0];
-    formData.append('myVideo', this.files[0]);
-    var url = '/form/video/upload?id=' + $.cookie('id');
-    $.ajax({
-        xhr: function () {
-            var xhr = new window.XMLHttpRequest();
-            xhr.upload.addEventListener("progress", function (evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    percentComplete = parseInt(percentComplete * 100);
-                    console.log(percentComplete);             
-                    $('#progress-bar').css('width', percentComplete+'%');
-                }
-            }, false);
-            return xhr;
-        },
-        url: url,
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (res) {
-            console.log(res);
-            alert('影片上傳成功!');
-            fileUrl = window.URL.createObjectURL(file);
-            $('#video-preview').attr('src', fileUrl);
-            $('#video-preview').show();            
-        },
-        error: function (res) {
-            console.log(res);
-            alert('上傳失敗!');
-        }
-    });
+// });
 
-});
+// $('#btn-test').click(function () {
+//     $.cookie('id', '22222');
+// });
 
-$('#btn-test').click(function () {
-    $.cookie('id', '22222');
-});
+// $('#btn-image').click(function () {
+//     var img = $('#image-file');
+//     var formData = new FormData();
+//     formData.append('myImage', img[0].files[0]);
+//     var url = '/form/image/upload?id=' + $.cookie('id');
+//     $.ajax({
+//         url: url,
+//         type: 'POST',
+//         data: formData,
+//         processData: false,
+//         contentType: false,
+//         success: function (res) {
+//             console.log(res);
+//         },
+//         error: function (res) {
+//             console.log(res);
+//         }
+//     });
+// });
 
-$('#btn-image').click(function () {
-    var img = $('#image-file');
-    var formData = new FormData();
-    formData.append('myImage', img[0].files[0]);
-    var url = '/form/image/upload?id=' + $.cookie('id');
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (res) {
-            console.log(res);
-        },
-        error: function (res) {
-            console.log(res);
-        }
-    });
-});
-
-var patentCounter = 1;
-$('#btn-patent-upload').click(function () {
-    var _name = $('#patent-name');
-    var _country = $('#patent-country');
-    var _status = $("input[name='patentStatusRadio']:checked");
-    var _file = $('#patent-file');
-    var formData = new FormData();
-    formData.append('myPatent', _file[0].files[0]);
-    var url = `/form/patent/upload?id=${$.cookie('id')}&Name=${_name.val()}&Country=${_country.val()}&Status=${_status.val()}`;
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (res) {
-            console.log(res);
-            alert('送出成功');
-            $('#addPatent').modal('hide');
-            $('#patent-table').append(`<tr><th scope="row">${patentCounter}</th><td>${_name.val()}</td><td>${_country.val()}</td><td>申請中</td><td>點選</td><td>點選</td><td>點選</td></tr>`);
-            _name.val('');
-            _country.val('');
-            patentCounter += 1;
-        },
-        error: function (res) {
-            console.log(res);
-            alert('送出失敗');
-        }
-    });
-});
+// var patentCounter = 1;
+// $('#btn-patent-upload').click(function () {
+//     var _name = $('#patent-name');
+//     var _country = $('#patent-country');
+//     var _status = $("input[name='patentStatusRadio']:checked");
+//     var _file = $('#patent-file');
+//     var formData = new FormData();
+//     formData.append('myPatent', _file[0].files[0]);
+//     var url = `/form/patent/upload?id=${$.cookie('id')}&Name=${_name.val()}&Country=${_country.val()}&Status=${_status.val()}`;
+//     $.ajax({
+//         url: url,
+//         type: 'POST',
+//         data: formData,
+//         processData: false,
+//         contentType: false,
+//         success: function (res) {
+//             console.log(res);
+//             alert('送出成功');
+//             $('#addPatent').modal('hide');
+//             $('#patent-table').append(`<tr><th scope="row">${patentCounter}</th><td>${_name.val()}</td><td>${_country.val()}</td><td>申請中</td><td>點選</td><td>點選</td><td>點選</td></tr>`);
+//             _name.val('');
+//             _country.val('');
+//             patentCounter += 1;
+//         },
+//         error: function (res) {
+//             console.log(res);
+//             alert('送出失敗');
+//         }
+//     });
+// });
