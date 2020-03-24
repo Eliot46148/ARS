@@ -1,19 +1,31 @@
 
 $('#LoginButton').click(function (){
-    var ID = $('#accountID').val();
-    var password = $('#passwordID').val();
+    var accountID = $('#accountID').val();
+    var passwordID = $('#passwordID').val();
     $.post("/committee",{
-        email : ID,
-        code : password},
-        function(err,Data){
-            if (Data != null && !err ){
+        email : accountID,
+        code : passwordID},
+        function(data){
+            //alert(data);
+            if(data.status == 2)
+            {
+                alert("welcom : "+ data.data.formOid);
+                window.location.href = "./review";
+
+            }
+            else
+                alert(data.msg);
+/*
+            if (data != null && !err ){
+                alert(Data);
                 alert("welcom");
                 window.location.href = "./review";
             }
             else 
             {
+                alert(data.msg);
                 alert("Data error");
                 console.log(err);
-            }
-        });
+            }*/
+        })
 });
