@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
+var path = require('path');
 formModel = require('../models/formModel');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/files');
+    cb(null, './uploads/');
   },
   filename: function (req, file, cb) {
     var str = file.originalname.split('.');
@@ -50,7 +51,7 @@ router.put('/', function (req, res, next) {
     }, function (err, data) {
       if (err)
         res.json({ "status": 1, "msg": "Error", 'data': data });
-      else{
+      else {
         res.json({ "status": 0, "msg": "success", 'data': req.body });
         console.log(req.body);
       }
@@ -96,10 +97,20 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
       if (err)
         res.json({ "status": 1, "msg": "Error" });
       else {
-        res.json({ "status": 0, "msg": "success", 'data': data, 'filename':req.file.filename });
+        res.json({ "status": 0, "msg": "success", 'data': data, 'filename': req.file.filename });
         console.log(req.query.Status);
       }
     });
+});
+
+router.get('/patent', (req, res, next) => {
+  formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
+    res.sendFile(path.join(__dirname, `../uploads/${data.Patent[0].File}`), (err) => {
+      if (err)
+        res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
+    }
+    );
+  });
 });
 
 router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
