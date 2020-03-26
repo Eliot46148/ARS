@@ -1,8 +1,24 @@
 var app = angular.module('form', []);
 
 app.controller('formCtrl', ($scope, $http) => {
+    $scope.init = () => {
+        $http.get('/form/data?TeacherNum='+$scope.TeacherNum).then(
+            (res) => {          
+                var data = res.data.data;                    
+                $scope.FormId = data._id;
+                console.log($scope.FormId);
+                console.log(data);
+            },
+            (err)=>{
+                console.log(err);
+            }
+        );
+    }
+
     $scope.test = () => console.log($scope);
+
     $scope.TeacherNum = $.cookie('id') != null ? $.cookie('id') : '請從/function進入';
+
     $scope.save = () => {
         $http.put('/form',
             {
@@ -22,6 +38,7 @@ app.controller('formCtrl', ($scope, $http) => {
             })
             .then((res) => console.log(res), (err) => alert(err.msg));
     }
+
     $scope.submit = () => {
         $http.put('/form/submit',
             {
@@ -37,10 +54,11 @@ app.controller('formCtrl', ($scope, $http) => {
                 "Email": $scope.email,
                 "Description": $scope.description,
                 "Evaluation": $scope.evaluation,
-                "ChartData": chartData                
+                "ChartData": chartData
             })
             .then((res) => console.log(res), (err) => alert(err.msg));
     }
+
     $('#image').change(() => {
         var formData = new FormData();
         formData.append('myImage', $("#image")[0].files[0]);
@@ -64,6 +82,7 @@ app.controller('formCtrl', ($scope, $http) => {
             }
         });
     });
+
     $('#video').change(function () {
         $('#progress-bar').show();
         var formData = new FormData();
@@ -99,6 +118,7 @@ app.controller('formCtrl', ($scope, $http) => {
             }
         });
     });
+
     var patentCounter = 1;
     $scope.UploadPatent = () => {
         var formData = new FormData();
@@ -115,8 +135,8 @@ app.controller('formCtrl', ($scope, $http) => {
                 alert('送出成功');
                 $('#addPatent').modal('hide');
                 $('#patent-table').append(`<tr><th scope="row">${patentCounter}</th><td>${$scope.patentName}</td><td>${$scope.patentCountry}</td><td>${$scope.patentStatus}</td><td><a href=./files/${res.filename} target="_blank">點選</a></td><td>點選</td><td>點選</td></tr>`);
-                $scope.patentName='';
-                $scope.patentCountry='';
+                $scope.patentName = '';
+                $scope.patentCountry = '';
                 patentCounter += 1;
             },
             error: function (res) {
@@ -124,5 +144,6 @@ app.controller('formCtrl', ($scope, $http) => {
                 alert('送出失敗');
             }
         });
-    };
+    }
+    $scope.init();
 });

@@ -16,7 +16,25 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-router.get('/', (req, res, next) => res.render('form', { title: 'Express' }));
+router.get('/', (req, res, next) => {
+  formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
+    if (err)
+      res.render('404');
+    else if (req.query.FormId == data._id)
+      res.render('form');
+    else
+      res.render('404');
+  });  
+});
+
+router.get('/data', (req, res, next) => {
+  formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
+    if (err)
+      res.json({ "status": 1, "msg": "Error", 'data': data });
+    else
+      res.json({ "status": 0, "msg": "success", 'data': data });
+  });
+});
 
 router.post('/', function (req, res, next) {
   var newForm = new formModel({
@@ -29,7 +47,7 @@ router.post('/', function (req, res, next) {
     if (err)
       res.json({ "status": 1, "msg": "Error" });
     else
-      res.redirect('/form');
+      res.json({ "status": 1, "msg": "success", "id": data._id });
   });
 });
 
@@ -78,7 +96,7 @@ router.put('/submit', function (req, res, next) {
       if (err)
         res.json({ "status": 1, "msg": "Error", 'data': data });
       else
-        res.json({ "status": 0, "msg": "success", 'data': req.body });
+        res.json({ "status": 0, "msg": "success", 'data': req.body, });
     });
 });
 
@@ -105,6 +123,7 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
 
 router.get('/patent', (req, res, next) => {
   formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
+    console.log(data._id.toString());
     res.sendFile(path.join(__dirname, `../uploads/${data.Patent[0].File}`), (err) => {
       if (err)
         res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
@@ -134,6 +153,16 @@ router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
     });
 });
 
+router.get('/image', (req, res, next) => {
+  formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
+    res.sendFile(path.join(__dirname, `../uploads/${data.Image}`), (err) => {
+      if (err)
+        res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
+    }
+    );
+  });
+});
+
 router.patch('/image', upload.single('myImage'), function (req, res, next) {
   formModel.findOne({ TeacherNum: req.query.TeacherNum }, function (err, data) {
     data.Image = req.file.filename;
@@ -146,6 +175,16 @@ router.patch('/image', upload.single('myImage'), function (req, res, next) {
         res.json({ 'status': 0, 'msg': 'success', 'data': data });
       }
     });
+  });
+});
+
+router.get('/video', (req, res, next) => {
+  formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
+    res.sendFile(path.join(__dirname, `../uploads/${data.Video}`), (err) => {
+      if (err)
+        res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
+    }
+    );
   });
 });
 
