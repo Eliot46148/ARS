@@ -17,10 +17,11 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.get('/', (req, res, next) => {
-  formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
-    if (err)
+  formModel.findById(req.query.FormId , (err, data) => {
+    console.log(req.query);
+    if (err || data==null)
       res.render('404');
-    else if (req.query.FormId == data._id)
+    else if (req.query.TeacherNum == data.TeacherNum)
       res.render('form');
     else
       res.render('404');
@@ -28,11 +29,11 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/data', (req, res, next) => {
-  formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
+  formModel.findById(req.query.FormId , (err, data) => {
     if (err)
       res.json({ "status": 1, "msg": "Error", 'data': data });
     else
-      res.json({ "status": 0, "msg": "success", 'data': data });
+      res.json({ "status": 0, "msg": "success", 'data': data});
   });
 });
 
@@ -52,7 +53,7 @@ router.post('/', function (req, res, next) {
 });
 
 router.put('/', function (req, res, next) {
-  formModel.update({ TeacherNum: req.body.TeacherNum },
+  formModel.update({ _id: req.query.FormId },
     {
       ResearchTopic: req.body.ResearchTopic,
       HIGHER: req.body.HIGHER,
@@ -77,7 +78,7 @@ router.put('/', function (req, res, next) {
 });
 
 router.put('/submit', function (req, res, next) {
-  formModel.update({ TeacherNum: req.body.TeacherNum },
+  formModel.update({ _id: req.query.FormId },
     {
       ResearchTopic: req.body.ResearchTopic,
       HIGHER: req.body.HIGHER,
@@ -101,7 +102,7 @@ router.put('/submit', function (req, res, next) {
 });
 
 router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
-  formModel.updateOne({ TeacherNum: req.query.TeacherNum },
+  formModel.updateOne({ _id: req.query.FormId },
     {
       $push: {
         Patent: {
@@ -122,7 +123,7 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
 });
 
 router.get('/patent', (req, res, next) => {
-  formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
+  formModel.findById(req.query.FormId , (err, data) => {
     console.log(data._id.toString());
     res.sendFile(path.join(__dirname, `../uploads/${data.Patent[0].File}`), (err) => {
       if (err)
@@ -133,7 +134,7 @@ router.get('/patent', (req, res, next) => {
 });
 
 router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
-  formModel.updateOne({ TeacherNum: req.query.TeacherNum },
+  formModel.updateOne({ _id: req.query.FormId },
     {
       $push: {
         Paper: {
@@ -154,7 +155,7 @@ router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
 });
 
 router.get('/image', (req, res, next) => {
-  formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
+  formModel.findById(req.query.FormId , (err, data) => {
     res.sendFile(path.join(__dirname, `../uploads/${data.Image}`), (err) => {
       if (err)
         res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
@@ -164,7 +165,11 @@ router.get('/image', (req, res, next) => {
 });
 
 router.patch('/image', upload.single('myImage'), function (req, res, next) {
-  formModel.findOne({ TeacherNum: req.query.TeacherNum }, function (err, data) {
+  formModel.findById(req.query.FormId , (err, data) => {
+    if(data == null) {
+      res.json({ 'status': 1, 'msg': 'can not find document' });
+      return;
+    }
     data.Image = req.file.filename;
     data.markModified('Image');
     data.save(function (err) {
@@ -179,7 +184,7 @@ router.patch('/image', upload.single('myImage'), function (req, res, next) {
 });
 
 router.get('/video', (req, res, next) => {
-  formModel.findOne({ TeacherNum: req.query.TeacherNum }, (err, data) => {
+  formModel.findById(req.query.FormId , (err, data) => {
     res.sendFile(path.join(__dirname, `../uploads/${data.Video}`), (err) => {
       if (err)
         res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
@@ -189,7 +194,11 @@ router.get('/video', (req, res, next) => {
 });
 
 router.patch('/video', upload.single('myVideo'), function (req, res, next) {
-  formModel.findOne({ TeacherNum: req.query.TeacherNum }, function (err, data) {
+  formModel.findById(req.query.FormId , (err, data) => {
+    if(data == null) {
+      res.json({ 'status': 1, 'msg': 'can not find document' });
+      return;
+    }
     data.Video = req.file.filename;
     data.markModified('Image');
     data.save(function (err) {

@@ -1,23 +1,30 @@
 var app = angular.module('form', []);
 
-app.controller('formCtrl', ($scope, $http) => {
+app.config(function ($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+});
+
+app.controller('formCtrl', ($scope, $http, $location) => {
     $scope.init = () => {
-        $http.get('/form/data?TeacherNum='+$scope.TeacherNum).then(
-            (res) => {          
-                var data = res.data.data;                    
-                $scope.FormId = data._id;
-                console.log($scope.FormId);
+        $http.get('/form/data?FormId=' + $scope.FormId).then(
+            (res) => {
+                var data = res.data.data;
                 console.log(data);
+                $scope.FormId = data._id;
             },
-            (err)=>{
+            (err) => {
                 console.log(err);
             }
         );
     }
+    $scope.TeacherNum = $location.search().TeacherNum;
+
+    $scope.FormId = $location.search().FormId;
 
     $scope.test = () => console.log($scope);
-
-    $scope.TeacherNum = $.cookie('id') != null ? $.cookie('id') : '請從/function進入';
 
     $scope.save = () => {
         $http.put('/form',
@@ -76,6 +83,7 @@ app.controller('formCtrl', ($scope, $http) => {
                     $('#image-preview').show();
                 }
                 reader.readAsDataURL($("#image")[0].files[0]);
+                console.log(res);
             },
             error: function (res) {
                 console.log(res);
