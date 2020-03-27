@@ -8,12 +8,26 @@ app.config(function ($locationProvider) {
 });
 
 app.controller('formCtrl', ($scope, $http, $location) => {
+
     $scope.init = () => {
         $http.get('/form/data?FormId=' + $scope.FormId).then(
             (res) => {
                 var data = res.data.data;
                 console.log(data);
-                $scope.FormId = data._id;
+                if(data!=null){                    
+                    $scope.ResearchTopic =data.ResearchTopic;
+                    $scope.HIGHER=data.HIGHER;
+                    $scope.Industry=data.Industry;
+                    $scope.Industry5n=data.Industry5n;
+                    $scope.Name=data.Name;
+                    $scope.college=data.College;
+                    $scope.department=data.Department;
+                    $scope.Phone=data.Phone;
+                    $scope.Email=data.Email;
+                    $scope.description=data.Description;
+                    $scope.evaluation=data.Evaluation;
+                    chartData=data.ChartData;
+                }                                
             },
             (err) => {
                 console.log(err);

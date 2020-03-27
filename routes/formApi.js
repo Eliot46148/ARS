@@ -17,8 +17,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.get('/', (req, res, next) => {
-  formModel.findById(req.query.FormId , (err, data) => {
-    console.log(req.query);
+  formModel.findById(req.query.FormId , (err, data) => {    
     if (err || data==null)
       res.render('404');
     else if (req.query.TeacherNum == data.TeacherNum)

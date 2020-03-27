@@ -61,7 +61,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <input class="form-control" type="text" id="createNewFormNum" ng-model="TeacherNum">
+                        <input class="form-control" type="text" id="createNewFormNum" ng-model="TeacherNumCreate">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -85,16 +85,16 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="">員工編號</label>
-                        <input type="text" class="form-control" id="account">
+                        <input type="text" class="form-control" id="account" ng-model="TeacherNumGet">
                     </div>
                     <div class="form-group">
-                        <label for="">登入代碼</label>
-                        <input type="text" class="form-control" id="password">
+                        <label for="">表單編號</label>
+                        <input type="text" class="form-control" id="password" ng-model="FormId">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">送出</button>
+                    <button type="button" class="btn btn-primary" ng-click="getForm()">送出</button>
                 </div>
             </div>
         </div>
