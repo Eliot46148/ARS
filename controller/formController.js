@@ -14,22 +14,24 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             (res) => {
                 var data = res.data.data;
                 console.log(data);
-                if(data!=null){                    
-                    $scope.ResearchTopic =data.ResearchTopic;
-                    $scope.HIGHER=data.HIGHER;
-                    $scope.Industry=data.Industry;
-                    $scope.Industry5n=data.Industry5n;
-                    $scope.Name=data.Name;
-                    $scope.college=data.College;
-                    $scope.department=data.Department;
-                    $scope.Phone=data.Phone;
-                    $scope.Email=data.Email;
-                    $scope.description=data.Description;
-                    $scope.evaluation=data.Evaluation;
-                    chartData=data.ChartData;
+                if (data != null) {
+                    $scope.ResearchTopic = data.ResearchTopic;
+                    $scope.HIGHER = data.HIGHER;
+                    $scope.Industry = data.Industry;
+                    $scope.Industry5n = data.Industry5n;
+                    $scope.Name = data.Name;
+                    $scope.college = data.College;
+                    $scope.department = data.Department;
+                    $scope.Phone = data.Phone;
+                    $scope.Email = data.Email;
+                    $scope.description = data.Description;
+                    $scope.evaluation = data.Evaluation;
+                    chartData = data.ChartData;
                     $scope.Patent = data.Patent;
                     $scope.Paper = data.Paper;
-                }                                
+                    showImage(data.Image);
+                    showVideo(data.Video);             
+                }
             },
             (err) => {
                 console.log(err);
@@ -43,7 +45,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     $scope.test = () => console.log($scope);
 
     $scope.save = () => {
-        $http.put('/form?FormId='+$scope.FormId,
+        $http.put('/form?FormId=' + $scope.FormId,
             {
                 'TeacherNum': $scope.TeacherNum,
                 "ResearchTopic": $scope.ResearchTopic,
@@ -63,7 +65,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.submit = () => {
-        $http.put('/form/submit?FormId='+$scope.FormId,
+        $http.put('/form/submit?FormId=' + $scope.FormId,
             {
                 'TeacherNum': $scope.TeacherNum,
                 "ResearchTopic": $scope.ResearchTopic,
@@ -85,7 +87,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     $('#image').change(() => {
         var formData = new FormData();
         formData.append('myImage', $("#image")[0].files[0]);
-        var url = '/form/image?TeacherNum=' + $.cookie('id');
+        var url = '/form/image?FormId=' + $scope.FormId;
         $.ajax({
             url: url,
             type: 'patch',
@@ -95,8 +97,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             success: function (res) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    $('#image-preview').attr('src', e.target.result);
-                    $('#image-preview').show();
+                    showImage(e.target.result);                    
                 }
                 reader.readAsDataURL($("#image")[0].files[0]);
                 console.log(res);
@@ -111,7 +112,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         $('#progress-bar').show();
         var formData = new FormData();
         formData.append('myVideo', $('#video')[0].files[0]);
-        var url = '/form/video?TeacherNum=' + $.cookie('id');
+        var url = '/form/video?FormId=' + $scope.FormId;    
         $.ajax({
             xhr: function () {
                 var xhr = new window.XMLHttpRequest();
@@ -133,8 +134,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             success: function (res) {
                 console.log(res);
                 fileUrl = window.URL.createObjectURL($('#video')[0].files[0]);
-                $('#video-preview').attr('src', fileUrl);
-                $('#video-preview').show();
+                showVideo(fileUrl);
             },
             error: function (res) {
                 console.log(res);
@@ -171,3 +171,15 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
     $scope.init();
 });
+
+function showImage(data) {
+    if(data==null) return;
+    $('#image-preview').attr('src', data);
+    $('#image-preview').show();
+}
+
+function showVideo(data) {
+    if(data==null) return;
+    $('#video-preview').attr('src', data);
+    $('#video-preview').show();
+}
