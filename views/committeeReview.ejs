@@ -10,11 +10,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
         integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
     <script src="../library/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="../stylesheets/index-style.css">
-    <script src= "/committeeLogin.js"></script>
+   
 </head>
 
-<body>
+<body onload="loadfinish()">
     <div class =" container text-center">
         <div class="card p-3">
             <div class="card-header">
@@ -23,8 +22,8 @@
         </div>
     </div>
     <div aria-disabled="true" class="d-flex">    
-        <iframe style='pointer-events: none;' src="../form" width="50%" height="450px" frameborder="1" scrolling="yes"></iframe>
+        <iframe id = "needReviewForm" style='pointer-events: none;' src="../form?TeacherNum=1324654&FormId=5e7de5d5f7bf39164440937f" width="50%" height="450px" frameborder="1" scrolling="yes"></iframe>
         <iframe style='pointer-events: none;' src="" width="50%" height="450px" frameborder="1" scrolling="yes"></iframe>
     </div>
-
+    <script src="../javascripts/committeeReview.js"></script>
 </body>
