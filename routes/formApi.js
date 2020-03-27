@@ -116,7 +116,8 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
       if (err)
         res.json({ "status": 1, "msg": "Error" });
       else {
-        res.sendFile(path.join(__dirname, `../uploads/${req.filename}`), (err) => {          
+        res.sendFile(path.join(__dirname, `../uploads/${req.file.filename}`), (err) => { 
+          if(err)         
             res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
         });
       }
@@ -200,8 +201,7 @@ router.patch('/video', upload.single('myVideo'), function (req, res, next) {
       res.json({ 'status': 1, 'msg': 'can not find document' });
       return;
     }
-    data.Video = req.file.filename;
-    data.markModified('Image');
+    data.Video = req.file.filename;    
     data.save(function (err) {
       if (err) {
         res.json({ 'status': 1, 'msg': err });
