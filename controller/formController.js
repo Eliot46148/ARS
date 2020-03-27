@@ -27,6 +27,8 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.description=data.Description;
                     $scope.evaluation=data.Evaluation;
                     chartData=data.ChartData;
+                    $scope.Patent = data.Patent;
+                    $scope.Paper = data.Paper;
                 }                                
             },
             (err) => {
@@ -41,7 +43,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     $scope.test = () => console.log($scope);
 
     $scope.save = () => {
-        $http.put('/form',
+        $http.put('/form?FormId='+$scope.FormId,
             {
                 'TeacherNum': $scope.TeacherNum,
                 "ResearchTopic": $scope.ResearchTopic,
@@ -61,7 +63,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.submit = () => {
-        $http.put('/form/submit',
+        $http.put('/form/submit?FormId='+$scope.FormId,
             {
                 'TeacherNum': $scope.TeacherNum,
                 "ResearchTopic": $scope.ResearchTopic,

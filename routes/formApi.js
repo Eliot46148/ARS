@@ -71,7 +71,7 @@ router.put('/', function (req, res, next) {
         res.json({ "status": 1, "msg": "Error", 'data': data });
       else {
         res.json({ "status": 0, "msg": "success", 'data': req.body });
-        console.log(req.body);
+        console.log(data);
       }
     });
 });
@@ -112,11 +112,13 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
         }
       }
     }, function (err, data) {
+      console.log(req)
       if (err)
         res.json({ "status": 1, "msg": "Error" });
       else {
-        res.json({ "status": 0, "msg": "success", 'data': data, 'filename': req.file.filename });
-        console.log(req.query.Status);
+        res.sendFile(path.join(__dirname, `../uploads/${req.filename}`), (err) => {          
+            res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
+        });
       }
     });
 });
