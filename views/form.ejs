@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./stylesheets/style.css">
     <script src="./library/jquery.dm-uploader.min.js"></script>
     <link rel="stylesheet" href="./library/jquery.dm-uploader.min.css">
+    <link rel="stylesheet" href="/stylesheets/form.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
         integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
     <script src="./library/jquery.cookie.js"></script>
@@ -296,7 +297,7 @@
                 <div id="drop-area" class="dm-uploader">
                     <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="image" id="image" name="myImage">
                 </div>
-                <img src="" id="image-preview" style="width: 40%; height: auto; display: none;">
+                <img ng-src="{{imageSrc}}" id="image-preview" style="width: 40%; height: auto; display: none;">
             </div>
 
             <div class="form-group">

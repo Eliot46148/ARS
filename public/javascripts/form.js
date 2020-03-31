@@ -50,7 +50,7 @@ var radarChart = new Chart(ctx, {
 });
 radarChart.options.legend.display = false;
 
-$('td').click(function () {
+$('td.td1, td.td2').click(function () {
     var $this = $(this);
     var col = $this.index();
     var row = $this.closest('tr').index();    
