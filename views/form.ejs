@@ -144,6 +144,15 @@
                                 <th scope="col">修改</th>
                                 <th scope="col">移除</th>
                             </tr>
+                            <tr ng-repeat="data in Patents">
+                                <td scope="row">{{$index+1}}</th>
+                                <td>{{data.Name}}</td>
+                                <td>{{data.Country}}</td>
+                                <td>{{data.Status}}</td>
+                                <td><a href={{data.File}} target="_blank">點選</a></td>
+                                <td><a href={{data.File}} target="_blank">點選</a></td>
+                                <td><a href={{data.File}} target="_blank">點選</a></td>
+                            </tr>
                         </thead>
                         <tbody>
 

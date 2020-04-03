@@ -12,8 +12,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     $scope.init = () => {
         $http.get('/form/data?FormId=' + $scope.FormId).then(
             (res) => {
-                var data = res.data.data;
-                console.log(data);
+                var data = res.data.data;                
                 if (data != null) {
                     $scope.ResearchTopic = data.ResearchTopic;
                     $scope.HIGHER = data.HIGHER;
@@ -27,10 +26,11 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.description = data.Description;
                     $scope.evaluation = data.Evaluation;
                     chartData = data.ChartData;
-                    $scope.Patent = data.Patent;
+                    $scope.Patents = data.Patent;
                     $scope.Paper = data.Paper;
                     showImage(data.Image);
-                    showVideo(data.Video);             
+                    showVideo(data.Video);
+                    console.log($scope);   
                 }
             },
             (err) => {
@@ -143,11 +143,10 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         });
     });
 
-    var patentCounter = 1;
     $scope.UploadPatent = () => {
         var formData = new FormData();
         formData.append('myPatent', $('#patent-file')[0].files[0]);
-        var url = `/form/patent?TeacherNum=${$scope.TeacherNum}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
+        var url = `/form/patent?FormId=${$scope.FormId}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
         $.ajax({
             url: url,
             type: 'patch',
@@ -158,10 +157,15 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 console.log(res);
                 alert('送出成功');
                 $('#addPatent').modal('hide');
-                $('#patent-table').append(`<tr><th scope="row">${patentCounter}</th><td>${$scope.patentName}</td><td>${$scope.patentCountry}</td><td>${$scope.patentStatus}</td><td><a href=./files/${res.filename} target="_blank">點選</a></td><td>點選</td><td>點選</td></tr>`);
-                $scope.patentName = '';
-                $scope.patentCountry = '';
-                patentCounter += 1;
+                $scope.Patents.push(
+                    {
+                        Name: $scope.patentName,
+                        Country: $scope.patentCountry,
+                        Status: $scope.patentStatus,
+                        File: res.filename
+                    }
+                );      
+                $scope.$apply();                         
             },
             error: function (res) {
                 console.log(res);

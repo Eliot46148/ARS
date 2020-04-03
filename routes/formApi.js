@@ -27,6 +27,7 @@ router.get('/', (req, res, next) => {
   });  
 });
 
+// get form data
 router.get('/data', (req, res, next) => {
   formModel.findById(req.query.FormId , (err, data) => {
     if (err)
@@ -36,6 +37,7 @@ router.get('/data', (req, res, next) => {
   });
 });
 
+// create new form
 router.post('/', function (req, res, next) {
   var newForm = new formModel({
     TeacherNum: req.body.TeacherNum,
@@ -51,6 +53,7 @@ router.post('/', function (req, res, next) {
   });
 });
 
+// save form data
 router.put('/', function (req, res, next) {
   formModel.update({ _id: req.query.FormId },
     {
@@ -76,6 +79,7 @@ router.put('/', function (req, res, next) {
     });
 });
 
+// submit form data
 router.put('/submit', function (req, res, next) {
   formModel.update({ _id: req.query.FormId },
     {
@@ -100,6 +104,7 @@ router.put('/submit', function (req, res, next) {
     });
 });
 
+// upload patent data
 router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
   formModel.updateOne({ _id: req.query.FormId },
     {
@@ -112,18 +117,16 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
         }
       }
     }, function (err, data) {
-      console.log(req)
+      console.log(req);
       if (err)
         res.json({ "status": 1, "msg": "Error" });
       else {
-        res.sendFile(path.join(__dirname, `../uploads/${req.file.filename}`), (err) => { 
-          if(err)         
-            res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
-        });
+        res.json({ "status": 0, "msg": "Success", "filename": req.file.filename });
       }
     });
 });
 
+// get patent data
 router.get('/patent', (req, res, next) => {
   formModel.findById(req.query.FormId , (err, data) => {
     console.log(data._id.toString());
@@ -135,6 +138,8 @@ router.get('/patent', (req, res, next) => {
   });
 });
 
+
+// upload paper data
 router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
   formModel.updateOne({ _id: req.query.FormId },
     {
@@ -156,6 +161,8 @@ router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
     });
 });
 
+
+// get image
 router.get('/image', (req, res, next) => {
   formModel.findById(req.query.FormId , (err, data) => {
     res.sendFile(path.join(__dirname, `../uploads/${data.Image}`), (err) => {
@@ -166,6 +173,7 @@ router.get('/image', (req, res, next) => {
   });
 });
 
+// upload image
 router.patch('/image', upload.single('myImage'), function (req, res, next) {
   formModel.findById(req.query.FormId , (err, data) => {
     if(data == null) {
@@ -185,6 +193,7 @@ router.patch('/image', upload.single('myImage'), function (req, res, next) {
   });
 });
 
+// get video
 router.get('/video', (req, res, next) => {
   formModel.findById(req.query.FormId , (err, data) => {
     res.sendFile(path.join(__dirname, `../uploads/${data.Video}`), (err) => {
@@ -195,6 +204,7 @@ router.get('/video', (req, res, next) => {
   });
 });
 
+// upload video
 router.patch('/video', upload.single('myVideo'), function (req, res, next) {
   formModel.findById(req.query.FormId , (err, data) => {
     if(data == null) {
@@ -212,5 +222,6 @@ router.patch('/video', upload.single('myVideo'), function (req, res, next) {
     });
   });
 });
+
 
 module.exports = router;
