@@ -17,23 +17,23 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.get('/', (req, res, next) => {
-  formModel.findById(req.query.FormId , (err, data) => {    
-    if (err || data==null)
+  formModel.findById(req.query.FormId, (err, data) => {
+    if (err || data == null)
       res.render('404');
     else if (req.query.TeacherNum == data.TeacherNum)
       res.render('form');
     else
       res.render('404');
-  });  
+  });
 });
 
 // get form data
 router.get('/data', (req, res, next) => {
-  formModel.findById(req.query.FormId , (err, data) => {
+  formModel.findById(req.query.FormId, (err, data) => {
     if (err)
       res.json({ "status": 1, "msg": "Error", 'data': data });
     else
-      res.json({ "status": 0, "msg": "success", 'data': data});
+      res.json({ "status": 0, "msg": "success", 'data': data });
   });
 });
 
@@ -106,7 +106,7 @@ router.put('/submit', function (req, res, next) {
 
 // upload patent data
 router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
-  formModel.updateOne({ _id: req.query.FormId },
+  formModel.findByIdAndUpdate({ _id: req.query.FormId },
     {
       $push: {
         Patent: {
@@ -116,19 +116,16 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
           File: req.file.filename
         }
       }
-    }, function (err, data) {
-      console.log(req);
-      if (err)
-        res.json({ "status": 1, "msg": "Error" });
-      else {
-        res.json({ "status": 0, "msg": "Success", "filename": req.file.filename });
-      }
+    }, function (err) {
+      if (err) res.json({ "status": 1, "msg": "Error" });
+    }).then((data) => {
+      res.json({ "status": 0, "msg": "Success", "filename": req.file.filename, "id": data._id });      
     });
 });
 
 // get patent data
 router.get('/patent', (req, res, next) => {
-  formModel.findById(req.query.FormId , (err, data) => {
+  formModel.findById(req.query.FormId, (err, data) => {
     console.log(data._id.toString());
     res.sendFile(path.join(__dirname, `../uploads/${data.Patent[0].File}`), (err) => {
       if (err)
@@ -138,6 +135,18 @@ router.get('/patent', (req, res, next) => {
   });
 });
 
+// delete patent
+router.delete('/patent', (req, res, next) => {
+  formModel.updateOne({_id: req.query.FormId},{
+    $pull: {
+      Patent:{
+        _id: req.query.PatentId
+      }
+    }
+  },(err)=>{
+    if(err) res.json({ "status": 1, "msg": "Error" });
+  });
+});
 
 // upload paper data
 router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
@@ -164,7 +173,7 @@ router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
 
 // get image
 router.get('/image', (req, res, next) => {
-  formModel.findById(req.query.FormId , (err, data) => {
+  formModel.findById(req.query.FormId, (err, data) => {
     res.sendFile(path.join(__dirname, `../uploads/${data.Image}`), (err) => {
       if (err)
         res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
@@ -175,8 +184,8 @@ router.get('/image', (req, res, next) => {
 
 // upload image
 router.patch('/image', upload.single('myImage'), function (req, res, next) {
-  formModel.findById(req.query.FormId , (err, data) => {
-    if(data == null) {
+  formModel.findById(req.query.FormId, (err, data) => {
+    if (data == null) {
       res.json({ 'status': 1, 'msg': 'can not find document' });
       return;
     }
@@ -195,7 +204,7 @@ router.patch('/image', upload.single('myImage'), function (req, res, next) {
 
 // get video
 router.get('/video', (req, res, next) => {
-  formModel.findById(req.query.FormId , (err, data) => {
+  formModel.findById(req.query.FormId, (err, data) => {
     res.sendFile(path.join(__dirname, `../uploads/${data.Video}`), (err) => {
       if (err)
         res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
@@ -206,12 +215,12 @@ router.get('/video', (req, res, next) => {
 
 // upload video
 router.patch('/video', upload.single('myVideo'), function (req, res, next) {
-  formModel.findById(req.query.FormId , (err, data) => {
-    if(data == null) {
+  formModel.findById(req.query.FormId, (err, data) => {
+    if (data == null) {
       res.json({ 'status': 1, 'msg': 'can not find document' });
       return;
     }
-    data.Video = req.file.filename;    
+    data.Video = req.file.filename;
     data.save(function (err) {
       if (err) {
         res.json({ 'status': 1, 'msg': err });

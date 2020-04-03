@@ -12,7 +12,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     $scope.init = () => {
         $http.get('/form/data?FormId=' + $scope.FormId).then(
             (res) => {
-                var data = res.data.data;                
+                var data = res.data.data;
                 if (data != null) {
                     $scope.ResearchTopic = data.ResearchTopic;
                     $scope.HIGHER = data.HIGHER;
@@ -30,7 +30,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.Paper = data.Paper;
                     showImage(data.Image);
                     showVideo(data.Video);
-                    console.log($scope);   
+                    console.log($scope);
                 }
             },
             (err) => {
@@ -97,7 +97,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             success: function (res) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    showImage(e.target.result);                    
+                    showImage(e.target.result);
                 }
                 reader.readAsDataURL($("#image")[0].files[0]);
                 console.log(res);
@@ -112,7 +112,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         $('#progress-bar').show();
         var formData = new FormData();
         formData.append('myVideo', $('#video')[0].files[0]);
-        var url = '/form/video?FormId=' + $scope.FormId;    
+        var url = '/form/video?FormId=' + $scope.FormId;
         $.ajax({
             xhr: function () {
                 var xhr = new window.XMLHttpRequest();
@@ -159,13 +159,14 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 $('#addPatent').modal('hide');
                 $scope.Patents.push(
                     {
+                        _id: res.id,
                         Name: $scope.patentName,
                         Country: $scope.patentCountry,
                         Status: $scope.patentStatus,
                         File: res.filename
                     }
-                );      
-                $scope.$apply();                         
+                );
+                $scope.$apply();
             },
             error: function (res) {
                 console.log(res);
@@ -173,17 +174,46 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             }
         });
     }
+
+    $scope.removePatent = (patentIndex) => {
+        $.ajax({
+            url: url,
+            type: 'delete',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                console.log(res);
+                alert('送出成功');
+                $('#addPatent').modal('hide');
+                $scope.Patents.push(
+                    {
+                        _id: res.id,
+                        Name: $scope.patentName,
+                        Country: $scope.patentCountry,
+                        Status: $scope.patentStatus,
+                        File: res.filename
+                    }
+                );
+                $scope.$apply();
+            },
+            error: function (res) {
+                console.log(res);
+                alert('送出失敗');
+            }
+        });
+    };
     $scope.init();
 });
 
 function showImage(data) {
-    if(data==null) return;
+    if (data == null) return;
     $('#image-preview').attr('src', data);
     $('#image-preview').show();
 }
 
 function showVideo(data) {
-    if(data==null) return;
+    if (data == null) return;
     $('#video-preview').attr('src', data);
     $('#video-preview').show();
 }

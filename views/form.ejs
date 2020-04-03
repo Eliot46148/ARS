@@ -149,9 +149,9 @@
                                 <td>{{data.Name}}</td>
                                 <td>{{data.Country}}</td>
                                 <td>{{data.Status}}</td>
-                                <td><a href={{data.File}} target="_blank">點選</a></td>
-                                <td><a href={{data.File}} target="_blank">點選</a></td>
-                                <td><a href={{data.File}} target="_blank">點選</a></td>
+                                <td><a href={{data.File}} target="_blank">檢視</a></td>
+                                <td><a target="_blank" ng-click="updatePantent()">修改</a></td>
+                                <td><a target="_blank" ng-click="removePatent($index)">移除</a></td>
                             </tr>
                         </thead>
                         <tbody>
