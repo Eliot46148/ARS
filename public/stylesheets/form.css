@@ -8,7 +8,7 @@
     position: relative; 
     }
     
-.td1,.td2 span{
+/* .td1,.td2 span{
     z-index: 2; 
     display: block;
     position: absolute;
@@ -33,4 +33,4 @@
 .td1,.td2:hover::before{
     opacity: 1;
     transform: scale(1, 1);
-}
+} */

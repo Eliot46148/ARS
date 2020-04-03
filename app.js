@@ -9,7 +9,7 @@ var authRouter = require('./routes/authApi');
 var formRouter = require('./routes/formApi');
 var processorRouter = require('./routes/processor');
 var functionRouter = require('./routes/functionApi');
-var committeeRouter = require('./routes/committeeLogApi');
+var committeeRouter = require('./routes/committeeAPI');
 
 var app = express();
 
