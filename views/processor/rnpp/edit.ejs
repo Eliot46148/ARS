@@ -27,8 +27,12 @@
 
 <body ng-app="ProcessorEdit"  ng-controller="MainCtrl">
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-between">
             <h1>研發能量展現平台 > 查詢/修改資料</h1>
+            <button onclick="location.href='/processor/overview?sys=rnpp'" class="btn btn-sq-lg btn-danger">
+                <i class="fa fa-reply fa-1x"></i><br />
+                <br>返回
+            </button>
         </div>
 
         <table class="table table-bordered">
@@ -55,11 +59,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <button onclick="location.href='/processor/overview?sys=rnpp'" class="btn btn-sq-lg btn-danger">
-            <i class="fa fa-reply fa-5x"></i><br />
-            <br>返回
-        </button>
     </div>
 
 </body>

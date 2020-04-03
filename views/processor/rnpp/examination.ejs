@@ -16,54 +16,24 @@
     <script src="/library/jquery.cookie.js"></script>
     <link rel="stylesheet" href="/library/fontawesome-free-5.12.1-web/css/all.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/function-style.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap_datepicker.css">
     <script src="/library/angular.js"></script>
     <script src="/processor/rnpp/examination.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    <link href="/library/bootstrap_datepicker/bootstrap-datepicker3.css" rel="stylesheet"/>
+    <script src="/library/bootstrap_datepicker/bootstrap-datepicker.js"></script>
+    <script src="/library/bootstrap_datepicker/bootstrap-datepicker.zh-TW.js"></script>
     <script>
-        if (!$.cookie('account')){window.location='/processor';}
-        angular.module('Processor', []).controller('MainCtrl', function($scope, $http) {
-        });
-
-        $( function() {
-            $('#date-start').datepicker({
-                constrainInput: false,
-                dateFormat: "yy/mm/dd"
-            });
-            $('#date-end').datepicker({
-                constrainInput: false,
-                dateFormat: "yy/mm/dd"
-            });
-            var sDate,eDate;
-            $("#date_start").datepicker().on('changeDate',function(e){
-                sDate = new Date($(this).datepicker('getUTCDate'));
-                checkDate();
-            });
-
-            $("#date_end").datepicker().on('changeDate',function(date){
-                eDate = new Date($(this).datepicker('getUTCDate'));
-                checkDate();
-            });
-
-            function checkDate()
-            {
-                if(sDate && eDate && (eDate<sDate))
-                {
-                    $('#error').text("Date should lesser than start date");
-                }
-                else
-                {
-                    $('#error').text("");
-                }
-            }
-        } );
     </script>
 </head>
 
 <body ng-app="ProcessorExamination"  ng-controller="MainCtrl">
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-between">
             <h1>研發能量展現平台 > 審查發放/回收</h1>
+            <button onclick="location.href='/processor/overview?sys=rnpp'" class="btn btn-sq-lg btn-danger">
+                <i class="fa fa-reply fa-1x"></i><br />
+                <br>返回
+            </button>
         </div>
 
         <table class="table table-bordered">
@@ -82,68 +52,125 @@
                     <td ng-bind="form.Name"></td>
                     <td ng-bind="form.ResearchTopic"></td>
                     <td>
-                        <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#modal" data-whatever="@{{form._id}}" >點選</a>
+                        <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#examModal" ng-click="triggerExam(form._id)">點選</a>
                     </td>
-                    <td ng-bind="form._id"></td>
+                    <td>
+                        <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#respondModal" ng-click="triggerRespond(form._id)">點選</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
-
-        <button onclick="location.href='/processor/overview?sys=rnpp'" class="btn btn-sq-lg btn-danger">
-            <i class="fa fa-reply fa-5x"></i><br />
-            <br>返回
-        </button>
     </div>
 
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="clear()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <form method="post" onsubmit="window.location.reload();">
-        <div class="modal-body">
-            <div class="form-group d-flex">
-                <label for="name" class="col-4">姓名輸入</label>
-                <input type="text" class="col-8" id="name" ng-model="name" required>
-            </div>
-            <div class="form-group d-flex">
-                <label for="email" class="col-4">電子郵件輸入</label>
-                <input type="email" class="col-8" id="email" ng-model="email" required>
-            </div>
-            <div class="form-group d-flex">
-                <label for="date-start" class="col-4">審查日期起始</label>
-                <input type="text" class="col-8" id="date-start" ng-model="date_start" required>
-            </div>
-            <div class="form-group d-flex">
-                <label for="date-end" class="col-4">審查日期終止</label>
-                <input type="text" class="col-8" id="date-end" ng-model="date_end" required>
-            </div>
-            <select class="form-control form-group col-12 d-flex justify-content-center" id="inputGroupSelect04" ng-model="selectedForm" required>
-                <option value="">-審查表單選擇-</option>
-                <option value="0">表單一</option>
-                <option value="1">表單二</option>
-            </select>
-            
-            <div>
-                <img ng-if="selectedForm==0" src="/img/examFormExample1.jpg" alt="表單一" width="450vw" height="100%">
-                <img ng-if="selectedForm==1" src="/img/examFormExample2.jpg" alt="表單一" width="450vw" height="100%">
-            </div>
-        </div>
+    <div class="modal fade" id="examModal" tabindex="-1" role="dialog" aria-labelledby="examModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="clear()">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="w-100 d-flex justify-content-center" ng-show="loading"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+                        
+                <form method="post" onsubmit="window.location.reload();" ng-show="!loading">
+                    <div class="modal-body">
+                        <div class="form-group d-flex">
+                            <label for="name" class="col-4">姓名輸入</label>
+                            <input type="text" class="col-8" id="name" ng-model="name" required>
+                        </div>
+                        <div class="form-group d-flex">
+                            <label for="email" class="col-4">電子郵件輸入</label>
+                            <input type="email" class="col-8" id="email" ng-model="email" required>
+                        </div>
+                        <div class="form-group d-flex">
+                            <label for="date-start" class="col-4">審查日期起始</label>
+                            <input type="text" class="col-8" id="date-start" ng-model="date_start" required>
+                        </div>
+                        <div class="form-group d-flex">
+                            <label for="date-end" class="col-4">審查日期終止</label>
+                            <input type="text" class="col-8" id="date-end" ng-model="date_end" required>
+                        </div>
+                        <select class="form-control form-group" id="inputGroupSelect04" ng-model="selectedForm" required>
+                            <option value="">-審查表單選擇-</option>
+                            <option value="0">表單一</option>
+                            <option value="1">表單二</option>
+                        </select>
+                        
+                        <div>
+                            <img ng-if="selectedForm==0" src="/img/examFormExample1.jpg" alt="表單一" width="450vw" height="100%">
+                            <img ng-if="selectedForm==1" src="/img/examFormExample2.jpg" alt="表單一" width="450vw" height="100%">
+                        </div>
+                    </div>
 
 
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="clear()">取消</button>
-            <button type="submit" class="btn btn-primary" ng-click="">送出</button>
-        </div>
-
-        </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="clear()">取消</button>
+                        <button type="submit" class="btn btn-primary" ng-click="">送出</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="modal fade" id="respondModal" tabindex="-1" role="dialog" aria-labelledby="respondModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="clear()">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <form method="post" onsubmit="window.location.reload();">
+                    <div class="modal-body">
+                        <div class="w-100 d-flex justify-content-center" ng-show="loading"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+                        <table class="table table-bordered" ng-show="!loading">
+                            <thead>
+                                <th scope="col">送出時間</th>
+                                <th scope="col">審查期限</th>
+                                <th scope="col">委員姓名</th>
+                                <th scope="col">委員郵件</th>
+                                <th scope="col">回收狀況</th>
+                                <th scope="col">建議點選</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="response in respond">
+                                    <td ng-bind="response.submitDate.substring(0, 10)"></td>
+                                    <td ng-bind="response.deadLine.substring(0, 10)"></td>
+                                    <td ng-bind="response.Name"></td>
+                                    <td ng-bind="response.email"></td>
+                                    <td ng-bind="response.isPASS"></td>
+                                    <td>
+                                        <a type="button" class="btn btn-primary text-white" ng-click="seeRespond(response._id)">點選</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <p>綜整審查結果</p>
+                                    </td>
+                                    <td class="d-flex justify-content-between">
+                                        <label class="radio-inline"><input type="radio" name="radios" value="0" ng-model="radio" required>通過</label>
+                                        <label class="radio-inline"><input type="radio" name="radios" value="1" ng-model="radio" required>未通過</label>
+                                        <label class="radio-inline"><input type="radio" name="radios" value="2" ng-model="radio" required>修改</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="clear()">取消</button>
+                        <button type="submit" class="btn btn-primary" ng-click="">送出</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 </body>
 
