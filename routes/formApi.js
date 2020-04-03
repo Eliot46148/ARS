@@ -36,6 +36,19 @@ router.get('/data', (req, res, next) => {
   });
 });
 
+router.get('/id', (req, res, next) => {
+  formModel.find({} , (err, data) => {
+    if (err)
+      res.json({ "status": 1, "msg": "Error", 'data': data });
+    else{
+      var lst = [];
+      for (var i=0; i<data.length; i++)
+        lst.push(data[i]._id);
+      res.json({ "status": 0, "msg": "success", 'data': lst});
+    }
+  });
+});
+
 router.post('/', function (req, res, next) {
   var newForm = new formModel({
     TeacherNum: req.body.TeacherNum,
