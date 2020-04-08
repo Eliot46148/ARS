@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/library/fontawesome-free-5.12.1-web/css/all.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/function-style.css">
     <script src="/library/angular.js"></script>
+    <script src="/processor/rnpp/edit.js"></script>
     <script>
         if (!$.cookie('account')){window.location='/processor';}
         angular.module('Processor', []).controller('MainCtrl', function($scope, $http) {
@@ -24,16 +25,40 @@
     </script>
 </head>
 
-<body ng-app="Processor"  ng-controller="MainCtrl">
+<body ng-app="ProcessorEdit"  ng-controller="MainCtrl">
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-between">
             <h1>研發能量展現平台 > 查詢/修改資料</h1>
+            <button onclick="location.href='/processor/overview?sys=rnpp'" class="btn btn-sq-lg btn-danger">
+                <i class="fa fa-reply fa-1x"></i><br />
+                <br>返回
+            </button>
         </div>
 
-        <button onclick="location.href='/processor/overview?sys=rnpp'" class="btn btn-sq-lg btn-danger">
-            <i class="fa fa-reply fa-5x"></i><br />
-            <br>返回
-        </button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">日期時間</th>
+                    <th scope="col">教師姓名</th>
+                    <th scope="col">主題</th>
+                    <th scope="col">查詢</th>
+                    <th scope="col">修改</th>
+                    <th scope="col">審查結果</th>
+                    <th scope="col">審查意見</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="form in forms">
+                    <td ng-bind="form.UploadDate.substring(0, 10)"></td>
+                    <td ng-bind="form.Name"></td>
+                    <td ng-bind="form.ResearchTopic"></td>
+                    <td ng-bind="form._id"></td>
+                    <td ng-bind="form._id"></td>
+                    <td ng-bind="form.Ended"></td>
+                    <td ng-bind="form._id"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </body>

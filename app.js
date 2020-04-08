@@ -9,7 +9,24 @@ var authRouter = require('./routes/authApi');
 var formRouter = require('./routes/formApi');
 var processorRouter = require('./routes/processor');
 var functionRouter = require('./routes/functionApi');
-var committeeRouter = require('./routes/committeeLogApi');
+var committeeRouter = require('./routes/committeeAPI');
+
+var nodemailer = require('nodemailer');
+var xoauth2 = require('xoauth2');
+var credentials = require('./routes/credentials');
+
+console.log(credentials.mailservice.user);
+
+var mailTransport = nodemailer.createTransport({
+  service: credentials.service,
+  secureConnecton: true,
+  auth: {
+    xoauth2: xoauth2.createXOAuth2Generator({
+      user: credentials.mailservice.user,
+      pass: credentials.mailservice.pass,
+    })
+  },
+});
 
 var app = express();
 
