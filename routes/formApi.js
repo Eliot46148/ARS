@@ -156,7 +156,10 @@ router.delete('/patent', (req, res, next) => {
       }
     }
   },(err)=>{
-    if(err) res.json({ "status": 1, "msg": "Error" });
+    if(err) 
+      res.json({ "status": 1, "msg": "Error" });
+    else 
+      res.json({ "status": 0, "msg": "Success" });
   });
 });
 

@@ -176,25 +176,17 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.removePatent = (patentIndex) => {
+        var url = `/form/patent?FormId=${$scope.FormId}&PatentId=${$scope.Patents[patentIndex]._id}`;
         $.ajax({
             url: url,
             type: 'delete',
-            data: formData,
+            data: null,
             processData: false,
             contentType: false,
             success: function (res) {
                 console.log(res);
-                alert('送出成功');
-                $('#addPatent').modal('hide');
-                $scope.Patents.push(
-                    {
-                        _id: res.id,
-                        Name: $scope.patentName,
-                        Country: $scope.patentCountry,
-                        Status: $scope.patentStatus,
-                        File: res.filename
-                    }
-                );
+                alert('送出成功');         
+                $scope.Patents.splice(patentIndex,1);                   
                 $scope.$apply();
             },
             error: function (res) {

@@ -18,24 +18,24 @@
         integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
     <script src="./library/jquery.cookie.js"></script>
     <script src="/library/angular.js"></script>
-    <script src="./formController.js"></script>    
+    <script src="./formController.js"></script>
 </head>
 
-<body ng-app="form"  ng-controller="formCtrl">
+<body ng-app="form" ng-controller="formCtrl">
     <form role="form">
         <div class="container offset-md-1">
-            <div class="form-group" id = "teachernum">
+            <div class="form-group" id="teachernum">
                 <label>教師員工編號</label>
-                <h2 ng-bind="TeacherNum" ></h2>
+                <h2 ng-bind="TeacherNum"></h2>
             </div>
-            <div class="form-group" id = "formid">
+            <div class="form-group" id="formid">
                 <label>表單編號</label>
                 <h2 ng-bind="FormId"></h2>
             </div>
             <div class="form-group">
                 <label>研究成果主題</label>
                 <input class="form-control col-md-10" type="text" id="ResearchTopic" ng-model="ResearchTopic">
-            </div>            
+            </div>
             <div class="form-group">
                 <label>HIGHER研究導向</label>
                 <select class="form-control col-md-10" id="HIGHER" ng-model="HIGHER">
@@ -110,7 +110,7 @@
             </div>
             <div class="form-group">
                 <label>教師隸屬系所</label>
-                <select class="form-control col-md-10" id="department"ng-model="department">
+                <select class="form-control col-md-10" id="department" ng-model="department">
                     <option>請先選擇學院</option>
                 </select>
             </div>
@@ -150,20 +150,21 @@
                                 <td>{{data.Country}}</td>
                                 <td>{{data.Status}}</td>
                                 <td><a href={{data.File}} target="_blank">檢視</a></td>
-                                <td><a target="_blank" ng-click="updatePantent()">修改</a></td>
-                                <td><a target="_blank" ng-click="removePatent($index)">移除</a></td>
+                                <td><a href="#" ng-click="updatePantent()">修改</a></td>
+                                <td><a href="#" ng-click="removePatent($index)">移除</a></td>
                             </tr>
                         </thead>
                         <tbody>
 
                         </tbody>
                     </table>
-
-                    <div class="col-md-4 offset-md-5 form-group mt-3">
-                        <button class="btn btn-primary" id="btn-patent" type="button" data-toggle="modal"
-                            data-target="#addPatent">
-                            <h5>新增資料</h5>
-                        </button>
+                    <div class="row justify-content-center">
+                        <div class="col-md-4form-group my-3">
+                            <button class="btn btn-primary" id="btn-patent" type="button" data-toggle="modal"
+                                data-target="#addPatent">
+                                <h5>新增資料</h5>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="modal fade" id="addPatent" tabindex="-1" role="dialog" aria-labelledby="addPatentTitle"
@@ -188,9 +189,11 @@
                                     <label>專利申請狀況</label>
                                     <div class="form-group">
                                         <label class="radio-inline"></label>
-                                        <input type="radio" name="patentStatusRadio" value="已核准" ng-model="patentStatus">已核准
+                                        <input type="radio" name="patentStatusRadio" value="已核准"
+                                            ng-model="patentStatus">已核准
                                         <label class="radio-inline"></label>
-                                        <input type="radio" name="patentStatusRadio" value="申請中" ng-model="patentStatus">申請中
+                                        <input type="radio" name="patentStatusRadio" value="申請中"
+                                            ng-model="patentStatus">申請中
                                     </div>
                                     <div class="form-group">
                                         <label>佐證資料上傳(限pdf)</label>
@@ -211,7 +214,7 @@
                 </div>
             </div>
 
-            
+
             <label>論文相關資訊</label>
             <div class="form-group">
                 <label class="radio-inline"></label>
@@ -304,7 +307,8 @@
             <div class="form-group">
                 <label>成果照片上傳</label>
                 <div id="drop-area" class="dm-uploader">
-                    <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="image" id="image" name="myImage">
+                    <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="image" id="image"
+                        name="myImage">
                 </div>
                 <img ng-src="{{imageSrc}}" id="image-preview" style="width: 40%; height: auto; display: none;">
             </div>
@@ -316,11 +320,12 @@
                 </div>
                 <div class="progress my-1">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                        aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" id="progress-bar" style="display: none;">
+                        aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" id="progress-bar"
+                        style="display: none;">
                         <span class="sr-only">70% Complete</span>
                     </div>
                 </div>
-                <video src="" style="height: auto; width: 80%;display: none;" id="video-preview" controls></video>
+                <video src="" class="col-md-10" style="height: auto;display: none;" id="video-preview" controls></video>
             </div>
             <div class="col-md-10">
                 <table class="table table-bordered text-center">
@@ -487,13 +492,16 @@
                 <div class="chart m-5">
                     <canvas id="myChart"></canvas>
                 </div>
-                <button type="submit" class="btn btn-secondary m-auto col-md-2" ng-click="save()" id = "savebt">暫存</button>
-                <button type="submit" class="btn btn-primary m-auto col-md-2" ng-click="submit()" id = "submitbt">提交</button>                
-                <button type="button" class="btn btn-primary m-auto col-md-2" id="btn-test" ng-click="test()">測試用</button>
+                <button type="submit" class="btn btn-secondary m-auto col-md-2" ng-click="save()"
+                    id="savebt">暫存</button>
+                <button type="submit" class="btn btn-primary m-auto col-md-2" ng-click="submit()"
+                    id="submitbt">提交</button>
+                <button type="button" class="btn btn-primary m-auto col-md-2" id="btn-test"
+                    ng-click="test()">測試用</button>
             </div>
 
         </div>
-    </form>    
+    </form>
     <script src="./javascripts/form.js"></script>
 
 </body>
