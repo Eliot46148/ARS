@@ -9,7 +9,9 @@ app.controller('MainCtrl', function($scope, $http) {
         for (var i=0; i<data.data.length; i++){
             var id = data.data[i];
             $http.get('/form/data', {'params': {'FormId':id}}).success(function(data){
-                $scope.forms.push(data.data);
+                if (data.data.Submitted){
+                    $scope.forms.push(data.data);
+                }
             });
         }
     });
@@ -21,10 +23,59 @@ app.controller('MainCtrl', function($scope, $http) {
         $scope.date_end = null;
         $scope.selectedForm = null;
         $scope.radio = null;
+        $scope.err_msg = null;
     }
 
-    $scope.triggerExam = function(id){
-        //$scope.loading = true;
+    $scope.triggerExam = function(id, state){
+        if (state==0)
+            $scope.triggerExam.id = id;
+        else{
+            $scope.loading = true;
+
+            var form = $scope.forms.find(element=>element._id==$scope.triggerExam.id);
+            var params = {
+                'name':$scope.name,
+                'email':$scope.email,
+                'formOid':$scope.triggerExam.id,
+                'submitDate':$scope.date_start,
+                'deadLine':$scope.date_end,
+                'paperType':'研發能量展現平台',
+                'paperTheme':form.ResearchTopic,
+                'fromType':$scope.selectedForm+1
+            };
+            console.log(params);
+            
+            $http.post('/committee/committeeregistered', {'params': params
+            }).success(function(data){
+                if (data.msg == 'success'){
+                    console.log(data);
+                    var html = '';
+                    $http.get('/mailServerSecret/template').success(function(rawhtml){
+                        html = rawhtml
+                        .replace('{name}', $scope.name)
+                        .replace('{topic}',form.ResearchTopic)
+                        .replace('{password}',data.password)
+                        .replace('{date_start}',$scope.date_start)
+                        .replace('{date_end}',$scope.date_end)
+                        .replace('{url}','https://www.google.com/');
+                        
+                        $http.post('/mailServerSecret/send', {
+                            'to':$scope.email,
+                            'subject':'委員通知',
+                            'html': html
+                        }).success(function(data){
+                            $('#examModal').modal('hide');
+                            $scope.loading = false;
+                            console.log(data);
+                            $scope.clear();
+                        });
+                    });
+                }else{
+                    $scope.loading = false;
+                    $scope.err_msg="無法送出，請檢查填寫內容。";
+                }
+            });
+        }
     }
 
     $scope.triggerRespond = function(id){
