@@ -28,13 +28,12 @@ router.post('/committeeregistered',function(req,res){
                 password:thepassword,                 /*委員密碼*/
                 needtestform:{
                     formOid : req.body.formOid,            /*表單OID*/
-                    TeacherNum : req.body.TeacherNum,       /*職員編號*/
                     isPass: false,                          /*委員是否送出*/
                     submitDate : req.body.submitDate,       /*開始日期*/
                     deadLine : req.body.deadLine,           /*結束日期*/
                     paperType : req.body.paperType,         /*研究類型*/
                     paperTheme : req.body.paperTheme,       /*研究主題*/
-                    fromType : req.body.fromType            /*填寫表單的樣式(0,1)型態是numbernumber*/
+                    fromType : req.body.fromType,            /*填寫表單的樣式(0,1)型態是numbernumber*/
                 }
             
             })
@@ -54,7 +53,6 @@ router.post('/committeeregistered',function(req,res){
                 $push:{
                     needtestform:{
                         formOid : req.body.formOid,            /*表單OID*/
-                        TeacherNum : req.body.TeacherNum,       /*職員編號*/
                         isPass: false,                          /*委員是否送出*/
                         submitDate : req.body.submitDate,       /*開始日期*/
                         deadLine : req.body.deadLine,           /*結束日期*/
@@ -74,31 +72,6 @@ router.post('/committeeregistered',function(req,res){
 })
 
 router.post('/',function(req,res){
-    /*var ncommittee = new committeeModel({
-        email :"123",
-        password:"123",
-        needtestform:[{
-            formOid : "5e7de5d5f7bf39164440937f",
-            TeacherNum : 1324654,
-            isPass: false,
-            submitDate : "2020-04-01",
-            deadLine : "2020-04-15",
-            paperType : "String",
-            paperTheme : "test",
-            fromType : 2
-        },{
-            formOid : "5e7de5d5f7bf39164440937f",
-            TeacherNum : 1324654,
-            isPass: true,
-            submitDate : "2020-04-01",
-            deadLine : "2020-04-15",
-            paperType : "String",
-            paperTheme : "test",
-            fromType : 1
-        }]
-        });
-    ncommittee.save(function(err,data){});*/
-    console.log (req.body.email+"----"+req.body.code);
     committeeModel.findOne({
         email: req.body.email,
         password : req.body.code
@@ -117,10 +90,9 @@ router.post('/',function(req,res){
 });
 
 router.post('/dashboard',function(req,res){
-   
     committeeModel.findOne({
         email: req.body.email,
-        password : req.body.code
+        password : req.body.password
     },function (err, data) {
         console.log("data :  "+ data);
         if (data == null)
@@ -134,5 +106,9 @@ router.post('/dashboard',function(req,res){
         }
       });
 });
+
+router.post('/committeeupdate',function(req,res){
+
+})
 
 module.exports = router;

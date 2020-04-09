@@ -7,6 +7,7 @@ $('#LoginButton').click(function (){
         function(data){
             if(data.status == 2)
             {
+                $.cookie('committeeCookie', JSON.stringify({Email : data.data.email, Password : data.data.password}));
                 window.location.href = "./dashboard";
             }
             else
