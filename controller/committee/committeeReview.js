@@ -22,7 +22,7 @@ function loadfinish(){
         reviewFormHtml +=`
         <tr>
             <th scope='row' >市場評估</th>
-            <td colspan='3'><input type='radio' name='isMarketassessment' value='True'>符合</<td>
+            <td colspan='3'><input type='radio' name='isMarketassessment' value='True' >符合</<td>
             <td colspan='3'><input type='radio' name='isMarketassessment' value='False'> 不符合</<td>
         </tr>
         <tr>
@@ -49,4 +49,24 @@ function loadfinish(){
     </tr>
     `;
     $(reviewForm).html(reviewFormHtml);
+    loadReview(typeID);
+}
+
+function loadReview(typeID,reqData){
+    if(typeID==1){
+        if(reqData.StudyandData!=-1)
+            $('input[name="isStudyandData"]')[reqData.StudyandData].checked = true;
+    }
+    else if (typeID==2){
+        if(reqData.Marketassessment!=-1)
+            $('input[name="isMarketassessment"]')[reqData.Marketassessment].checked = true;
+        if(reqData.ManufacturingEvaluation!=-1)
+            $('input[name="isManufacturingEvaluation"]')[reqData.Marketassessment].checked = true;
+        if(reqData.FinancialEvaluation!=-1)
+            $('input[name="isFinancialEvaluation"]')[reqData.Marketassessment].checked = true;
+    }
+    $(theopinion).val= reqData.theopinion;
+    if(reqData.reviewIsPass!=-1)
+    $('input[name="reviewIsPass"]')[reqData.reviewIsPass].checked = true;
+
 }

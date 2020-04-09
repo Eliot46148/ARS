@@ -7,13 +7,18 @@ var patentSchema = new mongoose.Schema({
     password : String,
     needtestform:[{
         formOid : String,
-        TeacherNum : String,
         isPass: Boolean,
         submitDate : Date,
         deadLine : Date,
         paperType : String,
         paperTheme : String,
-        fromType : Number
+        fromType : Number,
+        StudyandData: Number,
+        Marketassessment : Number,
+        ManufacturingEvaluation : Number,
+        FinancialEvaluation:Number,
+        opinion: String,
+        isSubmit : Number
     }]
 });
 

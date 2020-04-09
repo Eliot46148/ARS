@@ -52,7 +52,7 @@
                     <td ng-bind="form.Name"></td>
                     <td ng-bind="form.ResearchTopic"></td>
                     <td>
-                        <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#examModal" ng-click="triggerExam(form._id)">點選</a>
+                        <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#examModal" ng-click="triggerExam(form._id, 0)">點選</a>
                     </td>
                     <td>
                         <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#respondModal" ng-click="triggerRespond(form._id)">點選</a>
@@ -70,10 +70,10 @@
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                
+
                 <div class="w-100 d-flex justify-content-center" ng-show="loading"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
                         
-                <form method="post" onsubmit="window.location.reload();" ng-show="!loading">
+                <form ng-submit="triggerExam(form._id, 1)" ng-show="!loading">
                     <div class="modal-body">
                         <div class="form-group d-flex">
                             <label for="name" class="col-4">姓名輸入</label>
@@ -97,16 +97,17 @@
                             <option value="1">表單二</option>
                         </select>
                         
-                        <div>
-                            <img ng-if="selectedForm==0" src="/img/examFormExample1.jpg" alt="表單一" width="450vw" height="100%">
-                            <img ng-if="selectedForm==1" src="/img/examFormExample2.jpg" alt="表單一" width="450vw" height="100%">
+                        <div class="d-flex justify-content-center">
+                            <img ng-if="selectedForm==0" src="/img/examFormExample1.jpg" alt="表單一" width="250vw" height="100%">
+                            <img ng-if="selectedForm==1" src="/img/examFormExample2.jpg" alt="表單一" width="250vw" height="100%">
                         </div>
+                        
+                        <p class="text-danger" ng-bind="err_msg"></p>
                     </div>
-
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="clear()">取消</button>
-                        <button type="submit" class="btn btn-primary" ng-click="">送出</button>
+                        <button type="submit" class="btn btn-primary">送出</button>
                     </div>
                 </form>
             </div>
