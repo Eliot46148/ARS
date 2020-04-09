@@ -38,14 +38,14 @@ router.get('/data', (req, res, next) => {
 });
 
 router.get('/id', (req, res, next) => {
-  formModel.find({} , (err, data) => {
+  formModel.find({}, (err, data) => {
     if (err)
       res.json({ "status": 1, "msg": "Error", 'data': data });
-    else{
+    else {
       var lst = [];
-      for (var i=0; i<data.length; i++)
+      for (var i = 0; i < data.length; i++)
         lst.push(data[i]._id);
-      res.json({ "status": 0, "msg": "success", 'data': lst});
+      res.json({ "status": 0, "msg": "success", 'data': lst });
     }
   });
 });
@@ -118,6 +118,7 @@ router.put('/submit', function (req, res, next) {
 
 // upload patent data
 router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
+  console.log("save");
   formModel.findByIdAndUpdate({ _id: req.query.FormId },
     {
       $push: {
@@ -128,10 +129,10 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
           File: req.file.filename
         }
       }
-    }, function (err) {
+    }, function (err, data) {
       if (err) res.json({ "status": 1, "msg": "Error" });
-    }).then((data) => {
-      res.json({ "status": 0, "msg": "Success", "filename": req.file.filename, "id": data._id });      
+      else
+        res.json({ "status": 0, "msg": "Success", "filename": req.file.filename, "id": data._id });
     });
 });
 
@@ -149,23 +150,23 @@ router.get('/patent', (req, res, next) => {
 
 // delete patent
 router.delete('/patent', (req, res, next) => {
-  formModel.updateOne({_id: req.query.FormId},{
+  formModel.updateOne({ _id: req.query.FormId }, {
     $pull: {
-      Patent:{
+      Patent: {
         _id: req.query.PatentId
       }
     }
-  },(err)=>{
-    if(err) 
+  }, (err) => {
+    if (err)
       res.json({ "status": 1, "msg": "Error" });
-    else 
+    else
       res.json({ "status": 0, "msg": "Success" });
   });
 });
 
 // upload paper data
 router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
-  formModel.updateOne({ _id: req.query.FormId },
+  formModel.findByIdAndUpdate({ _id: req.query.FormId },
     {
       $push: {
         Paper: {
@@ -176,13 +177,38 @@ router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
         }
       }
     }, function (err, data) {
-      if (err)
-        res.json({ "status": 1, "msg": "Error" });
-      else {
-        res.json({ "status": 0, "msg": "success", 'data': data });
-        console.log(req.query.Status);
-      }
+      if (err) res.json({ "status": 1, "msg": "Error" });
+      else
+        res.json({ "status": 0, "msg": "Success", "filename": req.file.filename, "id": data._id });
     });
+});
+
+// get paper data
+router.get('/paper', (req, res, next) => {
+  formModel.findById(req.query.FormId, (err, data) => {
+    console.log(data._id.toString());
+    res.sendFile(path.join(__dirname, `../uploads/${data.Patent[0].File}`), (err) => {
+      if (err)
+        res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
+    }
+    );
+  });
+});
+
+// delete paper
+router.delete('/paper', (req, res, next) => {
+  formModel.updateOne({ _id: req.query.FormId }, {
+    $pull: {
+      Paper: {
+        _id: req.query.PaperId
+      }
+    }
+  }, (err) => {
+    if (err)
+      res.json({ "status": 1, "msg": "Error" });
+    else
+      res.json({ "status": 0, "msg": "Success" });
+  });
 });
 
 

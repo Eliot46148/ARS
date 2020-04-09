@@ -75,17 +75,17 @@ $('td.td1, td.td2').click(function () {
     $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')').addClass('table-info');
 });
 
-$('#college').change(function () {
-    $('#department').empty();
-    var selected = $('#college').find(":selected").text();
-    if (selected != '請選擇') {
-        $('#department').append("<option>請選擇</option>");
-        for (i in departmentDict[selected])
-            $('#department').append("<option>" + departmentDict[selected][i] + "</option>");
-    }
-    else
-        $('#department').append("<option>請先選擇學院</option>");
-});
+// $('#college').change(function () {
+//     $('#department').empty();
+//     var selected = $('#college').find(":selected").text();
+//     if (selected != '請選擇') {
+//         $('#department').append("<option>請選擇</option>");
+//         for (i in departmentDict[selected])
+//             $('#department').append("<option>" + departmentDict[selected][i] + "</option>");
+//     }
+//     else
+//         $('#department').append("<option>請先選擇學院</option>");
+// });
 
 
 $('.PatentInfoRadio').change(function () {

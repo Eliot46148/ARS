@@ -95,7 +95,7 @@
             </div>
             <div class="form-group">
                 <label>教師隸屬學院</label>
-                <select class="form-control col-md-10" id="college" ng-model="college">
+                <select class="form-control col-md-10" id="college" ng-model="college" ng-change="changeDepartments()">
                     <option>請選擇</option>
                     <option>機電學院</option>
                     <option>電資學院</option>
@@ -110,7 +110,7 @@
             </div>
             <div class="form-group">
                 <label>教師隸屬系所</label>
-                <select class="form-control col-md-10" id="department" ng-model="department">
+                <select class="form-control col-md-10" id="department" ng-model="department" ng-options="data for data in departments">
                     <option>請先選擇學院</option>
                 </select>
             </div>
@@ -141,7 +141,7 @@
                                 <th scope="col">國籍</th>
                                 <th scope="col">狀況</th>
                                 <th scope="col">檢視</th>
-                                <th scope="col">修改</th>
+                                <!-- <th scope="col">修改</th> -->
                                 <th scope="col">移除</th>
                             </tr>
                             <tr ng-repeat="data in Patents">
@@ -150,7 +150,7 @@
                                 <td>{{data.Country}}</td>
                                 <td>{{data.Status}}</td>
                                 <td><a href={{data.File}} target="_blank">檢視</a></td>
-                                <td><a href="#" ng-click="updatePantent()">修改</a></td>
+                                <!-- <td><a href="#" ng-click="updatePantent()">修改</a></td> -->
                                 <td><a href="#" ng-click="removePatent($index)">移除</a></td>
                             </tr>
                         </thead>
@@ -159,7 +159,7 @@
                         </tbody>
                     </table>
                     <div class="row justify-content-center">
-                        <div class="col-md-4form-group my-3">
+                        <div class="my-3">
                             <button class="btn btn-primary" id="btn-patent" type="button" data-toggle="modal"
                                 data-target="#addPatent">
                                 <h5>新增資料</h5>
@@ -224,50 +224,9 @@
             </div>
 
             <div id="paperInfo" class="panel-collapse collapse">
-                <div class="panel-body border border-warning fit-content rounded col-md-10">
-                    <div class="form-group">
-                        <label>論文主題名稱</label>
-                        <input class="form-control col-md-10" type="text">
-                    </div>
-                    <label>學術期刊領域</label>
-                    <div class="form-group">
-                        <label class="radio-inline"></label>
-                        <input type="radio" name="paperFieldRadio">SCI
-                        <label class="radio-inline"></label>
-                        <input type="radio" name="paperFieldRadio">SSCI
-                        <label class="radio-inline"></label>
-                        <input type="radio" name="paperFieldRadio">EI
-                        <label class="radio-inline"></label>
-                        <input type="radio" name="paperFieldRadio">研討會
-                        <label class="radio-inline"></label>
-                        <input type="radio" name="paperFieldRadio">其他
-                    </div>
-                    <label>論文申請狀況</label>
-                    <div class="form-group">
-                        <label class="radio-inline"></label>
-                        <input type="radio" name="paperStatusRadio">已發表
-                        <label class="radio-inline"></label>
-                        <input type="radio" name="paperStatusRadio">審查中
-                        <label class="radio-inline"></label>
-                        <input type="radio" name="paperStatusRadio">撰寫中
-                    </div>
+                <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
 
-                    <div class="form-group">
-                        <label>佐證資料上傳(限pdf)</label>
-                        <div id="drop-area" class="dm-uploader">
-                            <input type="file" title="選擇檔案" accept=".pdf" id="paper-file">
-                        </div>
-                    </div>
-                    <div id="link-holder">
-
-                    </div>
-                    <div class="col-md-2 offset-md-5 form-group">
-                        <button class="btn btn-warning" id="btn-paper" type="button">
-                            <h5>新增資料</h5>
-                        </button>
-                    </div>
-
-                    <table class="table">
+                    <table class="table mt-3">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">序號</th>
@@ -275,22 +234,87 @@
                                 <th scope="col">領域</th>
                                 <th scope="col">狀況</th>
                                 <th scope="col">檢視</th>
-                                <th scope="col">修改</th>
+                                <!-- <th scope="col">修改</th> -->
                                 <th scope="col">移除</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>XXX</td>
-                                <td>SCI</td>
-                                <td>申請中</td>
-                                <td>點選</td>
-                                <td>點選</td>
-                                <td>點選</td>
+                            <tr ng-repeat="data in Papers">
+                                <td scope="row">{{$index+1}}</th>
+                                <td>{{data.Name}}</td>
+                                <td>{{data.Journal}}</td>
+                                <td>{{data.Status}}</td>
+                                <td><a href={{data.File}} target="_blank">檢視</a></td>
+                                <!-- <td><a href="#" ng-click="updatePantent()">修改</a></td> -->
+                                <td><a href="#" ng-click="removePaper($index)">移除</a></td>
                             </tr>
                         </tbody>
                     </table>
+
+                    <div class="row justify-content-center">
+                        <div class="my-3">
+                            <button class="btn btn-warning" id="btn-paper" type="button" data-toggle="modal"
+                                data-target="#addPaper">
+                                <h5>新增資料</h5>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal fade" id="addPaper" tabindex="-1" role="dialog" aria-labelledby="addPatentTitle"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addPaperTitle">新增論文資訊</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>論文主題名稱</label>
+                                <input class="form-control col-md-10" type="text" ng-model="paperName">
+                            </div>
+                            <label>學術期刊領域</label>
+                            <div class="form-group">
+                                <label class="radio-inline"></label>
+                                <input type="radio" name="paperFieldRadio" value="SCI" ng-model="paperJournal">SCI
+                                <label class="radio-inline"></label>
+                                <input type="radio" name="paperFieldRadio" value="SSCI" ng-model="paperJournal">SSCI
+                                <label class="radio-inline"></label>
+                                <input type="radio" name="paperFieldRadio" value="EI" ng-model="paperJournal">EI
+                                <label class="radio-inline"></label>
+                                <input type="radio" name="paperFieldRadio" value="研討會" ng-model="paperJournal">研討會
+                                <label class="radio-inline"></label>
+                                <input type="radio" name="paperFieldRadio" value="其他" ng-model="paperJournal">其他
+                            </div>
+                            <label>論文申請狀況</label>
+                            <div class="form-group">
+                                <label class="radio-inline"></label>
+                                <input type="radio" name="paperStatusRadio" value="已發表" ng-model="paperStatus">已發表
+                                <label class="radio-inline"></label>
+                                <input type="radio" name="paperStatusRadio" value="審查中" ng-model="paperStatus">審查中
+                                <label class="radio-inline"></label>
+                                <input type="radio" name="paperStatusRadio" value="撰寫中" ng-model="paperStatus">撰寫中
+                            </div>
+
+                            <div class="form-group">
+                                <label>佐證資料上傳(限pdf)</label>
+                                <div id="drop-area" class="dm-uploader">
+                                    <input type="file" title="選擇檔案" accept=".pdf" id="paper-file">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" ng-click="UploadPaper()">送出</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -310,7 +334,7 @@
                     <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="image" id="image"
                         name="myImage">
                 </div>
-                <img ng-src="{{imageSrc}}" id="image-preview" style="width: 40%; height: auto; display: none;">
+                <img ng-src="{{imageSrc}}" id="image-preview" style="height: auto; display: none;" class="col-md-10">
             </div>
 
             <div class="form-group">
