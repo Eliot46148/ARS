@@ -3,6 +3,11 @@ var app = angular.module('ProcessorEdit', []);
 app.controller('MainCtrl', function($scope, $http) {
     // Redirect if not login
     if (!$.cookie('account')){window.location='/processor';}
+
+    var set_state = function(load, state=0){
+        $scope.loading = load;
+        $scope.loading_state = state;
+    };
     
     $http.get('/form/id').success(function(data){
         $scope.forms = [];
@@ -13,4 +18,23 @@ app.controller('MainCtrl', function($scope, $http) {
             });
         }
     });
+
+    $scope.triggerRespond = function(id, state=0){
+        if (state==0){
+            set_state(true);
+            $scope.respond = [];
+            $http.post('/committee/getFormExam', {'formId':id}).success(function(data){
+                //console.log(data);
+                $scope.triggerRespond.id = id;
+                $scope.respond = data.data;
+                set_state(false);
+            });
+        }
+        else{
+            set_state(true);
+            set_state(true, 1);
+            //console.log($scope.triggerRespond.id);
+            $timeout(function() { set_state(false);}, 1500);
+        }
+    }
 });

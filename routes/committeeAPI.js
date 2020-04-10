@@ -107,8 +107,51 @@ router.post('/dashboard',function(req,res){
       });
 });
 
-router.post('/committeeupdate',function(req,res){
+router.post('/getFormExam',function(req,res){
+    if (typeof req.body.formId != 'undefined'){
+        committeeModel.find({},
+        function (err, committee) {
+            if (err)
+                res.json({ "status": 1, "msg": "Error" });
+            else {
+                var exams = [];
+                for (var i=0; i<committee.length; i++){
+                    var forms = committee[i].needtestform;
+                    for (var j=0; j<forms.length; j++)
+                        if (forms[j].formOid == req.body.formId){
+                            var form = JSON.parse(JSON.stringify(forms[j]));
+                            form.name = committee[i].name;
+                            form.email = committee[i].email;
+                            exams.push(form);
+                        }
+                }
+                res.json({"status":0, "msg": "success", "data":exams});
+            }
+          });
+    }
+    else
+        res.json({ "status": 1, "msg": "given form id is empty." });
+});
 
+router.post('/committeeupdate',function(req,res){
+    committeeModel.findOne({
+        email: req.body.email,
+        password : req.body.password
+    },
+    function (err, data) {
+        var forms = JSON.parse(JSON.stringify(data.needtestform));
+        for(var i=0; i<forms.length;i++){
+            forms[i].isPass=false;
+            forms[i].fromType = 2;
+        }
+        committeeModel.findOneAndUpdate({
+            email: req.body.email,
+            password : req.body.password
+        }, {'needtestform':forms}, function(err, doc) {
+            if (err) return res.send(500, {error: err});
+            return res.send('Succesfully saved.');
+        });
+    });
 })
 
 module.exports = router;
