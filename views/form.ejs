@@ -126,9 +126,9 @@
             <label>專利相關資訊</label>
             <div class="form-group">
                 <label class="radio-inline"></label>
-                <input type="radio" name="patentRadio" class="PatentInfoRadio">有
+                <input type="radio" name="patentRadio" class="PatentInfoRadio" value="有" ng-model="HavePatents">有
                 <label class="radio-inline"></label>
-                <input type="radio" name="patentRadio" class="PatentInfoRadio" checked>無
+                <input type="radio" name="patentRadio" class="PatentInfoRadio" checked  ng-model="HavePatents">無
             </div>
 
             <div id="patentInfo" class="panel-collapse collapse">
@@ -218,9 +218,9 @@
             <label>論文相關資訊</label>
             <div class="form-group">
                 <label class="radio-inline"></label>
-                <input type="radio" name="paperRadio" class="PaperInfoRadio">有
+                <input type="radio" name="paperRadio" class="PaperInfoRadio" value="有" ng-model="HavePapers">有
                 <label class="radio-inline"></label>
-                <input type="radio" name="paperRadio" class="PaperInfoRadio" checked>無
+                <input type="radio" name="paperRadio" class="PaperInfoRadio" value="無" ng-model="HavePapers" checked>無
             </div>
 
             <div id="paperInfo" class="panel-collapse collapse">

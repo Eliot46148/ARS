@@ -30,11 +30,14 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.Papers = data.Paper;
                     showImage(data.Image);
                     showVideo(data.Video);
-                    $scope.changeDepartments();              
+                    $scope.changeDepartments();
+                    $scope.initPatentAndPaper();
+                    $scope.initRadarChart();
                 }
             },
             (err) => {
                 console.log(err);
+                alert("載入表單錯誤!");
             }
         );
     }
@@ -43,13 +46,46 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     $scope.FormId = $location.search().FormId;
 
     $scope.changeDepartments = () => {
-        console.log('trigger');
-        if($scope.college != '請選擇'){
+        if ($scope.college != '請選擇') {
             $scope.departments = departmentDict[$scope.college];
-            console.log(departmentDict);
         }
         else
             $scope.departments = ['請先選擇學院'];
+    }
+
+    $scope.initPatentAndPaper = () => {
+        if ($scope.Patents.length > 0) {
+            $('#patentInfo').collapse('toggle');
+            $scope.HavePatents = '有';
+        }
+        if ($scope.Papers.length > 0)
+            $('#paperInfo').collapse('toggle');
+        $scope.HavePapers = '有';
+    }
+
+    $scope.initRadarChart = () => {
+        if (chartData != null) {
+            var col;
+            var row;
+            var part="";
+            for (var chartCol = 0; chartCol < chartData.length; chartCol++) {
+                radarChart.data.datasets[0].data[chartCol] = chartData[chartCol];
+                radarChart.update();
+                if(chartCol>3){
+                    row = chartData[chartCol]+11;
+                    col = chartCol - 3;
+                    part = 'td2';
+                }
+                else{
+                    row = chartData[chartCol];
+                    col = chartCol+1;
+                    part= 'td1';
+                }
+                $('table tr td[class="' + part + ' table-info"]:nth-child(' + (col + 1) + ')').removeClass('table-info');
+                $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')[class="' + part + '"]').addClass('table-info');
+                // console.log(`col: ${col}, row: ${row}, part:${part}`);
+            }           
+        }
     }
 
     $scope.test = () => console.log($scope);
@@ -195,8 +231,8 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             contentType: false,
             success: function (res) {
                 console.log(res);
-                alert('移除成功');         
-                $scope.Patents.splice(patentIndex,1);                   
+                alert('移除成功');
+                $scope.Patents.splice(patentIndex, 1);
                 $scope.$apply();
             },
             error: function (res) {
@@ -248,8 +284,8 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             contentType: false,
             success: function (res) {
                 console.log(res);
-                alert('移除成功');         
-                $scope.Papers.splice(patentIndex,1);                   
+                alert('移除成功');
+                $scope.Papers.splice(patentIndex, 1);
                 $scope.$apply();
             },
             error: function (res) {

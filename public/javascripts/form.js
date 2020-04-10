@@ -69,10 +69,11 @@ $('td.td1, td.td2').click(function () {
     }    
     radarChart.data.datasets[0].data[chartCol - 1] = chartRow;
     radarChart.update();
-    chartData[chartCol-1]=chartRow;    
+    chartData[chartCol-1]=chartRow;
+    // console.log(`selected col: ${col}, row: ${row}, part:${part}`);    
     
     $('table tr td[class="' + part + ' table-info"]:nth-child(' + (col + 1) + ')').removeClass('table-info');
-    $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')').addClass('table-info');
+    $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')[class="'+part+'"]').addClass('table-info');
 });
 
 // $('#college').change(function () {
