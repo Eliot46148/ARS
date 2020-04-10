@@ -1,13 +1,23 @@
-function loadfinish(){
+var cookieData;
+var isPass = false;
+function frameload()
+{
     var $ifram = $('#needReviewForm');
     var $contents = $ifram.contents();
     $contents.find('#teachernum').remove();
     $contents.find('#formid').remove();
     $contents.find('#savebt').remove();
     $contents.find('#submitbt').remove();
-    var typeID = 2;
+}
+
+function loadfinish(){
+    $('#needReviewForm').attr('src', "../form?&TeacherNum=1324654&FormId=5e7de5d5f7bf39164440937f");
+//    src="../form?TeacherNum=1324654&FormId=5e7de5d5f7bf39164440937f"
+
+    cookieData =JSON.parse($.cookie('committeeCookie'));
+    alert(cookieData._OID);
     var reviewFormHtml = "<div class =' container text-center'><h1>審查表</h1></div><table class='table table-bordered'>";
-    if(typeID ==1)
+    if(cookieData.FormType ==1)
     {
         reviewFormHtml +=`
         <tr>
@@ -17,7 +27,7 @@ function loadfinish(){
         </tr>
         `;
     }
-    else if (typeID == 2)
+    else if (cookieData.FormType == 2)
     {
         reviewFormHtml +=`
         <tr>
@@ -49,24 +59,42 @@ function loadfinish(){
     </tr>
     `;
     $(reviewForm).html(reviewFormHtml);
-    loadReview(typeID);
+    loadReview();
+
+    var cookies = JSON.stringify({Email : cookieData.Email,Password : cookieData.Password})
+    $.cookie("committeeCookie",cookies)
 }
 
-function loadReview(typeID,reqData){
+function loadReview(){
+    var typeID = cookieData.FormType;
     if(typeID==1){
-        if(reqData.StudyandData!=-1)
-            $('input[name="isStudyandData"]')[reqData.StudyandData].checked = true;
+        if(cookieData.studyandData!=-1)
+            $('input[name="isStudyandData"]')[cookieData.studyandData].checked = true;
     }
     else if (typeID==2){
-        if(reqData.Marketassessment!=-1)
-            $('input[name="isMarketassessment"]')[reqData.Marketassessment].checked = true;
-        if(reqData.ManufacturingEvaluation!=-1)
-            $('input[name="isManufacturingEvaluation"]')[reqData.Marketassessment].checked = true;
-        if(reqData.FinancialEvaluation!=-1)
-            $('input[name="isFinancialEvaluation"]')[reqData.Marketassessment].checked = true;
+        if(cookieData.Marketassessment!=-1)
+            $('input[name="isMarketassessment"]')[cookieData.Marketassessment].checked = true;
+        if(cookieData.ManufacturingEvaluation!=-1)
+            $('input[name="isManufacturingEvaluation"]')[cookieData.ManufacturingEvaluation].checked = true;
+        if(cookieData.FinancialEvaluation!=-1)
+            $('input[name="isFinancialEvaluation"]')[cookieData.FinancialEvaluation].checked = true;
     }
-    $(theopinion).val= reqData.theopinion;
-    if(reqData.reviewIsPass!=-1)
-    $('input[name="reviewIsPass"]')[reqData.reviewIsPass].checked = true;
+    $(theopinion).val(cookieData.opinion);
+    if(cookieData.isSubmit!=-1)
+    $('input[name="reviewIsPass"]')[cookieData.isSubmit].checked = true;
+
+}
+
+function saveBtClick(){
+    isPass = false;
+    UpdateDB();
+}
+
+function submitBtClick(){
+    isPass = true;
+    UpdateDB();
+}
+
+function UpdateDB(){
 
 }

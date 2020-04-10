@@ -34,6 +34,12 @@ router.post('/committeeregistered',function(req,res){
                     paperType : req.body.paperType,         /*研究類型*/
                     paperTheme : req.body.paperTheme,       /*研究主題*/
                     fromType : req.body.fromType,            /*填寫表單的樣式(0,1)型態是numbernumber*/
+                    StudyandData: -1,
+                    Marketassessment : -1,
+                    ManufacturingEvaluation : -1,
+                    FinancialEvaluation:-1,
+                    opinion: "",
+                    isSubmit : -1
                 }
             
             })
@@ -58,7 +64,13 @@ router.post('/committeeregistered',function(req,res){
                         deadLine : req.body.deadLine,           /*結束日期*/
                         paperType : req.body.paperType,         /*研究類型*/
                         paperTheme : req.body.paperTheme,       /*研究主題*/
-                        fromType : req.body.fromType            /*填寫表單的樣式(0,1)*/    
+                        fromType : req.body.fromType,            /*填寫表單的樣式(0,1)*/    
+                        StudyandData: -1,
+                        Marketassessment : -1,
+                        ManufacturingEvaluation : -1,
+                        FinancialEvaluation:-1,
+                        opinion: "",
+                        isSubmit : -1
                     }
                 }
             },function(err,ndata){
@@ -152,6 +164,31 @@ router.post('/committeeupdate',function(req,res){
             return res.send('Succesfully saved.');
         });
     });
+// =======
+//     committeeModel.updateOne({
+//         email : req.body.email,
+//         password : req.body.password,
+//         "needtestform.formOid" : req.body.formOid
+//     },{
+//         $set:{
+//             "needtestform.$.isPass" : req.body.ispass,
+//             "needtestform.$.StudyandData" : req.body.StudyandData,
+//             "needtestform.$.Marketassessment" : req.body.Marketassessment,
+//             "needtestform.$.ManufacturingEvaluation" : req.body.ManufacturingEvaluation,
+//             "needtestform.$.FinancialEvaluation" : req.body.FinancialEvaluation,
+//             "needtestform.$.opinion" : req.body.opinion,
+//             "needtestform.$.isSubmit" : req.body.isSubmit,
+//         }
+//     },function(err,data){
+//         if (err)
+//             res.json({ "status": 1, "msg": "Error" });
+//         else {
+//             res.json({ "status": 2, "msg": "success"});
+//         }
+
+//     })
+
+// >>>>>>> dbb4bf11c9c50e4ee6ea6438e145face2330105f
 })
 
 module.exports = router;

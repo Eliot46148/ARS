@@ -27,20 +27,66 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.evaluation = data.Evaluation;
                     chartData = data.ChartData;
                     $scope.Patents = data.Patent;
-                    $scope.Paper = data.Paper;
+                    $scope.Papers = data.Paper;
                     showImage(data.Image);
                     showVideo(data.Video);
-                    console.log($scope);
+                    $scope.changeDepartments();
+                    $scope.initPatentAndPaper();
+                    $scope.initRadarChart();
                 }
             },
             (err) => {
                 console.log(err);
+                alert("載入表單錯誤!");
             }
         );
     }
     $scope.TeacherNum = $location.search().TeacherNum;
 
     $scope.FormId = $location.search().FormId;
+
+    $scope.changeDepartments = () => {
+        if ($scope.college != '請選擇') {
+            $scope.departments = departmentDict[$scope.college];
+        }
+        else
+            $scope.departments = ['請先選擇學院'];
+    }
+
+    $scope.initPatentAndPaper = () => {
+        if ($scope.Patents.length > 0) {
+            $('#patentInfo').collapse('toggle');
+            $scope.HavePatents = '有';
+        }
+        if ($scope.Papers.length > 0)
+            $('#paperInfo').collapse('toggle');
+        $scope.HavePapers = '有';
+    }
+
+    $scope.initRadarChart = () => {
+        if (chartData != null) {
+            var col;
+            var row;
+            var part="";
+            for (var chartCol = 0; chartCol < chartData.length; chartCol++) {
+                radarChart.data.datasets[0].data[chartCol] = chartData[chartCol];
+                radarChart.update();
+                if(chartCol>3){
+                    row = chartData[chartCol]+11;
+                    col = chartCol - 3;
+                    part = 'td2';
+                }
+                else{
+                    row = chartData[chartCol];
+                    col = chartCol+1;
+                    part= 'td1';
+                }
+                $('table tr td[class="' + part + ' table-info"]:nth-child(' + (col + 1) + ')').removeClass('table-info');
+                $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')[class="' + part + '"]').addClass('table-info');
+                // console.log(`col: ${col}, row: ${row}, part:${part}`);
+            }           
+        }
+    }
 
     $scope.test = () => console.log($scope);
 
@@ -55,8 +101,8 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "Name": $scope.name,
                 "College": $scope.college,
                 "Department": $scope.department,
-                "Phone": $scope.phone,
-                "Email": $scope.email,
+                "Phone": $scope.Phone,
+                "Email": $scope.Email,
                 "Description": $scope.description,
                 "Evaluation": $scope.evaluation,
                 "ChartData": chartData
@@ -72,11 +118,11 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "HIGHER": $scope.HIGHER,
                 "Industry": $scope.Industry,
                 "Industry5n": $scope.Industry5n,
-                "Name": $scope.name,
+                "Name": $scope.Name,
                 "College": $scope.college,
                 "Department": $scope.department,
-                "Phone": $scope.phone,
-                "Email": $scope.email,
+                "Phone": $scope.Phone,
+                "Email": $scope.Email,
                 "Description": $scope.description,
                 "Evaluation": $scope.evaluation,
                 "ChartData": chartData
@@ -176,22 +222,46 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.removePatent = (patentIndex) => {
+        var url = `/form/patent?FormId=${$scope.FormId}&PatentId=${$scope.Patents[patentIndex]._id}`;
         $.ajax({
             url: url,
             type: 'delete',
+            data: null,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                console.log(res);
+                alert('移除成功');
+                $scope.Patents.splice(patentIndex, 1);
+                $scope.$apply();
+            },
+            error: function (res) {
+                console.log(res);
+                alert('移除失敗');
+            }
+        });
+    };
+
+    $scope.UploadPaper = () => {
+        var formData = new FormData();
+        formData.append('myPaper', $('#paper-file')[0].files[0]);
+        var url = `/form/paper?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
+        $.ajax({
+            url: url,
+            type: 'patch',
             data: formData,
             processData: false,
             contentType: false,
             success: function (res) {
                 console.log(res);
                 alert('送出成功');
-                $('#addPatent').modal('hide');
-                $scope.Patents.push(
+                $('#addPaper').modal('hide');
+                $scope.Papers.push(
                     {
                         _id: res.id,
-                        Name: $scope.patentName,
-                        Country: $scope.patentCountry,
-                        Status: $scope.patentStatus,
+                        Name: $scope.paperName,
+                        Journal: $scope.paperJournal,
+                        Status: $scope.paperStatus,
                         File: res.filename
                     }
                 );
@@ -200,6 +270,27 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             error: function (res) {
                 console.log(res);
                 alert('送出失敗');
+            }
+        });
+    }
+
+    $scope.removePaper = (patentIndex) => {
+        var url = `/form/paper?FormId=${$scope.FormId}&PaperId=${$scope.Papers[patentIndex]._id}`;
+        $.ajax({
+            url: url,
+            type: 'delete',
+            data: null,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                console.log(res);
+                alert('移除成功');
+                $scope.Papers.splice(patentIndex, 1);
+                $scope.$apply();
+            },
+            error: function (res) {
+                console.log(res);
+                alert('移除失敗');
             }
         });
     };
