@@ -123,67 +123,51 @@ router.post('/dashboard',function(req,res){
       });
 });
 
+router.post('/getFormExam',function(req,res){
+    if (typeof req.body.formId != 'undefined'){
+        committeeModel.find({},
+        function (err, committee) {
+            if (err)
+                res.json({ "status": 1, "msg": "Error" });
+            else {
+                var exams = [];
+                for (var i=0; i<committee.length; i++){
+                    var forms = committee[i].needtestform;
+                    for (var j=0; j<forms.length; j++)
+                        if (forms[j].formOid == req.body.formId){
+                            var form = JSON.parse(JSON.stringify(forms[j]));
+                            form.name = committee[i].name;
+                            form.email = committee[i].email;
+                            exams.push(form);
+                        }
+                }
+                res.json({"status":0, "msg": "success", "data":exams});
+            }
+          });
+    }
+    else
+        res.json({ "status": 1, "msg": "given form id is empty." });
+});
+
 router.post('/committeeupdate',function(req,res){
     committeeModel.findOne({
-        email : req.body.email,
+        email: req.body.email,
         password : req.body.password
-    },function(err,data){
-        //res.json({"data":data.needtestform[0].isPass})
-        console.log(req.body.index)
-        data.needtestform[req.body.index].isPass = req.body.ispass;
-        data.needtestform[req.body.index].StudyandData = req.body.StudyandData;
-        data.needtestform[req.body.index].Marketassessment = req.body.Marketassessment;
-        data.needtestform[req.body.index].ManufacturingEvaluation = req.body.ManufacturingEvaluation;
-        data.needtestform[req.body.index].FinancialEvaluation = req.body.FinancialEvaluation;
-        data.needtestform[req.body.index].opinion = req.body.opinion;
-        data.needtestform[req.body.index].isSubmit = req.body.isSubmit;
-        console.log(data)
-
-        //committeeModel.save({data})
-    })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-
-
-    committeeModel.updateOne({
-        email : req.body.email,
-        password : req.body.password,
-        "needtestform.formOid" : req.body.formOid
-    },{
-        $set:{
-            "needtestform.$.isPass" : req.body.ispass,
-            "needtestform.$.StudyandData" : req.body.StudyandData,
-            "needtestform.$.Marketassessment" : req.body.Marketassessment,
-            "needtestform.$.ManufacturingEvaluation" : req.body.ManufacturingEvaluation,
-            "needtestform.$.FinancialEvaluation" : req.body.FinancialEvaluation,
-            "needtestform.$.opinion" : req.body.opinion,
-            "needtestform.$.isSubmit" : req.body.isSubmit,
+    },
+    function (err, data) {
+        var forms = JSON.parse(JSON.stringify(data.needtestform));
+        for(var i=0; i<forms.length;i++){
+            forms[i].isPass=false;
+            forms[i].fromType = 2;
         }
-    },function(err,data){
-        if (err)
-            res.json({ "status": 1, "msg": "Error" , "data" : data });
-        else {
-            res.json({ "status": 2, "msg": "success", "data":req.body});
-        }
-    })*/
+        committeeModel.findOneAndUpdate({
+            email: req.body.email,
+            password : req.body.password
+        }, {'needtestform':forms}, function(err, doc) {
+            if (err) return res.send(500, {error: err});
+            return res.send('Succesfully saved.');
+        });
+    });
 })
 
 module.exports = router;

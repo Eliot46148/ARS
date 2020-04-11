@@ -80,7 +80,8 @@ router.put('/', function (req, res, next) {
       Email: req.body.Email,
       Description: req.body.Description,
       Evaluation: req.body.Evaluation,
-      ChartData: req.body.ChartData
+      ChartData: req.body.ChartData,
+      Status: 0
     }, function (err, data) {
       if (err)
         res.json({ "status": 1, "msg": "Error", 'data': data });
@@ -107,7 +108,8 @@ router.put('/submit', function (req, res, next) {
       Description: req.body.Description,
       Evaluation: req.body.Evaluation,
       Submitted: true,
-      ChartData: req.body.ChartData
+      ChartData: req.body.ChartData,
+      Status: 1
     }, function (err, data) {
       if (err)
         res.json({ "status": 1, "msg": "Error", 'data': data });
@@ -273,5 +275,44 @@ router.patch('/video', upload.single('myVideo'), function (req, res, next) {
   });
 });
 
+// update form status
+// 0 : 暫存
+// 1 : 送出
+// 2 : 審查中
+// 3 : 修改
+// 4 : 未通過
+// 5 : 通過
+router.put('/status', function (req, res, next) {
+  var update = {
+    Status: req.body.status
+  };
+  if (req.body.status == "3"){
+    if (typeof req.body.deadline != 'undefined')
+      update.Deadline = req.body.deadline;
+    formModel.update({ _id: req.body.FormId }, update
+      , function (err, data) {
+        if (err)
+          res.json({ "status": 1, "msg": "Error", 'data': data });
+        else
+          res.json({ "status": 0, "msg": "success", 'data': data, });
+      });
+  }else{
+    formModel.update({ _id: req.body.FormId }, update
+      , function (err, data) {
+        if (err)
+          res.json({ "status": 1, "msg": "Error", 'data': data });
+        else
+          formModel.findOne({}, function(err, form){
+            if (err)
+              res.json({ "status": 1, "msg": "Error", 'data': data });
+            else{
+              form.Deadline = undefined;
+              form.save();
+                res.json({ "status": 0, "msg": "success", 'data': data, });
+            }
+          })
+      });
+  }
+});
 
 module.exports = router;

@@ -52,13 +52,75 @@
                     <td ng-bind="form.UploadDate.substring(0, 10)"></td>
                     <td ng-bind="form.Name"></td>
                     <td ng-bind="form.ResearchTopic"></td>
-                    <td ng-bind="form._id"></td>
-                    <td ng-bind="form._id"></td>
-                    <td ng-bind="form.Ended"></td>
-                    <td ng-bind="form._id"></td>
+                    <td>
+                        <a type="button" class="btn btn-primary text-white" ng-click="trigger(form._id)">點選</a>
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-primary text-white" ng-click="trigger(form._id)">點選</a>
+                    </td>
+                    <td>
+                        <p ng-if="form.Status==0">尚未送出</p>
+                        <p ng-if="form.Status==1">未審查</p>
+                        <p ng-if="form.Status==2">審查中</p>
+                        <p ng-if="form.Status==3">修改</p>
+                        <p ng-if="form.Status==4">不通過</p>
+                        <p ng-if="form.Status==5">通過</p>
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#respondModal" ng-click="triggerRespond(form._id)">點選</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="modal fade" id="respondModal" tabindex="-1" role="dialog" aria-labelledby="respondModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="clear()">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <div ng-show="loading">
+                        <div class="check_mark" ng-show="loading_state == 1">
+                            <div class="sa-icon sa-success animate">
+                            <span class="sa-line sa-tip animateSuccessTip"></span>
+                            <span class="sa-line sa-long animateSuccessLong"></span>
+                            <div class="sa-placeholder"></div>
+                            <div class="sa-fix"></div>
+                            </div>
+                        </div>
+                        <div class="w-100 d-flex justify-content-center" ng-show="loading_state == 0"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+                    </div>
+                    <table class="table table-bordered" ng-show="!loading" ng-if="respond.length > 0">
+                        <thead>
+                            <th scope="col">送出時間</th>
+                            <th scope="col">審查期限</th>
+                            <th scope="col">委員姓名</th>
+                            <th scope="col">委員郵件</th>
+                            <th scope="col">回收狀況</th>
+                            <th scope="col">查看建議</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="response in respond">
+                                <td ng-bind="response.submitDate.substring(0, 10)"></td>
+                                <td ng-bind="response.deadLine.substring(0, 10)"></td>
+                                <td ng-bind="response.name"></td>
+                                <td ng-bind="response.email"></td>
+                                <td ng-bind="response.isPass ? '已回傳' : '尚未回傳'">已回傳</td>
+                                <td>
+                                    <a type="button" class="btn btn-primary text-white" ng-click="seeRespond(response._id)" ng-class="response.isPass ? '' : 'disabled'">點選</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p ng-show="!loading" ng-if="respond.length == 0">查無資料。</p>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
