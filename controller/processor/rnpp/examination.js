@@ -45,8 +45,8 @@ app.controller('MainCtrl', function($scope, $http) {
             };
             console.log(params);
             
-            $http.post('/committee/committeeregistered', {'params': params
-            }).success(function(data){
+            $http.post('/committee/committeeregistered', params
+            ).success(function(data){
                 if (data.msg == 'success'){
                     console.log(data);
                     var html = '';
