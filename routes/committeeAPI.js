@@ -8,6 +8,10 @@ router.get('/dashboard',(req,res)=>res.render('committeeDashboard',{title:'Expre
 
 router.get('/review',(req,res)=>res.render('committeeReview',{title:"Express"}));
 
+router.get('/reviewT1',(req,res)=>res.render('ReviewForm/committeeReviewT1',{title:"Express"}));
+
+router.get('/reviewT2',(req,res)=>res.render('ReviewForm/committeeReviewT2',{title:"Express"}));
+
 router.post('/committeeregistered',function(req,res){
     var keylist="abcdefghijklmnopqrstuvwxyz123456789"
     var thepassword = ''
@@ -156,10 +160,19 @@ router.post('/committeeupdate',function(req,res){
     },
     function (err, data) {
         var forms = JSON.parse(JSON.stringify(data.needtestform));
+        console.log("--"+req.body.reMarketassessment)
+        forms[req.body.index].isPass = req.body.ispass;
+        forms[req.body.index].StudyandData = req.body.StudyandData;
+        forms[req.body.index].Marketassessment = req.body.reMarketassessment;
+        forms[req.body.index].ManufacturingEvaluation = req.body.ManufacturingEvaluation;
+        forms[req.body.index].FinancialEvaluation = req.body.FinancialEvaluation;
+        forms[req.body.index].opinion = req.body.opinion;
+        forms[req.body.index].isSubmit = req.body.isSubmit;
+        /*
         for(var i=0; i<forms.length;i++){
             forms[i].isPass=false;
             forms[i].fromType = 2;
-        }
+        }*/
         committeeModel.findOneAndUpdate({
             email: req.body.email,
             password : req.body.password
