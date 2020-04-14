@@ -36,11 +36,23 @@ function reviewload()
 }
 
 function loadfinish(){
-    $('#needReviewForm').attr('src', "../form?&TeacherNum=1324654&FormId=5e7de5d5f7bf39164440937f");
+    cookieData =JSON.parse($.cookie('committeeCookie'));
+
+    var formsrc = "../form/testest";
+    $.post(formsrc,{
+        email :  cookieData.Email,
+        password : cookieData.Password,
+        index : cookieData.index,
+        FormId : cookieData.FormOid
+    },function(data){
+        console.log("127.0.0.1:3000"+"/form?TeacherNum="+data.data.TeacherNum+"&FormId="+data.data._id);
+        var reviewsrc= "../form?TeacherNum="+data.data.TeacherNum+"&FormId="+data.data._id;
+        $('#needReviewForm').attr('src', reviewsrc);
+    })
+
+    //$('#needReviewForm').attr('src', "../form?&TeacherNum=1324654&FormId=5e7de5d5f7bf39164440937f");
 //    src="../form?TeacherNum=1324654&FormId=5e7de5d5f7bf39164440937f"
     var ReviewFormSrc ="";
-    cookieData =JSON.parse($.cookie('committeeCookie'));
-    console.log(cookieData);
 
     switch(cookieData.FormType){
         case 1:

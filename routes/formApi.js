@@ -27,6 +27,20 @@ router.get('/', (req, res, next) => {
   });
 });
 
+router.post('/testest',(req,res)=>{
+  console.log(req.body.email);
+
+  var committeeModel = require('../models/committeeMode');
+  committeeModel.findOne({email : req.body.email,password:req.body.password},function(merr,mdata){
+    formModel.findById(mdata.needtestform[req.body.index].formOid,(ferr,fdata)=>{
+      if ( ferr)
+        res.json({ "status": 1, "msg": "Error", 'data': fdata });
+      else
+        res.json({ "status": 0, "msg":"success" , 'data': fdata });
+    })
+  })
+})
+
 // get form data
 router.get('/data', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {

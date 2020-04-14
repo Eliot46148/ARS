@@ -20,8 +20,11 @@ router.post('/committeeregistered',function(req,res){
     console.log(theName);
     for (var i =0;i<8;i++)
         thepassword += keylist.charAt(Math.floor(Math.random()*keylist.length));
-    if(!(theEmail == ""||theName ==""||req.body.fromType==0||req.body.paperTheme==""||req.body.formOid =="" ||req.body.submitDate==""||req.body.deadLine==""||req.body.paperType==""))
-        res.json({ "status": 1, "msg": "Error" });
+    if(theEmail == ""||theName ==""||req.body.fromType==0||req.body.paperTheme==""||req.body.formOid =="" ||req.body.submitDate==""||req.body.deadLine==""||req.body.paperType=="")
+        {
+            console.log(theEmail+"-"+theName+"-"+req.body.fromType+"-"+req.body.paperTheme+"-"+req.body.formOid+"-"+req.body.submitDate+"-"+req.body.deadLine+"-"+req.body.paperType);
+            res.json({ "status": 1, "msg": "Error" });
+        }
     else{
         committeeModel.findOne({
             name : theName,
