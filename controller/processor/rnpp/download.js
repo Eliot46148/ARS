@@ -1,16 +1,6 @@
 var app = angular.module('ProcessorDownload', []);
 app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
     // Redirect if not login
-
-    $scope.downloaddata  = function(){
-        $http.post(window.location+"/loadCsv",{
-            data:{name : "test"}        //change to json data
-        },function(req,res){
-            alert(res.data)
-        })
-
-    }
-
     if (!$.cookie('account')){window.location='/processor';}
 
     var set_state = function(load, state=0){
@@ -75,7 +65,14 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
     });
 
     $scope.download = function(){
-        console.log($scope.forms);
+        $http.post(window.location+"/loadCsv",{data:$scope.forms}).success(function(data){
+            var anchor = angular.element('<a/>');
+            anchor.attr({
+                href: 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + encodeURI(data),
+                target: '_blank',
+                download: '表單紀錄.csv'
+            })[0].click();
+        })
     };
 });
 

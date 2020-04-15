@@ -32,28 +32,30 @@ router.post('/:sys/download/loadCsv',function(req,res,next){
     name : 123,
     price : 321
   }*/
-  const jsoncsv = new json2csv({header:true});
+  const jsoncsv = new json2csv({header:true, excelStrings:true, withBOM: true});
   const csvData = jsoncsv.parse(data);
   console.log("start");
   
   switch(req.params.sys){
     case "rnpp":
-      /*console.log(data);
-      res.setHeader('Content-disposition', 'attachment; filename=theDocument.csv');
-      res.setHeader('Content-type', 'text/plain');
-      res.charset = 'UTF-8';
-      res.write(csvData);
-      res.end();*/
-      fs.writeFile('output.csv',csvData,function(err){
+      var time = new Date();
+      var filename = __dirname + 'cache' + time.getTime().toString() + '.csv';
+      fs.writeFile(filename,csvData,function(err){
         if(err) throw err;
-        console.log("saved");
+        res.sendFile(filename, function(err){
+          if (err) {
+            res.render("404");
+          } else {
+            fs.unlinkSync(filename);
+          }
+        });
       })
-      console.log("finish00")
+      
       break;
     default:
       res.render("404");
   }
-  res.json({data : "sucess"})
+  // res.json({data : "sucess"})
 })
 
 

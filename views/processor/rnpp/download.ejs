@@ -30,10 +30,6 @@
     <div class="container">
         <div class="row d-flex justify-content-between">
             <h1>研發能量展現平台 > 資料數據下載</h1>
-            <button ng-click="downloaddata()" class="btn btn-sq-lg btn-secondary">
-                <i class="fa fa-reply fa-1x"></i><br />
-                <br>下載
-            </button>
 
             <button onclick="location.href='/processor/overview?sys=rnpp'" class="btn btn-sq-lg btn-danger">
                 <i class="fa fa-reply fa-1x"></i><br />
@@ -55,7 +51,7 @@
             </div>
             
             <div ng-show="!loading">
-                <a class="btn btn-primary text-white" ng-click="download()">下載</a>
+                <a class="btn btn-primary text-white" ng-click="download()" download>下載</a>
             </div>
         </div>
     </div>
