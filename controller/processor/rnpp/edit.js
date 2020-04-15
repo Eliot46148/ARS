@@ -19,6 +19,10 @@ app.controller('MainCtrl', function($scope, $http, $window) {
         }
     });
 
+    $scope.triggerView = function(tNum, id){
+        $window.open('/form?'+new URLSearchParams({TeacherNum:tNum, FormId:id}).toString(), '_blank');
+    };
+    
     $scope.triggerRespond = function(id, state=0){
         if (state==0){
             set_state(true);
