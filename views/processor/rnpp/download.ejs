@@ -49,6 +49,10 @@
                     <div class="w-100 d-flex justify-content-center" ng-show="loading_state == 0"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
                 </div>
             </div>
+            
+            <div ng-show="!loading">
+                <p>下載已開始，若沒開始下載請點<a href="" ng-click="download()" download>重新下載</a></p>
+            </div>
         </div>
     </div>
 

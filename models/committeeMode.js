@@ -10,10 +10,7 @@ var patentSchema = new mongoose.Schema({
         isPass: Boolean,
         submitDate : Date,
         deadLine : Date,
-        respondDate : {
-            type: Date,
-            default: Date.now
-        },
+        respondDate : Date,
         paperType : String,
         paperTheme : String,
         fromType : Number,

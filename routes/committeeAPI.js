@@ -40,7 +40,6 @@ router.post('/committeeregistered',function(req,res){
                         isPass: false,                          /*委員是否送出*/
                         submitDate : req.body.submitDate,       /*開始日期*/
                         deadLine : req.body.deadLine,           /*結束日期*/
-                        respondDate : req.body.respondDate,     /*回覆日期*/
                         paperType : req.body.paperType,         /*研究類型*/
                         paperTheme : req.body.paperTheme,       /*研究主題*/
                         fromType : req.body.fromType,            /*填寫表單的樣式(0,1)型態是numbernumber*/
@@ -72,7 +71,6 @@ router.post('/committeeregistered',function(req,res){
                             isPass: false,                          /*委員是否送出*/
                             submitDate : req.body.submitDate,       /*開始日期*/
                             deadLine : req.body.deadLine,           /*結束日期*/
-                            respondDate : req.body.respondDate,     /*回覆日期*/
                             paperType : req.body.paperType,         /*研究類型*/
                             paperTheme : req.body.paperTheme,       /*研究主題*/
                             fromType : req.body.fromType,            /*填寫表單的樣式(0,1)*/    
@@ -176,6 +174,7 @@ router.post('/committeeupdate',function(req,res){
     function (err, data) {
         var forms = JSON.parse(JSON.stringify(data.needtestform));
         console.log("--"+req.body.reMarketassessment)
+        forms[req.body.index].respondDate = req.body.respondDate,
         forms[req.body.index].isPass = req.body.ispass;
         forms[req.body.index].StudyandData = req.body.StudyandData;
         forms[req.body.index].Marketassessment = req.body.reMarketassessment;

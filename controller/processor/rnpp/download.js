@@ -7,6 +7,20 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
         $scope.loading = load;
         $scope.loading_state = state;
     };
+
+    $scope.download = function(){
+        $http.post(window.location+"/loadCsv",{
+            fields:$scope.fields,
+            data:$scope.forms
+        }).success(function(data){
+            var anchor = angular.element('<a/>');
+            anchor.attr({
+                href: 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + encodeURI(data),
+                target: '_blank',
+                download: '表單紀錄.csv'
+            })[0].click();
+        })
+    };
     
     set_state(true, 1);
     $http.post('/committee/getFormExam', {'formId':-1}).success(function(examData){
@@ -237,18 +251,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                         $scope.fields.push("委員"+(j+1).toString()+"意見");
                         $scope.fields.push("委員"+(j+1).toString()+"總體評估");
                     }
-                    
-                    $http.post(window.location+"/loadCsv",{
-                        fields:$scope.fields,
-                        data:$scope.forms
-                    }).success(function(data){
-                        var anchor = angular.element('<a/>');
-                        anchor.attr({
-                            href: 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + encodeURI(data),
-                            target: '_blank',
-                            download: '表單紀錄.csv'
-                        })[0].click();
-                    })
+                    $scope.download();
 
                     // console.log($scope.forms);
                     $timeout(function() {

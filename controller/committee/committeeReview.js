@@ -49,6 +49,7 @@ function loadfinish(){
         comdata ={
             Email : retdata.email,
             Password :retdata.password,
+            respondDate: new Date(),
             FormTypeN:useinload.fromType,
             studyandData:useinload.StudyandData,
             Marketassessment:useinload.Marketassessment,
@@ -110,6 +111,7 @@ function UpdateDB(){
     $.post("/committee/committeeupdate",{
         email : comdata.Email,
         password : comdata.Password,
+        respondDate: new Date(),
         ispass : isPass,
         index : cookieData.index,
         StudyandData : (isStudyandData == undefined? -1:isStudyandData),
