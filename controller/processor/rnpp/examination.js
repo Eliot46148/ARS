@@ -45,7 +45,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                 'deadLine':$scope.date_end,
                 'paperType':'研發能量展現平台',
                 'paperTheme':form.ResearchTopic,
-                'fromType':$scope.selectedForm+1
+                'fromType':parseInt($scope.selectedForm)+1
             };
             //console.log(params);
             

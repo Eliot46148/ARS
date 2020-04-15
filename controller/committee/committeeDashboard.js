@@ -1,5 +1,5 @@
 var cookieData;
-
+var Getdatafin;
 function creatTable(){
     //這個函式的引數可以是從後臺傳過來的也可以是從其他任何地方傳過來的
     //這裡我假設這個data是一個長度為5的字串陣列 我要把他放在表格的一行裡面，分成五列
@@ -7,10 +7,9 @@ function creatTable(){
     var tableData="";
     cookieData =JSON.parse($.cookie('committeeCookie'));
     $.cookie('committeeCookie',"");
-    $.post('/committee/dashboard',{
-        email : cookieData.Email,
-        password : cookieData.Password},
-        function(data){
+    $.post('/committee/GetID',{
+        Oid : cookieData.objID
+    },function(data){
             var testform = data.data.needtestform;
             for (var i in testform)
             {
@@ -25,16 +24,15 @@ function creatTable(){
                     tableData+="<td><a class = 'btn btn-info' href ='./review' onclick='aclick(this)' id ="+i+">click!</td>";
                 tableData+="</tr></form>";
                 tablegrup+=tableData;
-
             }
+            Getdatafin = data.data
             $("#tbody1").html(tablegrup);
    });
 }
-function aclick(obj){
-    $.post('/committee/dashboard',{
-        email : cookieData.Email,
-        password : cookieData.Password},
-        function(data){
+function aclick(obj){/*
+    $.post('/committee/GetID',{
+        Oid : cookieData.objID
+    },function(data){
             var testform = data.data.needtestform[obj.id];
             var dt = JSON.stringify({
                 _OID : testform._id,
@@ -50,5 +48,6 @@ function aclick(obj){
                 opinion: testform.opinion,
                 isSubmit: testform.isSubmit})
             $.cookie("committeeCookie",dt)
-        });
+        });*/
+    $.cookie("committeeCookie",JSON.stringify({objID : Getdatafin._id , index : obj.id}))
 }
