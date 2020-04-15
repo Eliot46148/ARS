@@ -18,6 +18,7 @@ var formSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    SubmitDate: Date,       // 送出日期
     Patent:[{               // 專利相關資訊
         Name: String,
         Country: String,

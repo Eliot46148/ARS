@@ -15,10 +15,18 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
         for (var i=0; i<data.data.length; i++){
             var id = data.data[i];
             $http.get('/form/data', {'params': {'FormId':id}}).success(function(data){
-                $scope.forms.push(data.data);
+                var form = JSON.parse(JSON.stringify(data.data));
+
+                if (form.ChartData.length < 8){
+                    var length = form.ChartData.length;
+                    for (var j=0; j<8-length;j++)
+                        form.ChartData.push(null);
+                }
+
+                $scope.forms.push(form);
             });
         }
-        console.log($scope.forms);
+        //console.log($scope.forms);
         
         $timeout(function() {
             set_state(false);
