@@ -1,6 +1,6 @@
 var app = angular.module('ProcessorEdit', []);
 
-app.controller('MainCtrl', function($scope, $http) {
+app.controller('MainCtrl', function($scope, $http, $window) {
     // Redirect if not login
     if (!$.cookie('account')){window.location='/processor';}
 
@@ -19,6 +19,10 @@ app.controller('MainCtrl', function($scope, $http) {
         }
     });
 
+    $scope.triggerView = function(tNum, id){
+        $window.open('/form?'+new URLSearchParams({TeacherNum:tNum, FormId:id}).toString(), '_blank');
+    };
+    
     $scope.triggerRespond = function(id, state=0){
         if (state==0){
             set_state(true);
@@ -36,5 +40,14 @@ app.controller('MainCtrl', function($scope, $http) {
             //console.log($scope.triggerRespond.id);
             $timeout(function() { set_state(false);}, 1500);
         }
-    }
+    };
+
+    $scope.seeRespond = function(id){
+        set_state(true);
+        var found = $scope.respond.find(element=>element._id==id);
+        if (found != null){
+            $window.open('/static/review.html?'+new URLSearchParams(found).toString(), '_blank');
+        }
+        set_state(false);
+    };
 });

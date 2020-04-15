@@ -1,6 +1,6 @@
 var app = angular.module('ProcessorExamination', []);
 
-app.controller('MainCtrl', function($scope, $http, $timeout) {
+app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
     // Redirect if not login
     if (!$.cookie('account')){window.location='/processor';}
 
@@ -45,7 +45,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout) {
                 'deadLine':$scope.date_end,
                 'paperType':'研發能量展現平台',
                 'paperTheme':form.ResearchTopic,
-                'fromType':$scope.selectedForm+1
+                'fromType':parseInt($scope.selectedForm)+1
             };
             //console.log(params);
             
@@ -122,6 +122,15 @@ app.controller('MainCtrl', function($scope, $http, $timeout) {
             });
             set_state(false);
         }
+    };
+
+    $scope.seeRespond = function(id){
+        set_state(true);
+        var found = $scope.respond.find(element=>element._id==id);
+        if (found != null){
+            $window.open('/static/review.html?'+new URLSearchParams(found).toString(), '_blank');
+        }
+        set_state(false);
     };
 
     $scope.init_deadline = function(){

@@ -41,8 +41,7 @@
                     <th scope="col">日期時間</th>
                     <th scope="col">教師姓名</th>
                     <th scope="col">主題</th>
-                    <th scope="col">查詢</th>
-                    <th scope="col">修改</th>
+                    <th scope="col">查詢與修改</th>
                     <th scope="col">審查結果</th>
                     <th scope="col">審查意見</th>
                 </tr>
@@ -53,17 +52,14 @@
                     <td ng-bind="form.Name"></td>
                     <td ng-bind="form.ResearchTopic"></td>
                     <td>
-                        <a type="button" class="btn btn-primary text-white" ng-click="trigger(form._id)">點選</a>
-                    </td>
-                    <td>
-                        <a type="button" class="btn btn-primary text-white" ng-click="trigger(form._id)">點選</a>
+                        <a type="button" class="btn btn-primary text-white" ng-click="triggerView(form.TeacherNum, form._id)">點選</a>
                     </td>
                     <td>
                         <p ng-if="form.Status==0">尚未送出</p>
                         <p ng-if="form.Status==1">未審查</p>
                         <p ng-if="form.Status==2">審查中</p>
                         <p ng-if="form.Status==3">修改</p>
-                        <p ng-if="form.Status==4">不通過</p>
+                        <p ng-if="form.Status==4">未通過</p>
                         <p ng-if="form.Status==5">通過</p>
                     </td>
                     <td>

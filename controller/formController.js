@@ -10,6 +10,7 @@ app.config(function ($locationProvider) {
 app.controller('formCtrl', ($scope, $http, $location) => {
 
     $scope.init = () => {
+        console.log($scope);
         $http.get('/form/data?FormId=' + $scope.FormId).then(
             (res) => {
                 var data = res.data.data;

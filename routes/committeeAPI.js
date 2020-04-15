@@ -20,8 +20,11 @@ router.post('/committeeregistered',function(req,res){
     console.log(theName);
     for (var i =0;i<8;i++)
         thepassword += keylist.charAt(Math.floor(Math.random()*keylist.length));
-    if(!(theEmail == ""||theName ==""||req.body.fromType==0||req.body.paperTheme==""||req.body.formOid =="" ||req.body.submitDate==""||req.body.deadLine==""||req.body.paperType==""))
-        res.json({ "status": 1, "msg": "Error" });
+    if(theEmail == ""||theName ==""||req.body.fromType==0||req.body.paperTheme==""||req.body.formOid =="" ||req.body.submitDate==""||req.body.deadLine==""||req.body.paperType=="")
+        {
+            console.log(theEmail+"-"+theName+"-"+req.body.fromType+"-"+req.body.paperTheme+"-"+req.body.formOid+"-"+req.body.submitDate+"-"+req.body.deadLine+"-"+req.body.paperType);
+            res.json({ "status": 1, "msg": "Error" });
+        }
     else{
         committeeModel.findOne({
             name : theName,
@@ -89,6 +92,16 @@ router.post('/committeeregistered',function(req,res){
         })
     
     }
+})
+
+router.post('/GetID',function(req,res){
+    committeeModel.findById(req.body.Oid,function(err,data){
+        if (err || data == null)
+            res.json({ "status": 1, "msg": "Error" });
+        else {
+            res.json({ "status": 2, "msg": "success", "data": data });
+        }
+    })
 })
 
 router.post('/',function(req,res){
@@ -168,11 +181,7 @@ router.post('/committeeupdate',function(req,res){
         forms[req.body.index].FinancialEvaluation = req.body.FinancialEvaluation;
         forms[req.body.index].opinion = req.body.opinion;
         forms[req.body.index].isSubmit = req.body.isSubmit;
-        /*
-        for(var i=0; i<forms.length;i++){
-            forms[i].isPass=false;
-            forms[i].fromType = 2;
-        }*/
+        console.log(forms);
         committeeModel.findOneAndUpdate({
             email: req.body.email,
             password : req.body.password

@@ -1,5 +1,7 @@
 var cookieData;
 var isPass = false;
+var comdata;
+
 function frameload()
 {
     var $ifram = $('#needReviewForm');
@@ -13,47 +15,76 @@ function reviewload()
 {
     var $ifram = $('#ReviewForm');
     var $contents = $ifram.contents();
-    var typeID = cookieData.FormType;
-    if(typeID==1)
+    var FormTypeN = comdata.FormTypeN;
+    if(FormTypeN==1)
     {
-        if(cookieData.studyandData!=-1)
-            $contents.find('input[name="isStudyandData"]').get(cookieData.studyandData).checked = true;
+        if(comdata.studyandData!=-1)
+            $contents.find('input[name="isStudyandData"]').get(comdata.studyandData).checked = true;
+
     }
-    else if (typeID==2){
-
-        if(cookieData.Marketassessment!=-1)
-            $contents.find('input[name="isMarketassessment"]').get(cookieData.Marketassessment).checked = true;
-        if(cookieData.ManufacturingEvaluation!=-1)
-            $contents.find('input[name="isManufacturingEvaluation"]').get(cookieData.ManufacturingEvaluation).checked = true;
-        if(cookieData.FinancialEvaluation!=-1)
-            $contents.find('input[name="isFinancialEvaluation"]').get(cookieData.FinancialEvaluation).checked = true;
+    else if (FormTypeN==2){
+        if(comdata.Marketassessment!=-1)
+            $contents.find('input[name="isMarketassessment"]').get(comdata.Marketassessment).checked = true;
+        if(comdata.ManufacturingEvaluation!=-1)
+            $contents.find('input[name="isManufacturingEvaluation"]').get(comdata.ManufacturingEvaluation).checked = true;
+        if(comdata.FinancialEvaluation!=-1)
+            $contents.find('input[name="isFinancialEvaluation"]').get(comdata.FinancialEvaluation).checked = true;
     }
 
-    $contents.find('#theopinion').val(cookieData.opinion);
+    $contents.find('#theopinion').val(comdata.opinion);
 
-    if(cookieData.isSubmit!=-1)
-        $contents.find('input[name="reviewIsPass"]').get(cookieData.isSubmit).checked = true;
+    if(comdata.isSubmit!=-1)
+        $contents.find('input[name="reviewIsPass"]').get(comdata.isSubmit).checked = true;
 }
 
 function loadfinish(){
-    $('#needReviewForm').attr('src', "../form?&TeacherNum=1324654&FormId=5e7de5d5f7bf39164440937f");
-//    src="../form?TeacherNum=1324654&FormId=5e7de5d5f7bf39164440937f"
-    var ReviewFormSrc ="";
     cookieData =JSON.parse($.cookie('committeeCookie'));
-    console.log(cookieData);
+    $.cookie("committeeCookie","");
+    $.post('/committee/GetID',{
+        Oid : cookieData.objID
+    },function(fdata){
+        var retdata = fdata.data;
+        var ReviewFormSrc ="";
+        var useinload = retdata.needtestform[cookieData.index];
+        comdata ={
+            Email : retdata.email,
+            Password :retdata.password,
+            FormTypeN:useinload.fromType,
+            studyandData:useinload.StudyandData,
+            Marketassessment:useinload.Marketassessment,
+            ManufacturingEvaluation:useinload.ManufacturingEvaluation,
+            FinancialEvaluation:useinload.FinancialEvaluation,
+            opinion:useinload.opinion,
+            isSubmit:useinload.isSubmit
+        }
 
-    switch(cookieData.FormType){
-        case 1:
-            ReviewFormSrc ="./reviewT1";
-            break;
-        case 2:
-            ReviewFormSrc ="./reviewT2";
-            break;
-    }
-    $('#ReviewForm').attr('src',ReviewFormSrc);
+        switch(comdata.FormTypeN){
+            case 1:
+                ReviewFormSrc ="./reviewT1";
+                break;
+            case 2:
+                ReviewFormSrc ="./reviewT2";
+                break;
+        }
+        $('#ReviewForm').attr('src',ReviewFormSrc);
+    
 
-    var cookies = JSON.stringify({Email : cookieData.Email,Password : cookieData.Password})
-    $.cookie("committeeCookie",cookies)
+        $.post("../form/testest",{
+            email :  retdata.email,
+            password : retdata.password,
+            index : cookieData.index,
+            FormId : retdata.formOid
+        },function(sdata){
+            var reviewsrc= "../form?TeacherNum="+sdata.data.TeacherNum+"&FormId="+sdata.data._id;
+            $('#needReviewForm').attr('src', reviewsrc);
+        })
+    })
+   
+}
+
+function backBtClick(){
+    $.cookie("committeeCookie",JSON.stringify({objID:cookieData.objID}))
+    window.history.back();
 }
 
 function saveBtClick(){
@@ -77,10 +108,8 @@ function UpdateDB(){
     var reviewIsPass= $contents.find('input:radio[name="reviewIsPass"]:checked').val();
     var theopinion = $contents.find('#theopinion').val();
     $.post("/committee/committeeupdate",{
-        email : cookieData.Email,
-        password : cookieData.Password,
-        //formOid : cookieData._OID,
-        formOid : "asdfasdf",
+        email : comdata.Email,
+        password : comdata.Password,
         ispass : isPass,
         index : cookieData.index,
         StudyandData : (isStudyandData == undefined? -1:isStudyandData),
@@ -93,6 +122,6 @@ function UpdateDB(){
         if(data.status == 1)
             alert(data.msg);
         else
-            window.history.back();
+            backBtClick()
     })
 }

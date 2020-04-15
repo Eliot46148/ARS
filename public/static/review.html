@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>審查表</title>
+
+    <script src="../library/jquery-3.4.1.min.js"></script>
+    <script src="../library/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../library/bootstrap.min.css">
+    <link rel="stylesheet" href="../stylesheets/style.css">
+    <script src="../library/jquery.dm-uploader.min.js"></script>
+    <link rel="stylesheet" href="../library/jquery.dm-uploader.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
+        integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
+    <script src="/library/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="/library/fontawesome-free-5.12.1-web/css/all.css">
+    <script src="/library/angular.js"></script>
+    <script>
+        var app = angular.module('CommitteeReview', []);
+
+        app.config(['$locationProvider', function($locationProvider){
+            $locationProvider.html5Mode({
+                enabled: true,
+                requireBase: false
+            });    
+        }]);
+
+        app.controller('MainCtrl', function($scope, $location) {
+            $scope.review = $location.search();
+        });
+    </script>
+</head>
+
+<body ng-app="CommitteeReview"  ng-controller="MainCtrl">
+    <div class =' container text-center'>
+        <h1>審查表</h1>
+    </div>
+    <table class='table table-bordered' ng-if="review.fromType == 1">
+        <tr>
+            <th scope='row' >研究資料與佐證資料是否相符</th>
+            <td colspan='3'><input type='radio' name='isStudyandData' id="SDture" value='0' ng-model="review.StudyandData"> 符合</td>
+            <td colspan='3'><input type='radio' name='isStudyandData' id="SDfalse" value='1' ng-model="review.StudyandData"> 不符合</td>
+        </tr>
+        <tr> 
+            <th scope='row' >審查意見填寫</th>
+            <td colspan='6' height=220px><textarea style ='width:100%;height:200px;' id = 'theopinion' ng-model="review.opinion"></textarea></td>
+        </tr>
+        <tr>
+            <th scope='row' >總體審查意見</th>
+            <td colspan='2'><input type='radio' name='reviewIsPass' id="reviewSuggest" value='0' ng-model="review.isSubmit"> 建議</td>
+            <td colspan='2'><input type='radio' name='reviewIsPass' id="reviewNSuggest" value='1' ng-model="review.isSubmit"> 不建議</td>
+            <td colspan='2'><input type='radio' name='reviewIsPass' id="reviewModify" value='2' ng-model="review.isSubmit"> 修改</td>
+        </tr>
+    </table>
+
+    <table class='table table-bordered' ng-if="review.fromType == 2">
+        <tr>
+            <th scope='row' >市場評估</th>
+            <td colspan='3'><input type='radio' name='isMarketassessment' id = "MAtrue" value='0' ng-model="review.Marketassessment">符合</td>
+            <td colspan='3'><input type='radio' name='isMarketassessment' id = "MAfalse" value='1' ng-model="review.Marketassessment"> 不符合</td>
+        </tr>
+        <tr>
+            <th scope='row' >製造評估</th>
+            <td colspan='3'><input type='radio' name='isManufacturingEvaluation' id = "MEtrue" value='0' ng-model="review.ManufacturingEvaluation">符合</td>
+            <td colspan='3'><input type='radio' name='isManufacturingEvaluation' id = "MEfalse" value='1' ng-model="review.ManufacturingEvaluation"> 不符合</td>
+        </tr>
+        <tr>
+            <th scope='row' >財務評估</th>
+            <td colspan='3'><input type='radio' name='isFinancialEvaluation' id = "FEtrue" value='0' ng-model="review.FinancialEvaluation">符合</td>
+            <td colspan='3'><input type='radio' name='isFinancialEvaluation' id = "FFfalse" value='1' ng-model="review.FinancialEvaluation"> 不符合</td>
+        </tr>    
+        <tr>
+            <th scope='row' >審查意見填寫</th>
+            <td colspan='6' height=220px><textarea style ='width:100%;height:200px;' id = 'theopinion' ng-model="review.opinion"></textarea></td>
+        </tr>
+        <tr>
+            <th scope='row' >總體審查意見</th>
+            <td colspan='2'><input type='radio' name='reviewIsPass' id="reviewSuggest" value='0' ng-model="review.isSubmit"> 建議</td>
+            <td colspan='2'><input type='radio' name='reviewIsPass' id="reviewNSuggest" value='1' ng-model="review.isSubmit"> 不建議</td>
+            <td colspan='2'><input type='radio' name='reviewIsPass' id="reviewModify" value='2' ng-model="review.isSubmit"> 修改</td>
+        </tr>
+    </table>
+</body>
