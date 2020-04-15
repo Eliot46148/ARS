@@ -5,7 +5,4 @@ router.get('/', function(req, res, next) {
     res.render('processor/'+req.params.sys+'/download', { title: 'Express' });
 });
 
-
-
-
 module.exports = router;

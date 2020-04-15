@@ -1,11 +1,12 @@
 var app = angular.module('ProcessorDownload', []);
-
 app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
     // Redirect if not login
 
     $scope.downloaddata  = function(){
-        $http.get(window.location+"/loadCsv",function(req,res){
-            
+        $http.post(window.location+"/loadCsv",{
+            data:{name : "test"}        //change to json data
+        },function(req,res){
+            alert(res.data)
         })
 
     }

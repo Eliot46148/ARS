@@ -22,27 +22,38 @@ router.get('/:sys/download', function(req, res, next) {
 });
 
 
-var fastcsv = require("fast-csv");
-var fs = require("fs");
-var ws = fs.createWriteStream("output.csv");
 
-router.get('/:sys/download/loadCsv',function(req,res,next){
-  var data ={name : "123"};
+router.post('/:sys/download/loadCsv',function(req,res,next){
+  var fs = require("fs");
+  var json2csv = require('json2csv').Parser;
+
+  data = req.body.data;
+  /*data = {
+    name : 123,
+    price : 321
+  }*/
+  const jsoncsv = new json2csv({header:true});
+  const csvData = jsoncsv.parse(data);
   console.log("start");
+  
   switch(req.params.sys){
     case "rnpp":
-      console.log(data);
-      fastcsv
-      .write(data, { headers: true })
-      .on("finish", function() {
-        console.log("Write to bezkoder_mongodb_fastcsv.csv successfully!");
+      /*console.log(data);
+      res.setHeader('Content-disposition', 'attachment; filename=theDocument.csv');
+      res.setHeader('Content-type', 'text/plain');
+      res.charset = 'UTF-8';
+      res.write(csvData);
+      res.end();*/
+      fs.writeFile('output.csv',csvData,function(err){
+        if(err) throw err;
+        console.log("saved");
       })
-      .pipe(ws);      
       console.log("finish00")
       break;
     default:
       res.render("404");
   }
+  res.json({data : "sucess"})
 })
 
 
