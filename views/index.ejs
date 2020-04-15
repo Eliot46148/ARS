@@ -17,24 +17,54 @@
     <link rel="stylesheet" href="/library/fontawesome-free-5.12.1-web/css/all.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/function-style.css">
     <script src="/library/angular.js"></script>
+    <script src="indexController.js"></script>
 </head>
 
-<body>
+<body ng-app="index" ng-controller="indexCtrl">
     <div class="container">
         <div class="row">
             <h1>首頁</h1>
         </div>
 
-        <div class="d-flex flex-column row align-items-center">
-            <a href="/function" class="m-3 btn btn-sq-lg btn btn-secondary center-vertical">
-                研發能量展現平台API
-            </a>
-            <a href="/processor" class="m-3 btn btn-sq-lg btn btn-secondary center-vertical">
-                專責人員頁面
-            </a>
-            <a href="/committee" class="m-3 btn btn-sq-lg btn btn-secondary center-vertical">
-                評審委員頁面
-            </a>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-lg-12">
+                <a href="/function" class="btn btn-sq-lg btn btn-secondary center-vertical">
+                    研發能量展現平台API
+                </a>
+                <a href="/processor" class="btn btn-sq-lg btn btn-secondary center-vertical">
+                    專責人員頁面
+                </a>
+                <a href="/committee" class="m-3 btn btn-sq-lg btn btn-secondary center-vertical">
+                    評審委員頁面
+                </a>
+                <a href="#" class="btn btn-sq-lg btn btn-secondary center-vertical" data-toggle="modal" data-target="#progress">
+                    進度查詢
+                </a>
+            </div>
+        </div>
+
+        <div class="modal fade" id="progress" tabindex="-1" role="dialog" aria-labelledby="progressTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="progressTitle">輸入員工編號</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input class="form-control" type="text" id="progressNum" ng-model="TeacherNumProgress">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="createNewFormBtn"
+                            ng-click="getProgress()">送出</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
