@@ -11,10 +11,9 @@ app.controller('functionCtrl', ($scope, $http) => {
     $scope.getForm = () => {
         $http.get(`/form?TeacherNum=${$scope.TeacherNumGet}$FormId=${$scope.FormId}`)
             .then((res) => {
-                if (res.data != null)
-                    window.location.assign(`./form?TeacherNum=${$scope.TeacherNumGet}&FormId=${$scope.FormId}`);
-                else
-                    alert('員工或表單編號錯誤!');
+                console.log(res);
+                console.log(res.data.status);             
+                window.location.assign(`./form?TeacherNum=${$scope.TeacherNumGet}&FormId=${$scope.FormId}`);
             }, (err) => alert(err.msg));
-    }    
+    }
 });

@@ -29,15 +29,14 @@ app.controller('MainCtrl', function($scope, $http, $window) {
             $scope.respond = [];
             $http.post('/committee/getFormExam', {'formId':id}).success(function(data){
                 //console.log(data);
-                $scope.triggerRespond.id = id;
+                $scope.triggerRespond.id = id;  
                 $scope.respond = data.data;
                 set_state(false);
             });
         }
         else{
             set_state(true);
-            set_state(true, 1);
-            //console.log($scope.triggerRespond.id);
+            set_state(true, 1);            
             $timeout(function() { set_state(false);}, 1500);
         }
     };
