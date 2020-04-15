@@ -7,9 +7,9 @@ app.config(function ($locationProvider) {
     });
 });
 
-app.controller('progressCtrl', ($scope, $http, $location) => {      
+app.controller('progressCtrl', ($scope, $http, $location, $window) => {
     $scope.init = () => {
-        $scope.statusDict = ['暫存中','已送出','審查中','需修改','未通過','已通過']; 
+        $scope.statusDict = ['暫存中', '已送出', '審查中', '需修改', '未通過', '已通過'];
         $scope.TeacherNum = $location.search().TeacherNum;
         $http.get('/form/progress?TeacherNum=' + $scope.TeacherNum).then(
             (res) => {
@@ -23,23 +23,23 @@ app.controller('progressCtrl', ($scope, $http, $location) => {
         console.log($scope);
     }
 
-    $scope.triggerRespond = function(id, state=0){
-        if (state==0){
-            set_state(true);
+    $scope.triggerRespond = function (id, state = 0) {
+        if (state == 0) {
             $scope.respond = [];
-            $http.post('/committee/getFormExam', {'formId':id}).success(function(data){
+            $http.post('/committee/getFormExam', { 'formId': id }).success(function (data) {
                 //console.log(data);
-                $scope.triggerRespond.id = id;  
+                $scope.triggerRespond.id = id;
                 $scope.respond = data.data;
-                set_state(false);
             });
         }
-        else{
-            set_state(true);
-            set_state(true, 1);            
-            $timeout(function() { set_state(false);}, 1500);
+        else {
         }
     };
-
+    $scope.seeRespond = function (id) {
+        var found = $scope.respond.find(element => element._id == id);
+        if (found != null) {
+            $window.open('/static/review.html?' + new URLSearchParams(found).toString(), '_blank');
+        }
+    };
     $scope.init();
 });

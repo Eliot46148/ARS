@@ -105,7 +105,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "HIGHER": $scope.HIGHER,
                 "Industry": $scope.Industry,
                 "Industry5n": $scope.Industry5n,
-                "Name": $scope.name,
+                "Name": $scope.Name,
                 "College": $scope.college,
                 "Department": $scope.department,
                 "Phone": $scope.Phone,
@@ -116,6 +116,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             })
             .then((res) => {
                 console.log(res);
+                // $scope.sendMail();
                 alert("暫存成功");
             }, (err) => {
                 alert(err.msg);
@@ -173,7 +174,11 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         });
     });
 
-    $('#video').change(function () {
+    $('#video').change(function () {        
+        if(Math.floor($('#video')[0].files[0].size/1024/1024)>100){
+            alert('影片超過限制大小(100MB)');
+            return;
+        };
         $('#progress-bar').show();
         var formData = new FormData();
         formData.append('myVideo', $('#video')[0].files[0]);
@@ -290,6 +295,24 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 console.log(res);
                 alert('送出失敗');
             }
+        });
+    }
+
+    $scope.sendMail = function (id, state) {
+        $http.get('/mailServerSecret/template').success(function (rawhtml) {
+            html = rawhtml
+                .replace('{name}', $scope.Name)
+                .replace('{topic}', $scope.ResearchTopic)
+                .replace('{password}', $scope.FormId)
+                .replace('{date_start}', $scope.date_start)
+                .replace('{date_end}', $scope.date_end)
+                .replace('{url}', 'https://www.google.com/');
+
+            $http.post('/mailServerSecret/send', {
+                'to': $scope.Email,
+                'subject': '委員通知',
+                'html': html
+            });
         });
     }
 

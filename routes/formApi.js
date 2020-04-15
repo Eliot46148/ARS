@@ -68,8 +68,7 @@ router.post('/', function (req, res, next) {
   var newForm = new formModel({
     TeacherNum: req.body.TeacherNum,
     UploadDate: req.body.UploadDate,
-    Submitted: false,
-    Ended: false
+    Status: 0
   });
   newForm.save(function (err, data) {
     if (err)
