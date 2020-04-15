@@ -151,7 +151,7 @@ router.post('/getFormExam',function(req,res){
                 for (var i=0; i<committee.length; i++){
                     var forms = committee[i].needtestform;
                     for (var j=0; j<forms.length; j++)
-                        if (forms[j].formOid == req.body.formId){
+                        if (req.body.formId == forms[j].formOid || req.body.formId==-1){
                             var form = JSON.parse(JSON.stringify(forms[j]));
                             form.name = committee[i].name;
                             form.email = committee[i].email;

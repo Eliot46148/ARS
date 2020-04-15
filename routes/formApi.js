@@ -93,6 +93,7 @@ router.put('/', function (req, res, next) {
       Email: req.body.Email,
       Description: req.body.Description,
       Evaluation: req.body.Evaluation,
+      SubmitDate: req.body.SubmitDate,
       ChartData: req.body.ChartData,
       Status: 0
     }, function (err, data) {
@@ -120,6 +121,7 @@ router.put('/submit', function (req, res, next) {
       Email: req.body.Email,
       Description: req.body.Description,
       Evaluation: req.body.Evaluation,
+      SubmitDate: req.body.SubmitDate,
       Submitted: true,
       ChartData: req.body.ChartData,
       Status: 1

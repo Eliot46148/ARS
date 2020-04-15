@@ -112,6 +112,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "Email": $scope.Email,
                 "Description": $scope.description,
                 "Evaluation": $scope.evaluation,
+                "SubmitDate": new Date(),
                 "ChartData": chartData
             })
             .then((res) => {
@@ -138,8 +139,8 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "Email": $scope.Email,
                 "Description": $scope.description,
                 "Evaluation": $scope.evaluation,
-                "ChartData": chartData,
-                "Submitted": true
+                "SubmitDate": new Date(),
+                "ChartData": chartData
             })
             .then((res) => {
                 console.log(res);
