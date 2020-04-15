@@ -22,8 +22,10 @@
 </head>
 
 <body ng-app="form" ng-controller="formCtrl">
-    <form role="form">
+    
+    <form role="form" ng-submit="submit()">
         <div class="container offset-md-1">
+            <h1 class="mb-4">研發能量展現平台 > 表單填寫</h1>
             <div class="form-group" id="teachernum">
                 <label>教師員工編號</label>
                 <h2 ng-bind="TeacherNum"></h2>
@@ -34,12 +36,12 @@
             </div>
             <div class="form-group">
                 <label>研究成果主題</label>
-                <input class="form-control col-md-10" type="text" id="ResearchTopic" ng-model="ResearchTopic">
+                <input class="form-control col-md-10" type="text" id="ResearchTopic" ng-model="ResearchTopic" required>
             </div>
             <div class="form-group">
                 <label>HIGHER研究導向</label>
-                <select class="form-control col-md-10" id="HIGHER" ng-model="HIGHER">
-                    <option>請選擇</option>
+                <select class="form-control col-md-10" id="HIGHER" ng-model="HIGHER"  required>
+                    <option value="">請選擇</option>
                     <option>Health</option>
                     <option>Intelligent</option>
                     <option>Green</option>
@@ -50,8 +52,8 @@
             </div>
             <div class="form-group">
                 <label>所屬產業類別</label>
-                <select class="form-control col-md-10" id="Industry" ng-model="Industry">
-                    <option>請選擇</option>
+                <select class="form-control col-md-10" id="Industry" ng-model="Industry"  required>
+                    <option value="">請選擇</option>
                     <option>運輸及倉儲業</option>
                     <option>礦業及土石採取業</option>
                     <option>製造業</option>
@@ -75,8 +77,8 @@
             </div>
             <div class="form-group">
                 <label>5+N產業類別</label>
-                <select class="form-control col-md-10" id="Industry5n" ng-model="Industry5n">
-                    <option>請選擇</option>
+                <select class="form-control col-md-10" id="Industry5n" ng-model="Industry5n"  required>
+                    <option value="">請選擇</option>
                     <option>「智慧機械」</option>
                     <option>「亞洲‧矽谷」</option>
                     <option>「綠能科技」</option>
@@ -91,12 +93,12 @@
             </div>
             <div class="form-group">
                 <label>研究教師姓名</label>
-                <input class="form-control col-md-10" type="text" id="Name" ng-model="Name">
+                <input class="form-control col-md-10" type="text" id="Name" ng-model="Name"  required>
             </div>
             <div class="form-group">
                 <label>教師隸屬學院</label>
-                <select class="form-control col-md-10" id="college" ng-model="college" ng-change="changeDepartments()">
-                    <option>請選擇</option>
+                <select class="form-control col-md-10" id="college" ng-model="college" ng-change="changeDepartments()"  required>
+                    <option value="">請選擇</option>
                     <option>機電學院</option>
                     <option>電資學院</option>
                     <option>工程學院</option>
@@ -110,25 +112,25 @@
             </div>
             <div class="form-group">
                 <label>教師隸屬系所</label>
-                <select class="form-control col-md-10" id="department" ng-model="department" ng-options="data for data in departments">
-                    <option>請先選擇學院</option>
+                <select class="form-control col-md-10" id="department" ng-model="department" ng-options="data for data in departments"  required>
+                    <option value="">請先選擇學院</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>教師連絡電話</label>
-                <input class="form-control col-md-10" type="text" id="Phone" ng-model="Phone">
+                <input class="form-control col-md-10" type="text" id="Phone" ng-model="Phone"  required>
             </div>
             <div class="form-group">
                 <label>教師電子郵件</label>
-                <input class="form-control col-md-10" type="text" id="Email" ng-model="Email">
+                <input class="form-control col-md-10" type="text" id="Email" ng-model="Email"  required>
             </div>
 
             <label>專利相關資訊</label>
             <div class="form-group">
                 <label class="radio-inline"></label>
-                <input type="radio" name="patentRadio" class="PatentInfoRadio" value="有" ng-model="HavePatents">有
+                <input type="radio" name="patentRadio" class="PatentInfoRadio" value="有" ng-model="HavePatents"  required>有
                 <label class="radio-inline"></label>
-                <input type="radio" name="patentRadio" class="PatentInfoRadio" checked  ng-model="HavePatents">無
+                <input type="radio" name="patentRadio" class="PatentInfoRadio" value="無" checked  ng-model="HavePatents"  required>無
             </div>
 
             <div id="patentInfo" class="panel-collapse collapse">
@@ -320,12 +322,12 @@
 
             <div class="form-group">
                 <label>成果技術摘要說明</label>
-                <textarea class="form-control col-md-10" rows="5" id="description" ng-model="description"></textarea>
+                <textarea class="form-control col-md-10" rows="5" id="description" ng-model="description"  required></textarea>
             </div>
 
             <div class="form-group">
                 <label>應用範圍及產業效益評估</label>
-                <textarea class="form-control col-md-10" rows="5" id="evaluation" ng-model="evaluation"></textarea>
+                <textarea class="form-control col-md-10" rows="5" id="evaluation" ng-model="evaluation" required></textarea>
             </div>
 
             <div class="form-group">
@@ -518,10 +520,10 @@
                 </div>
                 <button type="submit" class="btn btn-secondary m-auto col-md-2" ng-click="save()"
                     id="savebt">暫存</button>
-                <button type="submit" class="btn btn-primary m-auto col-md-2" ng-click="submit()"
-                    id="submitbt">提交</button>
-                <button type="button" class="btn btn-primary m-auto col-md-2" id="btn-test"
-                    ng-click="test()">測試用</button>
+                <input type="submit" class="btn btn-primary m-auto col-md-2" 
+                    id="submitbt" value="提交">
+                <!-- <button type="button" class="btn btn-primary m-auto col-md-2" id="btn-test"
+                    ng-click="test()">測試用</button> -->
             </div>
 
         </div>

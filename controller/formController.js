@@ -59,33 +59,39 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             $('#patentInfo').collapse('toggle');
             $scope.HavePatents = '有';
         }
-        if ($scope.Papers.length > 0)
+        else
+            $scope.HavePatents = '無';
+
+        if ($scope.Papers.length > 0) {
             $('#paperInfo').collapse('toggle');
-        $scope.HavePapers = '有';
+            $scope.HavePapers = '有';
+        }
+        else
+            $scope.HavePapers = '無';
     }
 
     $scope.initRadarChart = () => {
         if (chartData != null) {
             var col;
             var row;
-            var part="";
+            var part = "";
             for (var chartCol = 0; chartCol < chartData.length; chartCol++) {
                 radarChart.data.datasets[0].data[chartCol] = chartData[chartCol];
                 radarChart.update();
-                if(chartCol>3){
-                    row = chartData[chartCol]+11;
+                if (chartCol > 3) {
+                    row = chartData[chartCol] + 11;
                     col = chartCol - 3;
                     part = 'td2';
                 }
-                else{
+                else {
                     row = chartData[chartCol];
-                    col = chartCol+1;
-                    part= 'td1';
+                    col = chartCol + 1;
+                    part = 'td1';
                 }
                 $('table tr td[class="' + part + ' table-info"]:nth-child(' + (col + 1) + ')').removeClass('table-info');
                 $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')[class="' + part + '"]').addClass('table-info');
                 // console.log(`col: ${col}, row: ${row}, part:${part}`);
-            }           
+            }
         }
     }
 
@@ -106,9 +112,15 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "Email": $scope.Email,
                 "Description": $scope.description,
                 "Evaluation": $scope.evaluation,
+                "SubmitDate": new Date(),
                 "ChartData": chartData
             })
-            .then((res) => console.log(res), (err) => alert(err.msg));
+            .then((res) => {
+                console.log(res);
+                alert("暫存成功");
+            }, (err) => {
+                alert(err.msg);
+            });
     }
 
     $scope.submit = () => {
@@ -126,9 +138,16 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "Email": $scope.Email,
                 "Description": $scope.description,
                 "Evaluation": $scope.evaluation,
+                "SubmitDate": new Date(),
                 "ChartData": chartData
             })
-            .then((res) => console.log(res), (err) => alert(err.msg));
+            .then((res) => {
+                console.log(res);
+                alert("送出成功");
+                window.location.assign('/');
+            }, (err) => {
+                alert(err.msg);
+            });
     }
 
     $('#image').change(() => {

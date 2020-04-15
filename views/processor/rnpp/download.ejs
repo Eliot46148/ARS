@@ -90,7 +90,7 @@
                     <tbody>
                         <tr ng-repeat="form in forms">
                             <td ng-bind="form.UploadDate.substring(0, 10)"></td>
-                            <td ng-bind="form"></td>
+                            <td ng-bind="form.SubmitDate.substring(0, 10)"></td>
                             <td ng-bind="form"></td>
                             <td ng-bind="form.Deadline.substring(0, 10)"></td>
                             <td>
@@ -114,7 +114,6 @@
                             <td ng-bind="form.Description"></td>
                             <td ng-bind="form.Evaluation"></td>
                             <td ng-repeat="data in form.ChartData track by $index" ng-bind="data" ng-if="form.ChartData!==undefined"></td>
-                            <td ng-repeat="data in [null, null, null, null, null, null, null, null] track by $index" ng-bind="data" ng-if="!form.ChartData[0]"></td>
                             <td ng-bind="form"></td>
                             <td ng-bind="form"></td>
                         </tr>
