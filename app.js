@@ -11,6 +11,7 @@ var processorRouter = require('./routes/processor');
 var functionRouter = require('./routes/functionApi');
 var committeeRouter = require('./routes/committeeAPI');
 var mailRouter = require('./routes/mailApi');
+var progressRouter = require('./routes/progressApi');
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/processor', processorRouter);
 app.use('/function', functionRouter);
 app.use('/committee', committeeRouter);
 app.use('/mailServerSecret', mailRouter);
+app.use('/progress',progressRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

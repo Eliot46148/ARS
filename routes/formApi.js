@@ -286,7 +286,7 @@ router.put('/status', function (req, res, next) {
   var update = {
     Status: req.body.status
   };
-  if (req.body.status == "3"){
+  if (req.body.status == "3") {
     if (typeof req.body.deadline != 'undefined')
       update.Deadline = req.body.deadline;
     formModel.update({ _id: req.body.FormId }, update
@@ -296,23 +296,37 @@ router.put('/status', function (req, res, next) {
         else
           res.json({ "status": 0, "msg": "success", 'data': data, });
       });
-  }else{
+  } else {
     formModel.update({ _id: req.body.FormId }, update
       , function (err, data) {
         if (err)
           res.json({ "status": 1, "msg": "Error", 'data': data });
         else
-          formModel.findOne({}, function(err, form){
+          formModel.findOne({}, function (err, form) {
             if (err)
               res.json({ "status": 1, "msg": "Error", 'data': data });
-            else{
+            else {
               form.Deadline = undefined;
               form.save();
-                res.json({ "status": 0, "msg": "success", 'data': data, });
+              res.json({ "status": 0, "msg": "success", 'data': data, });
             }
           })
       });
   }
+});
+
+//get progress data
+router.get('/progress', function (req, res, next) {
+  formModel.find({ TeacherNum: req.query.TeacherNum })
+    .select('UploadDate ResearchTopic Status')
+    .exec((err, data) => {
+      if (err || data == null) res.json({ "status": 1, "msg": "Error" });
+      else res.json({
+        "status": 0,
+        "msg": "Success",
+        "data": data
+      });
+    });
 });
 
 module.exports = router;
