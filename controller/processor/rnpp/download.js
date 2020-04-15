@@ -2,6 +2,14 @@ var app = angular.module('ProcessorDownload', []);
 
 app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
     // Redirect if not login
+
+    $scope.downloaddata  = function(){
+        $http.get(window.location+"/loadCsv",function(req,res){
+            
+        })
+
+    }
+
     if (!$.cookie('account')){window.location='/processor';}
 
     var set_state = function(load, state=0){

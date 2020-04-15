@@ -12,6 +12,7 @@
     "debug": "~2.6.9",
     "ejs": "^3.0.1",
     "express": "~4.16.1",
+    "fast-csv": "^4.1.3",
     "fs": "0.0.1-security",
     "googleapis": "^48.0.0",
     "grid-fs": "^1.0.1",
