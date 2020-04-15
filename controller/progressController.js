@@ -23,5 +23,23 @@ app.controller('progressCtrl', ($scope, $http, $location) => {
         console.log($scope);
     }
 
+    $scope.triggerRespond = function(id, state=0){
+        if (state==0){
+            set_state(true);
+            $scope.respond = [];
+            $http.post('/committee/getFormExam', {'formId':id}).success(function(data){
+                //console.log(data);
+                $scope.triggerRespond.id = id;  
+                $scope.respond = data.data;
+                set_state(false);
+            });
+        }
+        else{
+            set_state(true);
+            set_state(true, 1);            
+            $timeout(function() { set_state(false);}, 1500);
+        }
+    };
+
     $scope.init();
 });

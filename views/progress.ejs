@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>進度查詢</title>
+    <title>研發能量展現平台 > 查詢/修改資料</title>
 
     <script src="/library/jquery-3.4.1.min.js"></script>
     <script src="/library/bootstrap.bundle.min.js"></script>
@@ -17,14 +17,14 @@
     <link rel="stylesheet" href="/library/fontawesome-free-5.12.1-web/css/all.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/function-style.css">
     <script src="/library/angular.js"></script>
-    <script src="/progressController.js"></script>    
+    <script src="progressController.js"></script>
 </head>
 
 <body ng-app="progress"  ng-controller="progressCtrl">
     <div class="container">
         <div class="row d-flex justify-content-between">
             <h1>進度查詢</h1>
-            <button onclick="location.href='/'" class="btn btn-sq-lg btn-danger">
+            <button onclick="location.href='/processor/overview?sys=rnpp'" class="btn btn-sq-lg btn-danger">
                 <i class="fa fa-reply fa-1x"></i><br />
                 <br>返回
             </button>
@@ -42,14 +42,69 @@
             </thead>
             <tbody>
                 <tr ng-repeat="form in forms">
-                    <td ng-bind="form.UploadDate.substring(0, 10)"></td>
+                    <td ng-bind="form.UploadDate.substring(0, 10)"></td>                    
                     <td ng-bind="form.ResearchTopic"></td>
-                    <td>研發能量發展平台</td>                    
-                    <td ng-bind="statusDict[form.Status]"></td>
-                    <td>點選</td>
+                    <td>
+                        研發能量發展平台
+                    </td>
+                    <td>
+                        <p ng-bind="statusDict[form.Status]"></p>                        
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#respondModal" ng-click="triggerRespond(form._id)">點選</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="modal fade" id="respondModal" tabindex="-1" role="dialog" aria-labelledby="respondModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="clear()">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    <div ng-show="loading">
+                        <div class="check_mark" ng-show="loading_state == 1">
+                            <div class="sa-icon sa-success animate">
+                            <span class="sa-line sa-tip animateSuccessTip"></span>
+                            <span class="sa-line sa-long animateSuccessLong"></span>
+                            <div class="sa-placeholder"></div>
+                            <div class="sa-fix"></div>
+                            </div>
+                        </div>
+                        <div class="w-100 d-flex justify-content-center" ng-show="loading_state == 0"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+                    </div>
+                    <table class="table table-bordered" ng-show="!loading" ng-if="respond.length > 0">
+                        <thead>
+                            <th scope="col">送出時間</th>
+                            <th scope="col">審查期限</th>
+                            <th scope="col">委員姓名</th>
+                            <th scope="col">委員郵件</th>
+                            <th scope="col">回收狀況</th>
+                            <th scope="col">查看建議</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="response in respond">
+                                <td ng-bind="response.submitDate.substring(0, 10)"></td>
+                                <td ng-bind="response.deadLine.substring(0, 10)"></td>
+                                <td ng-bind="response.name"></td>
+                                <td ng-bind="response.email"></td>
+                                <td ng-bind="response.isPass ? '已回傳' : '尚未回傳'">已回傳</td>
+                                <td>
+                                    <a type="button" class="btn btn-primary text-white" ng-click="seeRespond(response._id)" ng-class="response.isPass ? '' : 'disabled'">點選</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p ng-show="!loading" ng-if="respond.length == 0">查無資料。</p>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
