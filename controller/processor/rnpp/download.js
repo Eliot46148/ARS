@@ -28,130 +28,6 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
     
                         for (var j=0; j<examData.data.length; j++){
                             if (examData.data[j].formOid == form._id){
-
-                                var submitDate = new Date(examData.data[j].submitDate)
-                                var deadLine = new Date(examData.data[j].deadLine);
-                                var opinion = examData.data[j].opinion;
-                                var StudyandData = examData.data[j].StudyandData;
-                                var Marketassessment = examData.data[j].Marketassessment;
-                                var ManufacturingEvaluation = examData.data[j].ManufacturingEvaluation;
-                                var FinancialEvaluation = examData.data[j].FinancialEvaluation;
-                                var isSubmit = examData.data[j].isSubmit;
-                                var name = examData.data[j].name;
-
-                                if(form.name !== undefined){
-                                    form.name = name;
-                                }else{
-                                    form.name = "";
-                                }
-                                
-                                if(form.StudyandData !== undefined){
-                                    var st = ""
-                                    switch (StudyandData){
-                                        case 0:
-                                            st = "符合";
-                                            break;
-                                        case 1:
-                                            st = "不符合";
-                                            break;
-                                    }
-                                    form.StudyandData = st;
-                                }else{
-                                    form.StudyandData = "";
-                                }
-                                
-                                if(form.Marketassessment !== undefined){
-                                    var st = ""
-                                    switch (Marketassessment){
-                                        case 0:
-                                            st = "Yes";
-                                            break;
-                                        case 1:
-                                            st = "No";
-                                            break;
-                                    }
-
-                                    form.Marketassessment = st;
-                                }else{
-                                    form.Marketassessment = "";
-                                }
-                                
-                                if(form.ManufacturingEvaluation !== undefined){
-                                    var st = ""
-                                    switch (ManufacturingEvaluation){
-                                        case 0:
-                                            st = "Yes";
-                                            break;
-                                        case 1:
-                                            st = "No";
-                                            break;
-                                    }
-                                    form.ManufacturingEvaluation = st;
-                                }else{
-                                    form.ManufacturingEvaluation = "";
-                                }
-                                
-                                if(form.FinancialEvaluation !== undefined){
-                                    var st = ""
-                                    switch (FinancialEvaluation){
-                                        case 0:
-                                            st = "Yes";
-                                            break;
-                                        case 1:
-                                            st = "No";
-                                            break;
-                                    }
-
-                                    form.FinancialEvaluation = st;
-                                }else{
-                                    form.FinancialEvaluation = "";
-                                }
-                                
-                                if(form.isSubmit !==undefined){
-                                    var st = ""
-                                    switch (isSubmit){
-                                        case 0:
-                                            st = "建議";
-                                            break;
-                                        case 1:
-                                            st = "不建議";
-                                            break;
-                                        case 2:
-                                            st ="修改";
-                                            break;
-                                    }
-
-                                    form.isSubmit = st;
-                                }else{
-                                    form.isSubmit = "";
-                                }
-
-                                if(form.name !== undefined){
-                                    form.name = name;
-                                }else{
-                                    form.name = "";
-                                }
-                                
-                                if(form.opinion !== undefined){
-                                    form.opinion = opinion;
-                                }else{
-                                    form.opinion = "";
-                                }
-                                
-                                if (form.startDate !== undefined){
-                                    if (dates.compare(form.startDate, submitDate))
-                                    form.startDate = submitDate;
-                                }else{
-                                    form.startDate = new Date();
-                                }
-    
-                                if (form.endDate !== undefined){
-                                    if (dates.compare(form.endDate, deadLine))
-                                    form.endDate = deadLine;
-                                }else{
-                                    form.endDate = new Date();
-                                }
-    
                                 form.committees.push(examData.data[j]);
                                 if (form.committees.length > $scope.max)
                                     $scope.max = form.committees.length;
@@ -185,12 +61,196 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                             "科學成熟度": form.ChartData[6],
                             "社會貢獻成熟度": form.ChartData[7],
                             "創新成熟度綜合評估": null,
-                            "創新成熟度平均等級": null
+                            "創新成熟度平均等級": null,
+                            "committees": form.committees
                         });
                         $scope.recursion(i+1);
                     });
                 }else{
-                    console.log($scope.forms);
+                    $scope.forms = $scope.forms.map(function(item, index, array){
+                        var form = item;
+                        var committees = JSON.parse(JSON.stringify(form.committees));
+                        delete form.committees;
+
+                        for (var j=0; j<$scope.max; j++){
+                            if (committees[j] !== undefined){
+                                var committee = {};
+                                var opinion = committees[j].opinion;
+                                var isSubmit = committees[j].isSubmit;
+                                var StudyandData = committees[j].StudyandData;
+                                var Marketassessment = committees[j].Marketassessment;
+                                var ManufacturingEvaluation = committees[j].ManufacturingEvaluation;
+                                var FinancialEvaluation = committees[j].FinancialEvaluation;
+                                var name = committees[j].name;
+
+                                if(name !== undefined){
+                                    committee.name = name;
+                                }else{
+                                    committee.name = "";
+                                }
+                                
+                                if(StudyandData !== undefined){
+                                    var st = ""
+                                    switch (StudyandData){
+                                        case 0:
+                                            st = "符合";
+                                            break;
+                                        case 1:
+                                            st = "不符合";
+                                            break;
+                                    }
+                                    committee.StudyandData = st;
+                                }else{
+                                    committee.StudyandData = "";
+                                }
+                                
+                                if(Marketassessment !== undefined){
+                                    var st = ""
+                                    switch (Marketassessment){
+                                        case 0:
+                                            st = "Yes";
+                                            break;
+                                        case 1:
+                                            st = "No";
+                                            break;
+                                    }
+
+                                    committee.Marketassessment = st;
+                                }else{
+                                    committee.Marketassessment = "";
+                                }
+                                
+                                if(ManufacturingEvaluation !== undefined){
+                                    var st = ""
+                                    switch (ManufacturingEvaluation){
+                                        case 0:
+                                            st = "Yes";
+                                            break;
+                                        case 1:
+                                            st = "No";
+                                            break;
+                                    }
+                                    committee.ManufacturingEvaluation = st;
+                                }else{
+                                    committee.ManufacturingEvaluation = "";
+                                }
+                                
+                                if(FinancialEvaluation !== undefined){
+                                    var st = ""
+                                    switch (FinancialEvaluation){
+                                        case 0:
+                                            st = "Yes";
+                                            break;
+                                        case 1:
+                                            st = "No";
+                                            break;
+                                    }
+
+                                    committee.FinancialEvaluation = st;
+                                }else{
+                                    committee.FinancialEvaluation = "";
+                                }
+                                
+                                if(isSubmit !==undefined){
+                                    var st = ""
+                                    switch (isSubmit){
+                                        case 0:
+                                            st = "建議";
+                                            break;
+                                        case 1:
+                                            st = "不建議";
+                                            break;
+                                        case 2:
+                                            st ="修改";
+                                            break;
+                                    }
+
+                                    committee.isSubmit = st;
+                                }else{
+                                    committee.isSubmit = "";
+                                }
+                                
+                                if(opinion !== undefined){
+                                    committee.opinion = opinion;
+                                }else{
+                                    committee.opinion = "";
+                                }
+
+                                form["委員"+(j+1).toString()+"姓名"] = committee.name;
+                                form["委員"+(j+1).toString()+"表單類型"] = committees[j].fromType;
+                                form["委員"+(j+1).toString()+"回覆日期"] = committees[j].respondDate;
+                                form["委員"+(j+1).toString()+"市場評估"] = committee.Marketassessment;
+                                form["委員"+(j+1).toString()+"製造評估"] = committee.ManufacturingEvaluation;
+                                form["委員"+(j+1).toString()+"財務評估"] = committee.FinancialEvaluation;
+                                form["委員"+(j+1).toString()+"研究佐證資料比較"] = committee.StudyandData;
+                                form["委員"+(j+1).toString()+"意見"] = committee.opinion;
+                                form["委員"+(j+1).toString()+"總體評估"] = committee.isSubmit;
+                            }else{
+                                form["委員"+(j+1).toString()+"姓名"] = null;
+                                form["委員"+(j+1).toString()+"表單類型"] = null;
+                                form["委員"+(j+1).toString()+"回覆日期"] = null;
+                                form["委員"+(j+1).toString()+"市場評估"] = null;
+                                form["委員"+(j+1).toString()+"製造評估"] = null;
+                                form["委員"+(j+1).toString()+"財務評估"] = null;
+                                form["委員"+(j+1).toString()+"研究佐證資料比較"] = null;
+                                form["委員"+(j+1).toString()+"意見"] = null;
+                                form["委員"+(j+1).toString()+"總體評估"] = null;
+                            }
+                        }
+                        return form;
+                    });
+                    $scope.fields = ["填寫時間",
+                    "送出時間",
+                    "審查起始日",
+                    "審查終止日",
+                    "審核結果",
+                    "教師員工編號",
+                    "教師姓名",
+                    "隸屬學院",
+                    "隸屬系所",
+                    "電子郵件",
+                    "連絡電話",
+                    "主題",
+                    "領域",
+                    "產業類別",
+                    "5+N產業類別",
+                    "成果摘要",
+                    "成果應用範疇",
+                    "需求成熟度",
+                    "市場成熟度",
+                    "投資成熟度",
+                    "製造成熟度",
+                    "技術成熟度",
+                    "組織成熟度",
+                    "科學成熟度",
+                    "社會貢獻成熟度",
+                    "創新成熟度綜合評估",
+                    "創新成熟度平均等級"];
+                    for (var j=0; j<$scope.max; j++){
+                        $scope.fields.push("委員"+(j+1).toString()+"姓名");
+                        $scope.fields.push("委員"+(j+1).toString()+"表單類型");
+                        $scope.fields.push("委員"+(j+1).toString()+"回覆日期");
+                        $scope.fields.push("委員"+(j+1).toString()+"市場評估");
+                        $scope.fields.push("委員"+(j+1).toString()+"製造評估");
+                        $scope.fields.push("委員"+(j+1).toString()+"財務評估");
+                        $scope.fields.push("委員"+(j+1).toString()+"研究佐證資料比較");
+                        $scope.fields.push("委員"+(j+1).toString()+"意見");
+                        $scope.fields.push("委員"+(j+1).toString()+"總體評估");
+                    }
+                    
+                    $http.post(window.location+"/loadCsv",{
+                        fields:$scope.fields,
+                        data:$scope.forms
+                    }).success(function(data){
+                        var anchor = angular.element('<a/>');
+                        anchor.attr({
+                            href: 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + encodeURI(data),
+                            target: '_blank',
+                            download: '表單紀錄.csv'
+                        })[0].click();
+                    })
+
+                    // console.log($scope.forms);
                     $timeout(function() {
                         set_state(false);
                     }, 1500);
@@ -199,46 +259,6 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
             $scope.load = $scope.recursion(0);
         });
     });
-
-    $scope.download = function(){
-        $http.post(window.location+"/loadCsv",{
-            fields:["填寫時間",
-            "送出時間",
-            "審查起始日",
-            "審查終止日",
-            "審核結果",
-            "教師員工編號",
-            "教師姓名",
-            "隸屬學院",
-            "隸屬系所",
-            "電子郵件",
-            "連絡電話",
-            "主題",
-            "領域",
-            "產業類別",
-            "5+N產業類別",
-            "成果摘要",
-            "成果應用範疇",
-            "需求成熟度",
-            "市場成熟度",
-            "投資成熟度",
-            "製造成熟度",
-            "技術成熟度",
-            "組織成熟度",
-            "科學成熟度",
-            "社會貢獻成熟度",
-            "創新成熟度綜合評估",
-            "創新成熟度平均等級"],
-            data:$scope.forms
-        }).success(function(data){
-            var anchor = angular.element('<a/>');
-            anchor.attr({
-                href: 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + encodeURI(data),
-                target: '_blank',
-                download: '表單紀錄.csv'
-            })[0].click();
-        })
-    };
 });
 
 if (!$.cookie('account')){window.location='/processor';}

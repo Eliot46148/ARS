@@ -40,6 +40,7 @@ router.post('/committeeregistered',function(req,res){
                         isPass: false,                          /*委員是否送出*/
                         submitDate : req.body.submitDate,       /*開始日期*/
                         deadLine : req.body.deadLine,           /*結束日期*/
+                        respondDate : req.body.respondDate,     /*回覆日期*/
                         paperType : req.body.paperType,         /*研究類型*/
                         paperTheme : req.body.paperTheme,       /*研究主題*/
                         fromType : req.body.fromType,            /*填寫表單的樣式(0,1)型態是numbernumber*/
@@ -71,6 +72,7 @@ router.post('/committeeregistered',function(req,res){
                             isPass: false,                          /*委員是否送出*/
                             submitDate : req.body.submitDate,       /*開始日期*/
                             deadLine : req.body.deadLine,           /*結束日期*/
+                            respondDate : req.body.respondDate,     /*回覆日期*/
                             paperType : req.body.paperType,         /*研究類型*/
                             paperTheme : req.body.paperTheme,       /*研究主題*/
                             fromType : req.body.fromType,            /*填寫表單的樣式(0,1)*/    
