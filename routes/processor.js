@@ -32,7 +32,7 @@ router.post('/:sys/download/loadCsv',function(req,res,next){
     name : 123,
     price : 321
   }*/
-  const jsoncsv = new json2csv({header:true, excelStrings:true, withBOM: true});
+  const jsoncsv = new json2csv({fields: req.body.fields, header:true, withBOM: true});
   const csvData = jsoncsv.parse(data);
   console.log("start");
   
