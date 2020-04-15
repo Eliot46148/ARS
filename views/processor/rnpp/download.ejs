@@ -49,71 +49,8 @@
                 </div>
             </div>
             
-            <div ng-show="!loading" style="overflow: auto;">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">填寫時間</th>
-                            <th scope="col">送出時間</th>
-                            <th scope="col">審查起始日</th>
-                            <th scope="col">審查終止日</th>
-                            <th scope="col">審核結果</th>
-                            <th scope="col">教師員工編號</th>
-                            <th scope="col">教師姓名</th>
-                            <th scope="col">隸屬學院</th>
-                            <th scope="col">隸屬系所</th>
-                            <th scope="col">電子郵件</th>
-                            <th scope="col">連絡電話</th>
-                            <th scope="col">主題</th>
-                            <th scope="col">領域</th>
-                            <th scope="col">產業類別</th>
-                            <th scope="col">5+N產業類別</th>
-                            <th scope="col">成果摘要</th>
-                            <th scope="col">成果應用範疇</th>
-                            <th scope="col">需求成熟度</th>
-                            <th scope="col">市場成熟度</th>
-                            <th scope="col">投資成熟度</th>
-                            <th scope="col">製造成熟度</th>
-                            <th scope="col">技術成熟度</th>
-                            <th scope="col">組織成熟度</th>
-                            <th scope="col">科學成熟度</th>
-                            <th scope="col">社會貢獻成熟度</th>
-                            <th scope="col">創新成熟度綜合評估</th>
-                            <th scope="col">創新成熟度平均等級</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="form in forms">
-                            <td ng-bind="form.UploadDate.substring(0, 10)"></td>
-                            <td ng-bind="form.SubmitDate.substring(0, 10)"></td>
-                            <td ng-bind="form"></td>
-                            <td ng-bind="form.Deadline.substring(0, 10)"></td>
-                            <td>
-                                <p ng-if="form.Status==0">尚未送出</p>
-                                <p ng-if="form.Status==1">未審查</p>
-                                <p ng-if="form.Status==2">審查中</p>
-                                <p ng-if="form.Status==3">修改</p>
-                                <p ng-if="form.Status==4">未通過</p>
-                                <p ng-if="form.Status==5">通過</p>
-                            </td>
-                            <td ng-bind="form.TeacherNum"></td>
-                            <td ng-bind="form.Name"></td>
-                            <td ng-bind="form.College"></td>
-                            <td ng-bind="form.Department"></td>
-                            <td ng-bind="form.Email"></td>
-                            <td ng-bind="form.Phone"></td>
-                            <td ng-bind="form.ResearchTopic"></td>
-                            <td ng-bind="form.HIGHER"></td>
-                            <td ng-bind="form.Industry"></td>
-                            <td ng-bind="form.Industry5n"></td>
-                            <td ng-bind="form.Description"></td>
-                            <td ng-bind="form.Evaluation"></td>
-                            <td ng-repeat="data in form.ChartData track by $index" ng-bind="data" ng-if="form.ChartData!==undefined"></td>
-                            <td ng-bind="form"></td>
-                            <td ng-bind="form"></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div ng-show="!loading">
+                <a class="btn btn-primary text-white" ng-click="download()">下載</a>
             </div>
         </div>
     </div>
