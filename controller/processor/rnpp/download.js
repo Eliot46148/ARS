@@ -158,7 +158,35 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                             }
                         }
         
-                        $scope.forms.push(form);
+                        $scope.forms.push({
+                            "填寫時間": new Date(form.UploadDate),
+                            "送出時間": new Date(form.SubmitDate),
+                            "審查起始日": form.startDate,
+                            "審查終止日": form.endDate,
+                            "審核結果": (form.Status==3?"修改":form.Status==4?"未通過":form.Status==5?"通過":"尚未送出"),
+                            "教師員工編號": form.TeacherNum,
+                            "教師姓名": form.Name,
+                            "隸屬學院": form.College,
+                            "隸屬系所": form.Department,
+                            "電子郵件": form.Email,
+                            "連絡電話": form.Phone,
+                            "主題": form.ResearchTopic,
+                            "領域": form.HIGHER,
+                            "產業類別": form.Industry,
+                            "5+N產業類別": form.Industry5n,
+                            "成果摘要": form.Description,
+                            "成果應用範疇": form.Evaluation,
+                            "需求成熟度": form.ChartData[0],
+                            "市場成熟度": form.ChartData[1],
+                            "投資成熟度": form.ChartData[2],
+                            "製造成熟度": form.ChartData[3],
+                            "技術成熟度": form.ChartData[4],
+                            "組織成熟度": form.ChartData[5],
+                            "科學成熟度": form.ChartData[6],
+                            "社會貢獻成熟度": form.ChartData[7],
+                            "創新成熟度綜合評估": null,
+                            "創新成熟度平均等級": null
+                        });
                         $scope.recursion(i+1);
                     });
                 }else{
@@ -173,7 +201,36 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
     });
 
     $scope.download = function(){
-        $http.post(window.location+"/loadCsv",{data:$scope.forms}).success(function(data){
+        $http.post(window.location+"/loadCsv",{
+            fields:["填寫時間",
+            "送出時間",
+            "審查起始日",
+            "審查終止日",
+            "審核結果",
+            "教師員工編號",
+            "教師姓名",
+            "隸屬學院",
+            "隸屬系所",
+            "電子郵件",
+            "連絡電話",
+            "主題",
+            "領域",
+            "產業類別",
+            "5+N產業類別",
+            "成果摘要",
+            "成果應用範疇",
+            "需求成熟度",
+            "市場成熟度",
+            "投資成熟度",
+            "製造成熟度",
+            "技術成熟度",
+            "組織成熟度",
+            "科學成熟度",
+            "社會貢獻成熟度",
+            "創新成熟度綜合評估",
+            "創新成熟度平均等級"],
+            data:$scope.forms
+        }).success(function(data){
             var anchor = angular.element('<a/>');
             anchor.attr({
                 href: 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + encodeURI(data),
