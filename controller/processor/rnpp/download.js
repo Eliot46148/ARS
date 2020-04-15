@@ -28,8 +28,116 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
     
                         for (var j=0; j<examData.data.length; j++){
                             if (examData.data[j].formOid == form._id){
-                                var submitDate = new Date(examData.data[j].submitDate), deadLine = new Date(examData.data[j].deadLine);
-    
+
+                                var submitDate = new Date(examData.data[j].submitDate)
+                                var deadLine = new Date(examData.data[j].deadLine);
+                                var opinion = examData.data[j].opinion;
+                                var StudyandData = examData.data[j].StudyandData;
+                                var Marketassessment = examData.data[j].Marketassessment;
+                                var ManufacturingEvaluation = examData.data[j].ManufacturingEvaluation;
+                                var FinancialEvaluation = examData.data[j].FinancialEvaluation;
+                                var isSubmit = examData.data[j].isSubmit;
+                                var name = examData.data[j].name;
+
+                                if(form.name !== undefined){
+                                    form.name = name;
+                                }else{
+                                    form.name = "";
+                                }
+                                
+                                if(form.StudyandData !== undefined){
+                                    var st = ""
+                                    switch (StudyandData){
+                                        case 0:
+                                            st = "符合";
+                                            break;
+                                        case 1:
+                                            st = "不符合";
+                                            break;
+                                    }
+                                    form.StudyandData = st;
+                                }else{
+                                    form.StudyandData = "";
+                                }
+                                
+                                if(form.Marketassessment !== undefined){
+                                    var st = ""
+                                    switch (Marketassessment){
+                                        case 0:
+                                            st = "Yes";
+                                            break;
+                                        case 1:
+                                            st = "No";
+                                            break;
+                                    }
+
+                                    form.Marketassessment = st;
+                                }else{
+                                    form.Marketassessment = "";
+                                }
+                                
+                                if(form.ManufacturingEvaluation !== undefined){
+                                    var st = ""
+                                    switch (ManufacturingEvaluation){
+                                        case 0:
+                                            st = "Yes";
+                                            break;
+                                        case 1:
+                                            st = "No";
+                                            break;
+                                    }
+                                    form.ManufacturingEvaluation = st;
+                                }else{
+                                    form.ManufacturingEvaluation = "";
+                                }
+                                
+                                if(form.FinancialEvaluation !== undefined){
+                                    var st = ""
+                                    switch (FinancialEvaluation){
+                                        case 0:
+                                            st = "Yes";
+                                            break;
+                                        case 1:
+                                            st = "No";
+                                            break;
+                                    }
+
+                                    form.FinancialEvaluation = st;
+                                }else{
+                                    form.FinancialEvaluation = "";
+                                }
+                                
+                                if(form.isSubmit !==undefined){
+                                    var st = ""
+                                    switch (isSubmit){
+                                        case 0:
+                                            st = "建議";
+                                            break;
+                                        case 1:
+                                            st = "不建議";
+                                            break;
+                                        case 2:
+                                            st ="修改";
+                                            break;
+                                    }
+
+                                    form.isSubmit = st;
+                                }else{
+                                    form.isSubmit = "";
+                                }
+
+                                if(form.name !== undefined){
+                                    form.name = name;
+                                }else{
+                                    form.name = "";
+                                }
+                                
+                                if(form.opinion !== undefined){
+                                    form.opinion = opinion;
+                                }else{
+                                    form.opinion = "";
+                                }
+                                
                                 if (form.startDate !== undefined){
                                     if (dates.compare(form.startDate, submitDate))
                                     form.startDate = submitDate;
