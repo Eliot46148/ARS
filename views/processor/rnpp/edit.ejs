@@ -42,8 +42,8 @@
                     <th scope="col">教師姓名</th>
                     <th scope="col">主題</th>
                     <th scope="col">查詢與修改</th>
-                    <th scope="col">審查結果</th>
-                    <th scope="col">審查意見</th>
+                    <th scope="col">教師申請情況</th>
+                    <th scope="col">審查狀態</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,12 +55,12 @@
                         <a type="button" class="btn btn-primary text-white" ng-click="triggerView(form.TeacherNum, form._id)">點選</a>
                     </td>
                     <td>
-                        <p ng-if="form.Status==0">尚未送出</p>
-                        <p ng-if="form.Status==1">未審查</p>
+                        <p ng-if="form.Status==0">教師暫存</p>
+                        <p ng-if="form.Status==1">未派審</p>
                         <p ng-if="form.Status==2">審查中</p>
-                        <p ng-if="form.Status==3">修改</p>
-                        <p ng-if="form.Status==4">未通過</p>
-                        <p ng-if="form.Status==5">通過</p>
+                        <p ng-if="form.Status==3">已審畢</p>
+                        <p ng-if="form.Status==4">已審畢</p>
+                        <p ng-if="form.Status==5">已審畢</p>
                     </td>
                     <td>
                         <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#respondModal" ng-click="triggerRespond(form._id)">點選</a>

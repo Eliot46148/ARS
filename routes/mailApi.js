@@ -27,6 +27,10 @@ const smtpTransport = nodemailer.createTransport({
          clientSecret: credentials.clientSecret,
          refreshToken: credentials.refreshToken,
          accessToken: accessToken
+    },
+    secure: false,
+    tls: {
+        rejectUnauthorized: false
     }
 });
 
