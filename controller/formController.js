@@ -30,11 +30,15 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     chartData = data.ChartData;
                     $scope.Patents = data.Patent;
                     $scope.Papers = data.Paper;
+                    $scope.marketDemand = data.MarketDemand;
+                    $scope.competitiveness = data.Competitiveness;
+                    $scope.cost = data.Cost;
                     showImage(data.Image);
                     showVideo(data.Video);
                     $scope.changeDepartments();
                     $scope.initPatentAndPaper();
                     $scope.initRadarChart();
+                    $scope.initCommercializationRadio();
                 }
             },
             (err) => {
@@ -78,6 +82,15 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         else
             $scope.HavePapers = '無';
     }
+
+    $scope.initCommercializationRadio = function () {
+        if($scope.marketDemand != null || $scope.competitiveness != null || $scope.cost != null){
+            $scope.isCommercialization = "是";
+            $('#CommercializationPanel').collapse('toggle');
+        }
+        else
+            $scope.isCommercialization = "否";
+    };
 
     /** Initialize the radar chart via data from DB*/
     $scope.initRadarChart = () => {
@@ -123,6 +136,9 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "Email": $scope.Email,
                 "Description": $scope.description,
                 "Evaluation": $scope.evaluation,
+                "MarketDemand": $scope.marketDemand,
+                "Competitiveness": $scope.competitiveness,
+                "Cost": $scope.cost,
                 "SubmitDate": new Date(),
                 "ChartData": chartData
             })
@@ -136,32 +152,37 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.submit = () => {
-        $http.put('/form/submit?FormId=' + $scope.FormId,
-            {
-                'TeacherNum': $scope.TeacherNum,
-                "ResearchTopic": $scope.ResearchTopic,
-                "HIGHER": $scope.HIGHER,
-                "HIGHER2": $scope.HIGHER2,
-                "Industry": $scope.Industry,
-                "Industry2": $scope.Industry2,
-                "Industry5n": $scope.Industry5n,
-                "Name": $scope.Name,
-                "College": $scope.college,
-                "Department": $scope.department,
-                "Phone": $scope.Phone,
-                "Email": $scope.Email,
-                "Description": $scope.description,
-                "Evaluation": $scope.evaluation,
-                "SubmitDate": new Date(),
-                "ChartData": chartData
-            })
-            .then((res) => {
-                console.log(res);
-                alert("送出成功");
-                window.location.assign('/');
-            }, (err) => {
-                alert(err.msg);
-            });
+        if (confirm("確認送出？")) {
+            $http.put('/form/submit?FormId=' + $scope.FormId,
+                {
+                    'TeacherNum': $scope.TeacherNum,
+                    "ResearchTopic": $scope.ResearchTopic,
+                    "HIGHER": $scope.HIGHER,
+                    "HIGHER2": $scope.HIGHER2,
+                    "Industry": $scope.Industry,
+                    "Industry2": $scope.Industry2,
+                    "Industry5n": $scope.Industry5n,
+                    "Name": $scope.Name,
+                    "College": $scope.college,
+                    "Department": $scope.department,
+                    "Phone": $scope.Phone,
+                    "Email": $scope.Email,
+                    "Description": $scope.description,
+                    "Evaluation": $scope.evaluation,
+                    "MarketDamand": $scope.marketDemand,
+                    "Competitiveness": $scope.competitiveness,
+                    "Cost": $scope.cost,
+                    "SubmitDate": new Date(),
+                    "ChartData": chartData
+                })
+                .then((res) => {
+                    console.log(res);
+                    alert("送出表單成功");
+                    window.location.assign('/');
+                }, (err) => {
+                    alert(err.msg);
+                });
+        }
     }
 
     $('#image').change(() => {
@@ -288,7 +309,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     };
 
     $scope.UploadPaper = () => {
-        var formData = new FormData();        
+        var formData = new FormData();
         formData.append('myPaper', $('#paper-file')[0].files[0]);
         var url = `/form/paper?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
         if (!$scope.IsPaperRequiredFieldValid()) return;

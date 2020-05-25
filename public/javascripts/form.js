@@ -104,3 +104,22 @@ $('#paperPublished').change(function () {
 $('.paperUnPublished').change(function () {
     $('#paperFileField').collapse('hide');
 });
+
+$('.CommercializationRadio').change(function(){
+    $('#CommercializationPanel').collapse('toggle');
+});
+
+$('#CommercializationTrue').click(function(){
+    $('.CommercializationFields').prop('required',true);
+});
+
+$('#CommercializationFalse').click(function(){
+    $('.CommercializationFields').prop('required',false);
+});
+
+function show_confirm() {
+    if(!confirm("Do you really want to do this?")) {
+      return false;
+    }
+    this.form.submit();
+  }

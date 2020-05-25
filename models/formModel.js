@@ -16,6 +16,9 @@ var formSchema = new mongoose.Schema({
     Email: String,          // 教師電子郵件
     Description: String,    // 成果技術摘要說明
     Evaluation: String,     // 應用範圍及產業效益評估
+    MarketDemand: String,   // 市場需求價值
+    Competitiveness: String,// 技術競爭性
+    Cost: String,           // 商品化成本規劃
     UploadDate: {           // 建立日期
         type: Date,
         default: Date.now
