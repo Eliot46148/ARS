@@ -8,7 +8,6 @@ app.config(function ($locationProvider) {
 });
 
 app.controller('formCtrl', ($scope, $http, $location) => {
-
     $scope.init = () => {
         console.log($scope);
         $http.get('/form/data?FormId=' + $scope.FormId).then(
@@ -17,7 +16,9 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 if (data != null) {
                     $scope.ResearchTopic = data.ResearchTopic;
                     $scope.HIGHER = data.HIGHER;
+                    $scope.HIGHER2 = data.HIGHER2;
                     $scope.Industry = data.Industry;
+                    $scope.Industry2 = data.Industry2;
                     $scope.Industry5n = data.Industry5n;
                     $scope.Name = data.Name;
                     $scope.college = data.College;
@@ -41,10 +42,17 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 alert("載入表單錯誤!");
             }
         );
+        $scope.patentName = "";
+        $scope.patentCountry = "";
+        $scope.patentStatus = false;
+        $scope.paperName = "";
+        $scope.paperJournal = false;
+        $scope.paperStatus = false;
     }
     $scope.TeacherNum = $location.search().TeacherNum;
 
     $scope.FormId = $location.search().FormId;
+
 
     $scope.changeDepartments = () => {
         if ($scope.college != '請選擇') {
@@ -53,6 +61,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         else
             $scope.departments = ['請先選擇學院'];
     }
+
 
     $scope.initPatentAndPaper = () => {
         if ($scope.Patents.length > 0) {
@@ -70,6 +79,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             $scope.HavePapers = '無';
     }
 
+    /** Initialize the radar chart via data from DB*/
     $scope.initRadarChart = () => {
         if (chartData != null) {
             var col;
@@ -90,7 +100,6 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 }
                 $('table tr td[class="' + part + ' table-info"]:nth-child(' + (col + 1) + ')').removeClass('table-info');
                 $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')[class="' + part + '"]').addClass('table-info');
-                // console.log(`col: ${col}, row: ${row}, part:${part}`);
             }
         }
     }
@@ -103,7 +112,9 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 'TeacherNum': $scope.TeacherNum,
                 "ResearchTopic": $scope.ResearchTopic,
                 "HIGHER": $scope.HIGHER,
+                "HIGHER2": $scope.HIGHER2,
                 "Industry": $scope.Industry,
+                "Industry2": $scope.Industry2,
                 "Industry5n": $scope.Industry5n,
                 "Name": $scope.Name,
                 "College": $scope.college,
@@ -130,7 +141,9 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 'TeacherNum': $scope.TeacherNum,
                 "ResearchTopic": $scope.ResearchTopic,
                 "HIGHER": $scope.HIGHER,
+                "HIGHER2": $scope.HIGHER2,
                 "Industry": $scope.Industry,
+                "Industry2": $scope.Industry2,
                 "Industry5n": $scope.Industry5n,
                 "Name": $scope.Name,
                 "College": $scope.college,
@@ -171,12 +184,13 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             },
             error: function (res) {
                 console.log(res);
+                alert("上傳失敗");
             }
         });
     });
 
-    $('#video').change(function () {        
-        if(Math.floor($('#video')[0].files[0].size/1024/1024)>100){
+    $('#video').change(function () {
+        if (Math.floor($('#video')[0].files[0].size / 1024 / 1024) > 100) {
             alert('影片超過限制大小(100MB)');
             return;
         };
@@ -218,32 +232,38 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         var formData = new FormData();
         formData.append('myPatent', $('#patent-file')[0].files[0]);
         var url = `/form/patent?FormId=${$scope.FormId}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
-        $.ajax({
-            url: url,
-            type: 'patch',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (res) {
-                console.log(res);
-                alert('送出成功');
-                $('#addPatent').modal('hide');
-                $scope.Patents.push(
-                    {
-                        _id: res.id,
-                        Name: $scope.patentName,
-                        Country: $scope.patentCountry,
-                        Status: $scope.patentStatus,
-                        File: res.filename
-                    }
-                );
-                $scope.$apply();
-            },
-            error: function (res) {
-                console.log(res);
-                alert('送出失敗');
-            }
-        });
+        if (!$scope.IsPatentRequiredFieldValid()) return;
+        else {
+            $.ajax({
+                url: url,
+                type: 'patch',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    alert('送出成功');
+                    $('#addPatent').modal('hide');
+                    $scope.Patents.push(
+                        {
+                            _id: res.id,
+                            Name: $scope.patentName,
+                            Country: $scope.patentCountry,
+                            Status: $scope.patentStatus,
+                            File: res.filename
+                        }
+                    );
+                    $scope.$apply();
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert('送出失敗');
+                },
+                complete: function () {
+                    $scope.resetPatent();
+                }
+            });
+        }
     }
 
     $scope.removePatent = (patentIndex) => {
@@ -268,35 +288,41 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     };
 
     $scope.UploadPaper = () => {
-        var formData = new FormData();
+        var formData = new FormData();        
         formData.append('myPaper', $('#paper-file')[0].files[0]);
         var url = `/form/paper?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
-        $.ajax({
-            url: url,
-            type: 'patch',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (res) {
-                console.log(res);
-                alert('送出成功');
-                $('#addPaper').modal('hide');
-                $scope.Papers.push(
-                    {
-                        _id: res.id,
-                        Name: $scope.paperName,
-                        Journal: $scope.paperJournal,
-                        Status: $scope.paperStatus,
-                        File: res.filename
-                    }
-                );
-                $scope.$apply();
-            },
-            error: function (res) {
-                console.log(res);
-                alert('送出失敗');
-            }
-        });
+        if (!$scope.IsPaperRequiredFieldValid()) return;
+        else {
+            $.ajax({
+                url: url,
+                type: 'patch',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    alert('送出成功');
+                    $('#addPaper').modal('hide');
+                    $scope.Papers.push(
+                        {
+                            _id: res.id,
+                            Name: $scope.paperName,
+                            Journal: $scope.paperJournal,
+                            Status: $scope.paperStatus,
+                            File: res.filename
+                        }
+                    );
+                    $scope.$apply();
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert('送出失敗');
+                },
+                complete: function () {
+                    $scope.resetPaper();
+                }
+            });
+        }
     }
 
     $scope.sendMail = function (id, state) {
@@ -337,6 +363,51 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             }
         });
     };
+
+    /** Validate the required fields of patent */
+    $scope.IsPatentRequiredFieldValid = function () {
+        if ($scope.patentName == "" || $scope.patentCountry == "" || $scope.Status == false) {
+            alert("請輸入完整資訊");
+            return false;
+        }
+        else if ($('#patent-file')[0].value == '') {
+            alert("請上傳佐證資料");
+            return false;
+        }
+        return true;
+    };
+
+    /** Validate the required fields of paper */
+    $scope.IsPaperRequiredFieldValid = function () {
+        if ($scope.paperName == "" || $scope.paperJournal == false || $scope.paperStatus == false) {
+            alert("請輸入完整資訊");
+            return false;
+        }
+        else if ($scope.paperStatus == "已發表" && $('#paper-file')[0].value == '') {
+            alert("請上傳佐證資料");
+            return false;
+        }
+        return true;
+    };
+
+    /** Reset the modal of patent */
+    $scope.resetPatent = function () {
+        $scope.patentName = "";
+        $scope.patentCountry = "";
+        $scope.patentStatus = false;
+        $('#patent-file')[0].value = '';
+        $scope.$apply();
+    };
+
+    /** Reset the modal of paper */
+    $scope.resetPaper = function resetPaper() {
+        $scope.paperName = "";
+        $scope.paperJournal = false;
+        $scope.paperStatus = false;
+        $('#paper-file')[0].value = '';
+        $scope.$apply();
+    };
+
     $scope.init();
 });
 

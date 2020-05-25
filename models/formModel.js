@@ -3,8 +3,10 @@ mongoose.connect('mongodb://localhost:27017/ARS', { useNewUrlParser: true });
 
 var formSchema = new mongoose.Schema({
     ResearchTopic: String,  // 研究成果主題
-    HIGHER: String,         // HIGHER研究導向
-    Industry: String,       // 所屬產業類別
+    HIGHER: String,         // 商品化研究導向(主要)
+    HIGHER2: String,        // 商品化研究導向(次要)
+    Industry: String,       // 所屬產業類別(主要)
+    Industry2: String,      // 所屬產業類別(次要)
     Industry5n: String,     // 5+n產業類別
     Name: String,           // 研究教師姓名
     College: String,        // 教師隸屬學院

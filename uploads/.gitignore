@@ -1,0 +1,6 @@
+# The purpose of this file is keeping the directory exists on git
+
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore

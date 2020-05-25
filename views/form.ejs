@@ -10,7 +10,6 @@
     <script src="./library/jquery-3.4.1.min.js"></script>
     <script src="./library/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./library/bootstrap.min.css">
-    <link rel="stylesheet" href="./stylesheets/style.css">
     <script src="./library/jquery.dm-uploader.min.js"></script>
     <link rel="stylesheet" href="./library/jquery.dm-uploader.min.css">
     <link rel="stylesheet" href="/stylesheets/form.css">
@@ -18,11 +17,12 @@
     <script src="./library/jquery.cookie.js"></script>
     <script src="/library/angular.js"></script>
     <script src="./formController.js"></script>
+    <link rel="stylesheet" href="./stylesheets/font.css">
 </head>
 
 <body ng-app="form" ng-controller="formCtrl">
-    
-    <form role="form" ng-submit="submit()">
+
+    <form role="form" ng-submit="submit()" enctype="multipart/form-data">
         <div class="container offset-md-1">
             <h1 class="mb-4">研發能量展現平台 > 表單填寫</h1>
             <div class="form-group" id="teachernum">
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 <label>商品化研發導向(主要)</label>
-                <select class="form-control col-md-10" id="HIGHER" ng-model="HIGHER"  required>
+                <select class="form-control col-md-10" id="HIGHER" ng-model="HIGHER" required>
                     <option value="">請選擇</option>
                     <option>Health</option>
                     <option>Intelligent</option>
@@ -50,8 +50,45 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>所屬產業類別</label>
-                <select class="form-control col-md-10" id="Industry" ng-model="Industry"  required>
+                <label>商品化研發導向(次要)</label>
+                <select class="form-control col-md-10" id="HIGHER2" ng-model="HIGHER2" required>
+                    <option value="">請選擇</option>
+                    <option>Health</option>
+                    <option>Intelligent</option>
+                    <option>Green & Energy</option>
+                    <option>Humanities & Creativity</option>
+                    <option>Emerging</option>
+                    <option>Recycle</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>所屬產業類別(主要)</label>
+                <select class="form-control col-md-10" id="Industry" ng-model="Industry" required>
+                    <option value="">請選擇</option>
+                    <option>運輸及倉儲業</option>
+                    <option>礦業及土石採取業</option>
+                    <option>製造業</option>
+                    <option>電力及然氣供應業</option>
+                    <option>營建工程業</option>
+                    <option>用水供應及汙染整治業</option>
+                    <option>批發與零售業</option>
+                    <option>農、林、漁、牧業</option>
+                    <option>住宿及餐飲業</option>
+                    <option>出版、影音製作、傳播集資通訊服務業</option>
+                    <option>金融及保險業</option>
+                    <option>醫療保健及社會工作服務業</option>
+                    <option>支援服務業</option>
+                    <option>專業、科學及技術服務業</option>
+                    <option>教育業</option>
+                    <option>公共行政及國防；強制性社會安全</option>
+                    <option>不動產業</option>
+                    <option>藝術、娛樂及休閒服務業</option>
+                    <option>其他服務業</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>所屬產業類別(次要)</label>
+                <select class="form-control col-md-10" id="Industry" ng-model="Industry2" required>
                     <option value="">請選擇</option>
                     <option>運輸及倉儲業</option>
                     <option>礦業及土石採取業</option>
@@ -76,7 +113,7 @@
             </div>
             <div class="form-group">
                 <label>5+N產業類別</label>
-                <select class="form-control col-md-10" id="Industry5n" ng-model="Industry5n"  required>
+                <select class="form-control col-md-10" id="Industry5n" ng-model="Industry5n" required>
                     <option value="">請選擇</option>
                     <option>「智慧機械」</option>
                     <option>「亞洲‧矽谷」</option>
@@ -92,11 +129,12 @@
             </div>
             <div class="form-group">
                 <label>研究教師姓名</label>
-                <input class="form-control col-md-10" type="text" id="Name" ng-model="Name"  required>
+                <input class="form-control col-md-10" type="text" id="Name" ng-model="Name" required>
             </div>
             <div class="form-group">
                 <label>教師隸屬學院</label>
-                <select class="form-control col-md-10" id="college" ng-model="college" ng-change="changeDepartments()"  required>
+                <select class="form-control col-md-10" id="college" ng-model="college" ng-change="changeDepartments()"
+                    required>
                     <option value="">請選擇</option>
                     <option>機電學院</option>
                     <option>電資學院</option>
@@ -111,25 +149,28 @@
             </div>
             <div class="form-group">
                 <label>教師隸屬系所</label>
-                <select class="form-control col-md-10" id="department" ng-model="department" ng-options="data for data in departments"  required>
+                <select class="form-control col-md-10" id="department" ng-model="department"
+                    ng-options="data for data in departments" required>
                     <option value="">請先選擇學院</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>教師連絡電話</label>
-                <input class="form-control col-md-10" type="text" id="Phone" ng-model="Phone"  required>
+                <input class="form-control col-md-10" type="text" id="Phone" ng-model="Phone" required>
             </div>
             <div class="form-group">
                 <label>教師電子郵件</label>
-                <input class="form-control col-md-10" type="text" id="Email" ng-model="Email"  required>
+                <input class="form-control col-md-10" type="text" id="Email" ng-model="Email" required>
             </div>
 
             <label>專利相關資訊</label>
             <div class="form-group">
                 <label class="radio-inline"></label>
-                <input type="radio" name="patentRadio" class="PatentInfoRadio" value="有" ng-model="HavePatents"  required>有
+                <input type="radio" name="patentRadio" class="PatentInfoRadio" value="有" ng-model="HavePatents"
+                    required>有
                 <label class="radio-inline"></label>
-                <input type="radio" name="patentRadio" class="PatentInfoRadio" value="無" checked  ng-model="HavePatents"  required>無
+                <input type="radio" name="patentRadio" class="PatentInfoRadio" value="無" checked ng-model="HavePatents"
+                    required>無
             </div>
 
             <div id="patentInfo" class="panel-collapse collapse">
@@ -234,8 +275,7 @@
                                 <th scope="col">名稱</th>
                                 <th scope="col">領域</th>
                                 <th scope="col">狀況</th>
-                                <th scope="col">檢視</th>
-                                <!-- <th scope="col">修改</th> -->
+                                <th scope="col">檢視</th>                                
                                 <th scope="col">移除</th>
                             </tr>
                         </thead>
@@ -245,8 +285,8 @@
                                 <td>{{data.Name}}</td>
                                 <td>{{data.Journal}}</td>
                                 <td>{{data.Status}}</td>
-                                <td><a href={{data.File}} target="_blank">檢視</a></td>
-                                <!-- <td><a href="#" ng-click="updatePantent()">修改</a></td> -->
+                                <td ng-if="data.Status=='已發表'"><a href={{data.File}} target="_blank">檢視</a></td>
+                                <td ng-if="data.Status!='已發表'">無</td>
                                 <td><a href="#" ng-click="removePaper($index)">移除</a></td>
                             </tr>
                         </tbody>
@@ -274,7 +314,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        
+
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>論文主題名稱</label>
@@ -300,19 +340,23 @@
                             <label>論文申請狀況</label>
                             <div class="form-group">
                                 <label class="radio-inline"></label>
-                                <input type="radio" name="paperStatusRadio" value="已發表" ng-model="paperStatus">已發表
+                                <input type="radio" name="paperStatusRadio" value="已發表" ng-model="paperStatus" id="paperPublished">已發表
                                 <label class="radio-inline"></label>
-                                <input type="radio" name="paperStatusRadio" value="審查中" ng-model="paperStatus">審查中
+                                <input type="radio" name="paperStatusRadio" value="審查中" ng-model="paperStatus" class="paperUnPublished">審查中
                                 <label class="radio-inline"></label>
-                                <input type="radio" name="paperStatusRadio" value="撰寫中" ng-model="paperStatus">撰寫中
+                                <input type="radio" name="paperStatusRadio" value="撰寫中" ng-model="paperStatus" class="paperUnPublished">撰寫中
                             </div>
-
-                            <div class="form-group">
-                                <label>佐證資料上傳(限pdf)</label>
-                                <div id="drop-area" class="dm-uploader">
-                                    <input type="file" title="選擇檔案" accept=".pdf" id="paper-file">
+                            <div id="paperFileField" class="panel-collapse collapse">
+                                <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
+                                    <div class="form-group">
+                                        <label class="mb-0">佐證資料上傳(限pdf)</label>                    
+                                        <div id="drop-area" class="dm-uploader">
+                                            <input type="file" title="選擇檔案" accept=".pdf" id="paper-file">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            
                         </div>
 
                         <div class="modal-footer">
@@ -325,12 +369,14 @@
 
             <div class="form-group">
                 <label>成果技術摘要說明</label>
-                <textarea class="form-control col-md-10" rows="5" id="description" ng-model="description"  required></textarea>
+                <textarea class="form-control col-md-10" rows="5" id="description" ng-model="description"
+                    required></textarea>
             </div>
 
             <div class="form-group">
                 <label>應用範圍及產業效益評估</label>
-                <textarea class="form-control col-md-10" rows="5" id="evaluation" ng-model="evaluation" required></textarea>
+                <textarea class="form-control col-md-10" rows="5" id="evaluation" ng-model="evaluation"
+                    required></textarea>
             </div>
 
             <div class="form-group">
@@ -370,10 +416,10 @@
                     <tbody>
                         <tr>
                             <th class="table-warning">Level 0</th>
-                            <td class="td1 table-info">尚未填寫</td>
-                            <td class="td1 table-info">尚未填寫</td>
-                            <td class="td1 table-info">尚未填寫</td>
-                            <td class="td1 table-info">尚未填寫</td>
+                            <td class="td1 table-info">不適用</td>
+                            <td class="td1 table-info">不適用</td>
+                            <td class="td1 table-info">不適用</td>
+                            <td class="td1 table-info">不適用</td>
                         </tr>
                         <tr>
                             <th class="table-warning">Level 1</th>
@@ -448,10 +494,10 @@
                         </tr>
                         <tr>
                             <th class="table-warning">Level 0</th>
-                            <td class="td2 table-info">尚未填寫</td>
-                            <td class="td2 table-info">尚未填寫</td>
-                            <td class="td2 table-info">尚未填寫</td>
-                            <td class="td2 table-info">尚未填寫</td>
+                            <td class="td2 table-info">不適用</td>
+                            <td class="td2 table-info">不適用</td>
+                            <td class="td2 table-info">不適用</td>
+                            <td class="td2 table-info">不適用</td>
                         </tr>
                         <tr>
                             <th class="table-warning">Level 1</th>
@@ -523,8 +569,9 @@
                 </div>
                 <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="save()"
                     id="savebt">暫存</button>
-                <input type="submit" class="btn btn-primary m-auto col-md-2" 
-                    id="submitbt" value="提交">                
+                <input type="submit" class="btn btn-primary m-auto col-md-2" id="submitbt" value="提交">
+                <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="test()"
+                    id="savebt">暫存</button>
             </div>
 
         </div>

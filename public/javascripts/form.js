@@ -97,3 +97,10 @@ $('.PaperInfoRadio').change(function () {
     $('#paperInfo').collapse('toggle');
 });
 
+$('#paperPublished').change(function () {
+    $('#paperFileField').collapse('show');
+});
+
+$('.paperUnPublished').change(function () {
+    $('#paperFileField').collapse('hide');
+});

@@ -41,7 +41,7 @@ router.post('/testest',(req,res)=>{
   })
 })
 
-// get form data
+/** get form data */ 
 router.get('/data', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
     if (err)
@@ -78,13 +78,15 @@ router.post('/', function (req, res, next) {
   });
 });
 
-// save form data
+/** save form data */
 router.put('/', function (req, res, next) {
   formModel.update({ _id: req.query.FormId },
     {
       ResearchTopic: req.body.ResearchTopic,
       HIGHER: req.body.HIGHER,
+      HIGHER2: req.body.HIGHER2,
       Industry: req.body.Industry,
+      Industry2: req.body.Industry2,
       Industry5n: req.body.Industry5n,
       Name: req.body.Name,
       College: req.body.College,
@@ -112,7 +114,9 @@ router.put('/submit', function (req, res, next) {
     {
       ResearchTopic: req.body.ResearchTopic,
       HIGHER: req.body.HIGHER,
+      HIGHER2: req.body.HIGHER2,
       Industry: req.body.Industry,
+      Industry2: req.body.Industry2,
       Industry5n: req.body.Industry5n,
       Name: req.body.Name,
       College: req.body.College,
