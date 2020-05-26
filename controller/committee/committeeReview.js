@@ -8,14 +8,15 @@ function frameload() {
     $contents.find('#teachernum').remove();
     $contents.find('#formid').remove();
     $contents.find('#savebt').remove();
-    $contents.find('#submitbt').remove();
+    $contents.find('#submitbtn').remove();
+    $contents.find('#btn-patent').remove();
+    $contents.find('#removePDFpaper').remove();
+
     $contents.find("input").prop("disabled", true);
     $contents.find("select").prop("disabled", true);
     $contents.find("table").prop("disabled", true);
     $contents.find("textarea").prop("disabled", true);
-
     $contents.find("td").prop("disabled", true);
-
 }
 function reviewload() {
     var $ifram = $('#ReviewForm');
