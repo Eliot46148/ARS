@@ -191,7 +191,7 @@ router.delete('/patent', (req, res, next) => {
   });
 });
 
-// upload paper data
+// upload paper data with files
 router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
   formModel.findByIdAndUpdate({ _id: req.query.FormId },
     {
@@ -207,6 +207,24 @@ router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
       if (err) res.json({ "status": 1, "msg": "Error" });
       else
         res.json({ "status": 0, "msg": "Success", "filename": req.file.filename, "id": data._id });
+    });
+});
+
+// upload paper data without files
+router.patch('/paper/nofile', function (req, res, next) {
+  formModel.findByIdAndUpdate({ _id: req.query.FormId },
+    {
+      $push: {
+        Paper: {
+          Name: req.query.Name,
+          Journal: req.query.Journal,
+          Status: req.query.Status,          
+        }
+      }
+    }, function (err, data) {
+      if (err) res.json({ "status": 1, "msg": "Error" });
+      else
+        res.json({ "status": 0, "msg": "Success","id": data._id });
     });
 });
 

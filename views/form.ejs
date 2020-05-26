@@ -583,7 +583,6 @@
 
                 <div id="CommercializationPanel" class="panel-collapse collapse">
                     <div class="panel-body border border-primary fit-content rounded col-md-12 mb-3">
-
                         <div class="form-group">
                             <label>市場需求價值</label>
                             <textarea class="form-control col-md-10 CommercializationFields" rows="5"
@@ -598,8 +597,7 @@
                             <label>商品化成本規劃</label>
                             <textarea class="form-control col-md-10 CommercializationFields" rows="5"
                                 ng-model="cost"></textarea>
-                        </div>
-                        
+                        </div>                        
                     </div>
                 </div>
 
@@ -608,8 +606,32 @@
                 <input type="submit" class="btn btn-primary m-auto col-md-2" id="submitbtn" value="提交">
                 <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="test()"
                     id="savebt">測試</button>
-            </div>
 
+
+                    <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalTitle"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="saveModalTitle">儲存成功</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+    
+                            <div class="modal-body">                            
+                                <p>員工編號：{{TeacherNum}}</p>                                                                                                                      
+                                <p>表單編號：{{FormId}}</p>
+                                <p class="text-danger">請記住以上資料進入修改</p>
+                            </div>
+    
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">完成</button>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
         </div>
     </form>
     <script src="./javascripts/form.js"></script>
