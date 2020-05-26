@@ -84,7 +84,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.initCommercializationRadio = function () {
-        if($scope.marketDemand != null || $scope.competitiveness != null || $scope.cost != null){
+        if ($scope.marketDemand != null || $scope.competitiveness != null || $scope.cost != null) {
             $scope.isCommercialization = "是";
             $('#CommercializationPanel').collapse('toggle');
         }
@@ -144,8 +144,8 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             })
             .then((res) => {
                 console.log(res);
-                // $scope.sendMail();
-                alert("暫存成功");
+                // $scope.sendMail();                
+                $('#saveModal').modal('show');
             }, (err) => {
                 alert(err.msg);
             });
@@ -309,40 +309,72 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     };
 
     $scope.UploadPaper = () => {
-        var formData = new FormData();
-        formData.append('myPaper', $('#paper-file')[0].files[0]);
-        var url = `/form/paper?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
         if (!$scope.IsPaperRequiredFieldValid()) return;
         else {
-            $.ajax({
-                url: url,
-                type: 'patch',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (res) {
-                    console.log(res);
-                    alert('送出成功');
-                    $('#addPaper').modal('hide');
-                    $scope.Papers.push(
-                        {
-                            _id: res.id,
-                            Name: $scope.paperName,
-                            Journal: $scope.paperJournal,
-                            Status: $scope.paperStatus,
-                            File: res.filename
-                        }
-                    );
-                    $scope.$apply();
-                },
-                error: function (res) {
-                    console.log(res);
-                    alert('送出失敗');
-                },
-                complete: function () {
-                    $scope.resetPaper();
-                }
-            });
+            if ($scope.paperStatus == "已發表") {
+                let formData = new FormData();
+                formData.append('myPaper', $('#paper-file')[0].files[0]);
+                let url = `/form/paper?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
+                $.ajax({
+                    url: url,
+                    type: 'patch',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        console.log(res);
+                        alert('送出成功');
+                        $('#addPaper').modal('hide');
+                        $scope.Papers.push(
+                            {
+                                _id: res.id,
+                                Name: $scope.paperName,
+                                Journal: $scope.paperJournal,
+                                Status: $scope.paperStatus,
+                                File: res.filename
+                            }
+                        );
+                        $scope.$apply();
+                    },
+                    error: function (res) {
+                        console.log(res);
+                        alert('送出失敗');
+                    },
+                    complete: function () {
+                        $scope.resetPaper();
+                    }
+                });
+            }
+            else {
+                let url = `/form/paper/nofile?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
+                $.ajax({
+                    url: url,
+                    type: 'patch',                    
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        console.log(res);
+                        alert('送出成功');
+                        $('#addPaper').modal('hide');
+                        $scope.Papers.push(
+                            {
+                                _id: res.id,
+                                Name: $scope.paperName,
+                                Journal: $scope.paperJournal,
+                                Status: $scope.paperStatus,                                
+                            }
+                        );
+                        $scope.$apply();
+                    },
+                    error: function (res) {
+                        console.log(res);
+                        alert('送出失敗');
+                    },
+                    complete: function () {
+                        $scope.resetPaper();
+                    }
+                });
+            }
         }
     }
 
