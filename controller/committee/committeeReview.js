@@ -17,6 +17,8 @@ function frameload() {
     $contents.find("table").prop("disabled", true);
     $contents.find("textarea").prop("disabled", true);
     $contents.find("td").prop("disabled", true);
+    $contents.find("#LevelTable").css("pointer-events", "none");
+
 }
 function reviewload() {
     var $ifram = $('#ReviewForm');
