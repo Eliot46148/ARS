@@ -15,6 +15,8 @@ var progressRouter = require('./routes/progressApi');
 
 var app = express();
 
+process.env.TZ = "Asia/Taipei";
+
 // view engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

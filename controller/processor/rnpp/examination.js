@@ -66,7 +66,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                             .replace('{password}',data.password)
                             .replace('{date_start}',$scope.date_start)
                             .replace('{date_end}',$scope.date_end)
-                            .replace('{url}','https://www.google.com/');
+                            .replace('{url}','http://127.0.0.1:3000/committee/#accountID=' + $scope.email + '&passwordID=' + data.password);
                             
                             $http.post('/mailServerSecret/send', {
                                 'to':$scope.email,
@@ -112,8 +112,11 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                 'FormId':$scope.triggerRespond.id,
                 'status':parseInt($scope.radio)
             };
-            if ($scope.radio=="3")
+            if ($scope.radio=="3"){
                 update.deadline = new Date($scope.deadline);
+                update.deadline.setHours(update.deadline.getHours() + 16);
+                update.deadline.setSeconds(update.deadline.getSeconds() - 1);
+            }
             $http.put('/form/status', update).success(function(respond){
                 //console.log(respond);
                 $scope.forms.find(element=>element._id==$scope.triggerRespond.id).Status = $scope.radio;
@@ -141,6 +144,16 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
             language: 'zh-TW'
         });
     };
+
+    $scope.deleteExamination = function(email, index){
+        $.post("/committee/committeeupdate", {
+            email: email,
+            index: index,
+            delete: 1
+        }, function (data) {
+            $('#respondModal').modal('hide');
+        })
+    }
 });
 
 if (!$.cookie('account')){window.location='/processor';}
@@ -162,19 +175,24 @@ $( function() {
     });
     var sDate,eDate;
     ds.on('changeDate',function(e){
-        sDate = new Date($(this).datepicker('getUTCDate'));
+        sDate = new Date($(this).val());
+        sDate.setHours(sDate.getHours() - 8);
         if (!checkDate())
             $(this).val("").datepicker("update");
     });
 
     de.on('changeDate',function(date){
-        eDate = new Date($(this).datepicker('getUTCDate'));
+        eDate = new Date($(this).val());
+        eDate.setHours(eDate.getHours() + 16);
+        eDate.setSeconds(eDate.getSeconds() - 1);
         if (!checkDate())
             $(this).val("").datepicker("update");
     });
 
     function checkDate()
     {
+        console.log(sDate);
+        console.log(eDate);
         if(sDate && eDate && (eDate<sDate))
         {
             alert('結束日期應大於起始日期');

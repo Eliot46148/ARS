@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="./stylesheets/function-style.css">
     <script src="/library/angular.js"></script>
     <script src="functionController.js"></script>
-    <link rel="stylesheet" href="./stylesheets/font.css">
+    <link rel="stylesheet" href="/stylesheets/font.css">
 </head>
 
 <body ng-app="function" ng-controller="functionCtrl">
@@ -29,8 +29,7 @@
 
         <div class="row justify-content-center align-items-center">
             <div class="col-lg-12">
-                <a href="#" class="btn btn-sq-lg btn-primary center-vertical" data-toggle="modal"
-                    data-target="#createNewForm">
+                <a href="#" class="btn btn-sq-lg btn-primary" data-toggle="modal" data-target="#createNewForm">
                     <i class="fa fa-plus-circle fa-5x"></i><br />
                     <br>新增資料
                 </a>
@@ -41,6 +40,10 @@
                 <a href="#" class="btn btn-sq-lg btn-info">
                     <i class="fas fa-file-alt fa-5x"></i><br />
                     <br>流程/辦法
+                </a>
+                <a href="#" class="btn btn-sq-lg btn-warning text-white" data-toggle="modal" data-target="#progress">
+                    <i class="fa fa-question fa-5x"></i><br />
+                    <br>進度查詢
                 </a>
                 <a href="/" class="btn btn-sq-lg btn-danger">
                     <i class="fa fa-reply fa-5x"></i><br />
@@ -97,6 +100,30 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-primary" ng-click="getForm()">送出</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="progress" tabindex="-1" role="dialog" aria-labelledby="progressTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="progressTitle">輸入員工編號</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="progressNum" ng-model="TeacherNumProgress">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="createNewFormBtn"
+                        ng-click="getProgress()">送出</button>
                 </div>
             </div>
         </div>

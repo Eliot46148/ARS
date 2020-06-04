@@ -35,11 +35,20 @@ app.controller('progressCtrl', ($scope, $http, $location, $window) => {
         else {
         }
     };
-    $scope.seeRespond = function (id) {
-        var found = $scope.respond.find(element => element._id == id);
-        if (found != null) {
-            $window.open('/static/review.html?' + new URLSearchParams(found).toString(), '_blank');
+    $scope.seeRespond = function (opinion, isSubmit, state = 0) {
+        if (state == 0) {
+            // $scope.respond = [];
+            $scope.opinion = opinion;
+            $scope.isSubmit = isSubmit;
+            $('#reviewModal').modal('show');
         }
+        else {
+            $('#reviewModal').modal('hide');
+        }
+        // var found = $scope.respond.find(element => element._id == id);
+        // if (found != null) {
+        //     $window.open('/static/review.html?' + new URLSearchParams(found).toString(), '_blank');
+        // }
     };
     $scope.init();
 });

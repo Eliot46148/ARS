@@ -23,7 +23,7 @@
     <link href="/library/bootstrap_datepicker/bootstrap-datepicker3.css" rel="stylesheet"/>
     <script src="/library/bootstrap_datepicker/bootstrap-datepicker.js"></script>
     <script src="/library/bootstrap_datepicker/bootstrap-datepicker.zh-TW.js"></script>
-    <link rel="stylesheet" href="./stylesheets/font.css">
+    <link rel="stylesheet" href="/stylesheets/font.css">
 </head>
 
 <body ng-app="ProcessorExamination"  ng-controller="MainCtrl">
@@ -125,7 +125,7 @@
     </div>
 
     <div class="modal fade" id="respondModal" tabindex="-1" role="dialog" aria-labelledby="respondModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="max-width: 1100px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="clear()">
@@ -154,6 +154,7 @@
                                 <th scope="col">委員郵件</th>
                                 <th scope="col">回收狀況</th>
                                 <th scope="col">查看建議</th>
+                                <th scope="col">刪除</th>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="response in respond">
@@ -164,6 +165,9 @@
                                     <td ng-bind="response.isPass ? '已回傳' : '尚未回傳'">已回傳</td>
                                     <td>
                                         <a type="button" class="btn btn-primary text-white" ng-click="seeRespond(response._id)" ng-class="response.isPass ? '' : 'disabled'">點選</a>
+                                    </td>
+                                    <td>
+                                        <a type="button" class="btn btn-danger text-white" ng-click="deleteExamination(response.email, response.formOid)">點選</a>
                                     </td>
                                 </tr>
                             </tbody>

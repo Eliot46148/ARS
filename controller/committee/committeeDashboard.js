@@ -20,8 +20,10 @@ function creatTable(){
                 tableData+="<td><h3>"+testform[i].paperTheme+"<h3></td>";
                 if(testform[i].isPass)
                     tableData+="<td><h4>已送出<h4></td>";
+                else if(Date.now() > new Date(testform[i].deadLine))
+                    tableData+="<td><h4>已過期<h4></td>";
                 else
-                    tableData+="<td><a class = 'btn btn-info' href ='./review' onclick='aclick(this)' id ="+i+">click!</td>";
+                    tableData+="<td><a class = 'btn btn-info' href ='./review' onclick='aclick(this)' id ="+i+">點擊</td>";
                 tableData+="</tr></form>";
                 tablegrup+=tableData;
             }

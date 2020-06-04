@@ -5,6 +5,7 @@ var comdata;
 function frameload() {
     var $ifram = $('#needReviewForm');
     var $contents = $ifram.contents();
+    $contents.find('#title').remove();
     $contents.find('#teachernum').remove();
     $contents.find('#formid').remove();
     $contents.find('#savebt').remove();
@@ -18,6 +19,8 @@ function frameload() {
     $contents.find("textarea").prop("disabled", true);
     $contents.find("td").prop("disabled", true);
     $contents.find("#LevelTable").css("pointer-events", "none");
+    $contents.find("#LevelTable").css("pointer-events", "none");
+    $contents.find("#formStyle").removeClass("offset-md-3");
 
 }
 function reviewload() {

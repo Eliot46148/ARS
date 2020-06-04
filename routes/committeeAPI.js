@@ -27,7 +27,6 @@ router.post('/committeeregistered',function(req,res){
         }
     else{
         committeeModel.findOne({
-            name : theName,
             email: theEmail
         },function(err,data){
             if(data == null ){
@@ -57,11 +56,9 @@ router.post('/committeeregistered',function(req,res){
                     res.json({ "status": 1, "msg": "Error" });
                 else
                     res.json({ "status": 0, "msg": "success","name":theName,"email":theEmail,"password":thepassword});
-    
                 });
             }
             else{
-                theName = data.name;
                 theEmail = data.email;
                 thepassword = data.password;
                 committeeModel.updateOne({_id:data._id},{
@@ -107,9 +104,8 @@ router.post('/GetID',function(req,res){
 router.post('/',function(req,res){
     committeeModel.findOne({
         email: req.body.email,
-        password : req.body.code
+        password: req.body.code
     },function (err, data) {
-        console.log("data :  "+ data);
         if (data == null)
             res.json({ "status": 0, "msg": "email 與 代號 匹配錯誤!" });
         else {
@@ -125,9 +121,8 @@ router.post('/',function(req,res){
 router.post('/dashboard',function(req,res){
     committeeModel.findOne({
         email: req.body.email,
-        password : req.body.password
+        password: req.body.password
     },function (err, data) {
-        console.log("data :  "+ data);
         if (data == null)
             res.json({ "status": 0, "msg": "email 與 代號 匹配錯誤!" });
         else {
@@ -155,6 +150,7 @@ router.post('/getFormExam',function(req,res){
                             var form = JSON.parse(JSON.stringify(forms[j]));
                             form.name = committee[i].name;
                             form.email = committee[i].email;
+                            form.password = committee[i].password;
                             exams.push(form);
                         }
                 }
@@ -168,28 +164,44 @@ router.post('/getFormExam',function(req,res){
 
 router.post('/committeeupdate',function(req,res){
     committeeModel.findOne({
-        email: req.body.email,
-        password : req.body.password
+        email: req.body.email
     },
     function (err, data) {
         var forms = JSON.parse(JSON.stringify(data.needtestform));
-        console.log("--"+req.body.reMarketassessment)
-        forms[req.body.index].respondDate = req.body.respondDate,
-        forms[req.body.index].isPass = req.body.ispass;
-        forms[req.body.index].StudyandData = req.body.StudyandData;
-        forms[req.body.index].Marketassessment = req.body.reMarketassessment;
-        forms[req.body.index].ManufacturingEvaluation = req.body.ManufacturingEvaluation;
-        forms[req.body.index].FinancialEvaluation = req.body.FinancialEvaluation;
-        forms[req.body.index].opinion = req.body.opinion;
-        forms[req.body.index].isSubmit = req.body.isSubmit;
-        console.log(forms);
-        committeeModel.findOneAndUpdate({
-            email: req.body.email,
-            password : req.body.password
-        }, {'needtestform':forms}, function(err, doc) {
-            if (err) return res.send(500, {error: err});
-            return res.send('Succesfully saved.');
-        });
+        if (req.body.delete){
+            if (forms.splice(req.body.index, 1) == [])
+                return res.send(500, {error: err})
+            else{
+                committeeModel.findOneAndUpdate({
+                    email: req.body.email
+                }, {'needtestform':forms}, function(err, doc) {
+                    if (err) return res.send(500, {error: err});
+                    return res.send('Succesfully saved.');
+                });
+            }
+
+        }else{
+            if (req.body.password.localeCompare(data.password) == 0 && Date.now() <= new Date(forms[req.body.index].deadLine)) {
+                console.log("--"+req.body.reMarketassessment)
+                forms[req.body.index].respondDate = req.body.respondDate,
+                forms[req.body.index].isPass = req.body.ispass;
+                forms[req.body.index].StudyandData = req.body.StudyandData;
+                forms[req.body.index].Marketassessment = req.body.reMarketassessment;
+                forms[req.body.index].ManufacturingEvaluation = req.body.ManufacturingEvaluation;
+                forms[req.body.index].FinancialEvaluation = req.body.FinancialEvaluation;
+                forms[req.body.index].opinion = req.body.opinion;
+                forms[req.body.index].isSubmit = req.body.isSubmit;
+                console.log(forms);
+                committeeModel.findOneAndUpdate({
+                    email: req.body.email
+                }, {'needtestform':forms}, function(err, doc) {
+                    if (err) return res.send(500, {error: err});
+                    return res.send('Succesfully saved.');
+                });
+            }
+            else
+                return res.send(500, {error: err});
+        }
     });
 })
 

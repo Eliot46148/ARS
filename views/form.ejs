@@ -24,613 +24,616 @@
 
     <form role="form" ng-submit="submit()" enctype="multipart/form-data">
         <div class="container offset-md-1">
-            <h1 class="mb-4">研發能量展現平台 > 表單填寫</h1>
-            <div class="form-group" id="teachernum">
-                <label>教師員工編號</label>
-                <h2 ng-bind="TeacherNum"></h2>
-            </div>
-            <div class="form-group" id="formid">
-                <label>表單編號</label>
-                <h2 ng-bind="FormId"></h2>
-            </div>
-            <div class="form-group">
-                <label>研究成果主題</label>
-                <input class="form-control col-md-10" type="text" id="ResearchTopic" ng-model="ResearchTopic" required>
-            </div>
-            <div class="form-group">
-                <label>商品化研發導向(主要)</label>
-                <select class="form-control col-md-10" id="HIGHER" ng-model="HIGHER" required>
-                    <option value="">請選擇</option>
-                    <option>Health</option>
-                    <option>Intelligent</option>
-                    <option>Green & Energy</option>
-                    <option>Humanities & Creativity</option>
-                    <option>Emerging</option>
-                    <option>Recycle</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>商品化研發導向(次要)</label>
-                <select class="form-control col-md-10" id="HIGHER2" ng-model="HIGHER2" required>
-                    <option value="">請選擇</option>
-                    <option>Health</option>
-                    <option>Intelligent</option>
-                    <option>Green & Energy</option>
-                    <option>Humanities & Creativity</option>
-                    <option>Emerging</option>
-                    <option>Recycle</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>所屬產業類別(主要)</label>
-                <select class="form-control col-md-10" id="Industry" ng-model="Industry" required>
-                    <option value="">請選擇</option>
-                    <option>運輸及倉儲業</option>
-                    <option>礦業及土石採取業</option>
-                    <option>製造業</option>
-                    <option>電力及然氣供應業</option>
-                    <option>營建工程業</option>
-                    <option>用水供應及汙染整治業</option>
-                    <option>批發與零售業</option>
-                    <option>農、林、漁、牧業</option>
-                    <option>住宿及餐飲業</option>
-                    <option>出版、影音製作、傳播集資通訊服務業</option>
-                    <option>金融及保險業</option>
-                    <option>醫療保健及社會工作服務業</option>
-                    <option>支援服務業</option>
-                    <option>專業、科學及技術服務業</option>
-                    <option>教育業</option>
-                    <option>公共行政及國防；強制性社會安全</option>
-                    <option>不動產業</option>
-                    <option>藝術、娛樂及休閒服務業</option>
-                    <option>其他服務業</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>所屬產業類別(次要)</label>
-                <select class="form-control col-md-10" id="Industry" ng-model="Industry2" required>
-                    <option value="">請選擇</option>
-                    <option>運輸及倉儲業</option>
-                    <option>礦業及土石採取業</option>
-                    <option>製造業</option>
-                    <option>電力及然氣供應業</option>
-                    <option>營建工程業</option>
-                    <option>用水供應及汙染整治業</option>
-                    <option>批發與零售業</option>
-                    <option>農、林、漁、牧業</option>
-                    <option>住宿及餐飲業</option>
-                    <option>出版、影音製作、傳播集資通訊服務業</option>
-                    <option>金融及保險業</option>
-                    <option>醫療保健及社會工作服務業</option>
-                    <option>支援服務業</option>
-                    <option>專業、科學及技術服務業</option>
-                    <option>教育業</option>
-                    <option>公共行政及國防；強制性社會安全</option>
-                    <option>不動產業</option>
-                    <option>藝術、娛樂及休閒服務業</option>
-                    <option>其他服務業</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>5+N產業類別</label>
-                <select class="form-control col-md-10" id="Industry5n" ng-model="Industry5n" required>
-                    <option value="">請選擇</option>
-                    <option>「智慧機械」</option>
-                    <option>「亞洲‧矽谷」</option>
-                    <option>「綠能科技」</option>
-                    <option>「生醫產業」</option>
-                    <option>「國防產業」</option>
-                    <option>「新農業」</option>
-                    <option>「循環經濟」</option>
-                    <option>「數位國家‧創新經濟」</option>
-                    <option>「文化創意產業科技創新」</option>
-                    <option>「晶片設計與半導體產業」</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>研究教師姓名</label>
-                <input class="form-control col-md-10" type="text" id="Name" ng-model="Name" required>
-            </div>
-            <div class="form-group">
-                <label>教師隸屬學院</label>
-                <select class="form-control col-md-10" id="college" ng-model="college" ng-change="changeDepartments()"
-                    required>
-                    <option value="">請選擇</option>
-                    <option>機電學院</option>
-                    <option>電資學院</option>
-                    <option>工程學院</option>
-                    <option>管理學院</option>
-                    <option>設計學院</option>
-                    <option>人文與社會科學學院</option>
-                    <option>體育室</option>
-                    <option>通識中心</option>
-                    <option>師培中心</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>教師隸屬系所</label>
-                <select class="form-control col-md-10" id="department" ng-model="department"
-                    ng-options="data for data in departments" required>
-                    <option value="">請先選擇學院</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>教師連絡電話</label>
-                <input class="form-control col-md-10" type="text" id="Phone" ng-model="Phone" required>
-            </div>
-            <div class="form-group">
-                <label>教師電子郵件</label>
-                <input class="form-control col-md-10" type="text" id="Email" ng-model="Email" required>
-            </div>
-
-            <label>專利相關資訊</label>
-            <div class="form-group">
-                <label class="radio-inline"></label>
-                <input type="radio" name="patentRadio" class="PatentInfoRadio" value="有" ng-model="HavePatents"
-                    required>有
-                <label class="radio-inline"></label>
-                <input type="radio" name="patentRadio" class="PatentInfoRadio" value="無" checked ng-model="HavePatents"
-                    required>無
-            </div>
-
-            <div id="patentInfo" class="panel-collapse collapse">
-                <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
-                    <table class="table mt-3" id="patent-table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">序號</th>
-                                <th scope="col">名稱</th>
-                                <th scope="col">國籍</th>
-                                <th scope="col">狀況</th>
-                                <th scope="col">檢視</th>
-                                <!-- <th scope="col">修改</th> -->
-                                <th scope="col">移除</th>
-                            </tr>
-                            <tr ng-repeat="data in Patents">
-                                <td scope="row">{{$index+1}}</th>
-                                <td>{{data.Name}}</td>
-                                <td>{{data.Country}}</td>
-                                <td>{{data.Status}}</td>
-                                <td><a href={{data.File}} target="_blank">檢視</a></td>
-                                <!-- <td><a href="#" ng-click="updatePantent()">修改</a></td> -->
-                                <td><a href="#" ng-click="removePatent($index)" id = "removePDFpaper">移除</a></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                    <div class="row justify-content-center">
-                        <div class="my-3">
-                            <button class="btn btn-primary" id="btn-patent" type="button" data-toggle="modal"
-                                data-target="#addPatent">
-                                <h5>新增資料</h5>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="addPatent" tabindex="-1" role="dialog" aria-labelledby="addPatentTitle"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addPatentTitle">新增專利資訊</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label>專利主題名稱</label>
-                                        <input class="form-control" type="text" ng-model="patentName">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>專利申請國籍</label>
-                                        <input class="form-control" type="text" ng-model="patentCountry">
-                                    </div>
-                                    <label>專利申請狀況</label>
-                                    <div class="form-group">
-                                        <label class="radio-inline"></label>
-                                        <input type="radio" name="patentStatusRadio" value="已核准"
-                                            ng-model="patentStatus">已核准
-                                        <label class="radio-inline"></label>
-                                        <input type="radio" name="patentStatusRadio" value="申請中"
-                                            ng-model="patentStatus">申請中
-                                    </div>
-                                    <div class="form-group">
-                                        <label>佐證資料上傳(限pdf)</label>
-                                        <div id="drop-area" class="dm-uploader">
-                                            <input type="file" title="選擇檔案" accept=".pdf" id="patent-file"
-                                                name="myPatent">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                    <button type="button" class="btn btn-primary" ng-click="UploadPatent()">送出</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+            <h1 class="mb-4" id="title">研發能量展現平台 > 表單填寫</h1>
+            <div class="shadow-sm offset-md-3 p-4" id="formStyle">
+                <div class="form-group" id="teachernum">
+                    <label>教師員工編號</label>
+                    <h2 ng-bind="TeacherNum"></h2>
                 </div>
-            </div>
-
-
-            <label>論文相關資訊</label>
-            <div class="form-group">
-                <label class="radio-inline"></label>
-                <input type="radio" name="paperRadio" class="PaperInfoRadio" value="有" ng-model="HavePapers">有
-                <label class="radio-inline"></label>
-                <input type="radio" name="paperRadio" class="PaperInfoRadio" value="無" ng-model="HavePapers" checked>無
-            </div>
-
-            <div id="paperInfo" class="panel-collapse collapse">
-                <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
-
-                    <table class="table mt-3">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">序號</th>
-                                <th scope="col">名稱</th>
-                                <th scope="col">領域</th>
-                                <th scope="col">狀況</th>
-                                <th scope="col">檢視</th>
-                                <th scope="col">移除</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="data in Papers">
-                                <td scope="row">{{$index+1}}</th>
-                                <td>{{data.Name}}</td>
-                                <td>{{data.Journal}}</td>
-                                <td>{{data.Status}}</td>
-                                <td ng-if="data.Status=='已發表'"><a href={{data.File}} target="_blank">檢視</a></td>
-                                <td ng-if="data.Status!='已發表'">無</td>
-                                <td><a href="#" ng-click="removePaper($index)">移除</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="row justify-content-center">
-                        <div class="my-3">
-                            <button class="btn btn-warning" id="btn-paper" type="button" data-toggle="modal"
-                                data-target="#addPaper">
-                                <h5>新增資料</h5>
-                            </button>
-                        </div>
-                    </div>
-
+                <div class="form-group" id="formid">
+                    <label>表單編號</label>
+                    <h2 ng-bind="FormId"></h2>
                 </div>
-            </div>
-
-            <div class="modal fade" id="addPaper" tabindex="-1" role="dialog" aria-labelledby="addPatentTitle"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addPaperTitle">新增論文資訊</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>論文主題名稱</label>
-                                <input class="form-control col-md-10" type="text" ng-model="paperName">
-                            </div>
-                            <label>學術期刊領域</label>
-                            <div class="form-group">
-                                <label class="radio-inline"></label>
-                                <input type="radio" name="paperFieldRadio" value="SCI" ng-model="paperJournal">SCI
-                                <label class="radio-inline"></label>
-                                <input type="radio" name="paperFieldRadio" value="SSCI" ng-model="paperJournal">SSCI
-                                <label class="radio-inline"></label>
-                                <input type="radio" name="paperFieldRadio" value="EI" ng-model="paperJournal">EI
-                                <label class="radio-inline"></label>
-                                <input type="radio" name="paperFieldRadio" value="AHCI" ng-model="paperJournal">AHCI
-                                <label class="radio-inline"></label>
-                                <input type="radio" name="paperFieldRadio" value="TSSCI" ng-model="paperJournal">TSSCI
-                                <label class="radio-inline"></label>
-                                <input type="radio" name="paperFieldRadio" value="研討會" ng-model="paperJournal">研討會
-                                <label class="radio-inline"></label>
-                                <input type="radio" name="paperFieldRadio" value="其他" ng-model="paperJournal">其他
-                            </div>
-                            <label>論文申請狀況</label>
-                            <div class="form-group">
-                                <label class="radio-inline"></label>
-                                <input type="radio" name="paperStatusRadio" value="已發表" ng-model="paperStatus"
-                                    id="paperPublished">已發表
-                                <label class="radio-inline"></label>
-                                <input type="radio" name="paperStatusRadio" value="審查中" ng-model="paperStatus"
-                                    class="paperUnPublished">審查中
-                                <label class="radio-inline"></label>
-                                <input type="radio" name="paperStatusRadio" value="撰寫中" ng-model="paperStatus"
-                                    class="paperUnPublished">撰寫中
-                            </div>
-                            <div id="paperFileField" class="panel-collapse collapse">
-                                <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
-                                    <div class="form-group">
-                                        <label class="mb-0">佐證資料上傳(限pdf)</label>
-                                        <div id="drop-area" class="dm-uploader">
-                                            <input type="file" title="選擇檔案" accept=".pdf" id="paper-file">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-primary" ng-click="UploadPaper()">送出</button>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    
+                    <label>研究成果主題</label>
+                    <input class="form-control col-md-10" type="text" id="ResearchTopic" ng-model="ResearchTopic" required>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>成果技術摘要說明</label>
-                <textarea class="form-control col-md-10" rows="5" id="description" ng-model="description"
-                    required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>應用範圍及產業效益評估</label>
-                <textarea class="form-control col-md-10" rows="5" id="evaluation" ng-model="evaluation"
-                    required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>成果照片上傳</label>
-                <div id="drop-area" class="dm-uploader">
-                    <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="image" id="image"
-                        name="myImage">
+                <div class="form-group">
+                    <label>商品化研發導向(主要)</label>
+                    <select class="form-control col-md-10" id="HIGHER" ng-model="HIGHER" required>
+                        <option value="">請選擇</option>
+                        <option>Health</option>
+                        <option>Intelligent</option>
+                        <option>Green & Energy</option>
+                        <option>Humanities & Creativity</option>
+                        <option>Emerging</option>
+                        <option>Recycle</option>
+                    </select>
                 </div>
-                <img ng-src="{{imageSrc}}" id="image-preview" style="height: auto; display: none;" class="col-md-10">
-            </div>
-
-            <div class="form-group">
-                <label>成果影片上傳(限制100MB) <span class="text-danger">建議解析度：720p | 建議長度：1分鐘以上</span></label>
-                <div id="drop-area" class="dm-uploader">
-                    <input type="file" title="選擇檔案" accept=".AVI,.FLV,.WMV,.MOV,.MP4" id="video" name='myVideo'>
+                <div class="form-group">
+                    <label>商品化研發導向(次要)</label>
+                    <select class="form-control col-md-10" id="HIGHER2" ng-model="HIGHER2" required>
+                        <option value="">請選擇</option>
+                        <option>Health</option>
+                        <option>Intelligent</option>
+                        <option>Green & Energy</option>
+                        <option>Humanities & Creativity</option>
+                        <option>Emerging</option>
+                        <option>Recycle</option>
+                    </select>
                 </div>
-                <div class="progress my-1">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                        aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" id="progress-bar"
-                        style="display: none;">
-                        <span class="sr-only">70% Complete</span>
-                    </div>
+                <div class="form-group">
+                    <label>所屬產業類別(主要)</label>
+                    <select class="form-control col-md-10" id="Industry" ng-model="Industry" required>
+                        <option value="">請選擇</option>
+                        <option>運輸及倉儲業</option>
+                        <option>礦業及土石採取業</option>
+                        <option>製造業</option>
+                        <option>電力及然氣供應業</option>
+                        <option>營建工程業</option>
+                        <option>用水供應及汙染整治業</option>
+                        <option>批發與零售業</option>
+                        <option>農、林、漁、牧業</option>
+                        <option>住宿及餐飲業</option>
+                        <option>出版、影音製作、傳播集資通訊服務業</option>
+                        <option>金融及保險業</option>
+                        <option>醫療保健及社會工作服務業</option>
+                        <option>支援服務業</option>
+                        <option>專業、科學及技術服務業</option>
+                        <option>教育業</option>
+                        <option>公共行政及國防；強制性社會安全</option>
+                        <option>不動產業</option>
+                        <option>藝術、娛樂及休閒服務業</option>
+                        <option>其他服務業</option>
+                    </select>
                 </div>
-                <video src="" class="col-md-10" style="height: auto;display: none;" id="video-preview" controls></video>
-            </div>
-            <div class="col-md-10" id="LevelTable">
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th class="table-primary">需求成熟度</th>
-                            <th class="table-primary">市場成熟度</th>
-                            <th class="table-primary">投資成熟度</th>
-                            <th class="table-primary">製造成熟度</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th class="table-warning">Level 0</th>
-                            <td class="td1 table-info">不適用</td>
-                            <td class="td1 table-info">不適用</td>
-                            <td class="td1 table-info">不適用</td>
-                            <td class="td1 table-info">不適用</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 1</th>
-                            <td class="td1">發現需求</td>
-                            <td class="td1">潛在商機</td>
-                            <td class="td1">研發探究</td>
-                            <td class="td1">製造分析</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 2</th>
-                            <td class="td1">需求確認</td>
-                            <td class="td1">市場分析</td>
-                            <td class="td1">自籌款項</td>
-                            <td class="td1">製程評估</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 3</th>
-                            <td class="td1">功能預期</td>
-                            <td class="td1">市場預測</td>
-                            <td class="td1">創業投資</td>
-                            <td class="td1">實驗試做</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 4</th>
-                            <td class="td1">量產預期</td>
-                            <td class="td1">客群確認</td>
-                            <td class="td1">政府投資</td>
-                            <td class="td1">組件製造</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 5</th>
-                            <td class="td1">品質確認</td>
-                            <td class="td1">成效分析</td>
-                            <td class="td1">產學投資</td>
-                            <td class="td1">原型製造</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 6</th>
-                            <td class="td1">需求驗證</td>
-                            <td class="td1">競爭分析</td>
-                            <td class="td1">天使投資</td>
-                            <td class="td1">量產評估</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 7</th>
-                            <td class="td1">資源挹注</td>
-                            <td class="td1">價值創造</td>
-                            <td class="td1">投資機構</td>
-                            <td class="td1">試少量產</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 8</th>
-                            <td class="td1">需求延續</td>
-                            <td class="td1">服務模式</td>
-                            <td class="td1">私募基金</td>
-                            <td class="td1">全速量產</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 9</th>
-                            <td class="td1">需求成熟</td>
-                            <td class="td1">商業模式</td>
-                            <td class="td1">國際財團</td>
-                            <td class="td1">品質控管</td>
-                        </tr>
-
-                        <tr>
-                            <th></th>
-                            <th class="table-primary">技術成熟度</th>
-                            <th class="table-primary">組織成熟度</th>
-                            <th class="table-primary">科學成熟度</th>
-                            <th class="table-primary">社會貢獻成熟度</th>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 0</th>
-                            <td class="td2 table-info">不適用</td>
-                            <td class="td2 table-info">不適用</td>
-                            <td class="td2 table-info">不適用</td>
-                            <td class="td2 table-info">不適用</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 1</th>
-                            <td class="td2">創意發現</td>
-                            <td class="td2">組織目標</td>
-                            <td class="td2">科學發想</td>
-                            <td class="td2">問題評調</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 2</th>
-                            <td class="td2">構想產生</td>
-                            <td class="td2">體系建立</td>
-                            <td class="td2">文獻探究</td>
-                            <td class="td2">影響評估</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 3</th>
-                            <td class="td2">構想驗證</td>
-                            <td class="td2">團隊形成</td>
-                            <td class="td2">觀察理解</td>
-                            <td class="td2">方案試擬</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 4</th>
-                            <td class="td2">基礎技術</td>
-                            <td class="td2">關鍵人物</td>
-                            <td class="td2">概念假設</td>
-                            <td class="td2">初步測試</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 5</th>
-                            <td class="td2">技術整合</td>
-                            <td class="td2">團隊整合</td>
-                            <td class="td2">系統模擬</td>
-                            <td class="td2">試點驗證</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 6</th>
-                            <td class="td2">原型製作</td>
-                            <td class="td2">組織試行</td>
-                            <td class="td2">產品試作</td>
-                            <td class="td2">利益驗修</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 7</th>
-                            <td class="td2">應用測試</td>
-                            <td class="td2">經營運作</td>
-                            <td class="td2">科學驗證</td>
-                            <td class="td2">場域示範</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 8</th>
-                            <td class="td2">系統驗證</td>
-                            <td class="td2">效能控管</td>
-                            <td class="td2">理論確定</td>
-                            <td class="td2">成效反饋</td>
-                        </tr>
-                        <tr>
-                            <th class="table-warning">Level 9</th>
-                            <td class="td2">技術成熟</td>
-                            <td class="td2">組織改造</td>
-                            <td class="td2">衝擊影響</td>
-                            <td class="td2">問題解決</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="chart m-5">
-                    <canvas id="myChart"></canvas>
+                <div class="form-group">
+                    <label>所屬產業類別(次要)</label>
+                    <select class="form-control col-md-10" id="Industry" ng-model="Industry2" required>
+                        <option value="">請選擇</option>
+                        <option>運輸及倉儲業</option>
+                        <option>礦業及土石採取業</option>
+                        <option>製造業</option>
+                        <option>電力及然氣供應業</option>
+                        <option>營建工程業</option>
+                        <option>用水供應及汙染整治業</option>
+                        <option>批發與零售業</option>
+                        <option>農、林、漁、牧業</option>
+                        <option>住宿及餐飲業</option>
+                        <option>出版、影音製作、傳播集資通訊服務業</option>
+                        <option>金融及保險業</option>
+                        <option>醫療保健及社會工作服務業</option>
+                        <option>支援服務業</option>
+                        <option>專業、科學及技術服務業</option>
+                        <option>教育業</option>
+                        <option>公共行政及國防；強制性社會安全</option>
+                        <option>不動產業</option>
+                        <option>藝術、娛樂及休閒服務業</option>
+                        <option>其他服務業</option>
+                    </select>
                 </div>
-
-                <label>是否需要進入商品化審查</label>
+                <div class="form-group">
+                    <label>5+N產業類別</label>
+                    <select class="form-control col-md-10" id="Industry5n" ng-model="Industry5n" required>
+                        <option value="">請選擇</option>
+                        <option>「智慧機械」</option>
+                        <option>「亞洲‧矽谷」</option>
+                        <option>「綠能科技」</option>
+                        <option>「生醫產業」</option>
+                        <option>「國防產業」</option>
+                        <option>「新農業」</option>
+                        <option>「循環經濟」</option>
+                        <option>「數位國家‧創新經濟」</option>
+                        <option>「文化創意產業科技創新」</option>
+                        <option>「晶片設計與半導體產業」</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>研究教師姓名</label>
+                    <input class="form-control col-md-10" type="text" id="Name" ng-model="Name" required>
+                </div>
+                <div class="form-group">
+                    <label>教師隸屬學院</label>
+                    <select class="form-control col-md-10" id="college" ng-model="college" ng-change="changeDepartments()"
+                        required>
+                        <option value="">請選擇</option>
+                        <option>機電學院</option>
+                        <option>電資學院</option>
+                        <option>工程學院</option>
+                        <option>管理學院</option>
+                        <option>設計學院</option>
+                        <option>人文與社會科學學院</option>
+                        <option>體育室</option>
+                        <option>通識中心</option>
+                        <option>師培中心</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>教師隸屬系所</label>
+                    <select class="form-control col-md-10" id="department" ng-model="department"
+                        ng-options="data for data in departments" required>
+                        <option value="">請先選擇學院</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>教師連絡電話</label>
+                    <input class="form-control col-md-10" type="text" id="Phone" ng-model="Phone" required>
+                </div>
+                <div class="form-group">
+                    <label>教師電子郵件</label>
+                    <input class="form-control col-md-10" type="text" id="Email" ng-model="Email" required>
+                </div>
+    
+                <label>專利相關資訊</label>
                 <div class="form-group">
                     <label class="radio-inline"></label>
-                    <input type="radio" name="CommercializationRadio" class="CommercializationRadio" id="CommercializationTrue" value="是"
-                        ng-model="isCommercialization">是
+                    <input type="radio" name="patentRadio" class="PatentInfoRadio" value="有" ng-model="HavePatents"
+                        required>有
                     <label class="radio-inline"></label>
-                    <input type="radio" name="CommercializationRadio" class="CommercializationRadio" id="CommercializationFalse" value="否"
-                        ng-model="isCommercialization" checked>否
+                    <input type="radio" name="patentRadio" class="PatentInfoRadio" value="無" checked ng-model="HavePatents"
+                        required>無
                 </div>
-
-                <div id="CommercializationPanel" class="panel-collapse collapse">
-                    <div class="panel-body border border-primary fit-content rounded col-md-12 mb-3">
-                        <div class="form-group">
-                            <label>市場需求價值</label>
-                            <textarea class="form-control col-md-10 CommercializationFields" rows="5"
-                                ng-model="marketDemand"></textarea>
+    
+                <div id="patentInfo" class="panel-collapse collapse">
+                    <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
+                        <table class="table mt-3" id="patent-table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">序號</th>
+                                    <th scope="col">名稱</th>
+                                    <th scope="col">國籍</th>
+                                    <th scope="col">狀況</th>
+                                    <th scope="col">檢視</th>
+                                    <!-- <th scope="col">修改</th> -->
+                                    <th scope="col">移除</th>
+                                </tr>
+                                <tr ng-repeat="data in Patents">
+                                    <td scope="row">{{$index+1}}</th>
+                                    <td>{{data.Name}}</td>
+                                    <td>{{data.Country}}</td>
+                                    <td>{{data.Status}}</td>
+                                    <td><a href={{data.File}} target="_blank">檢視</a></td>
+                                    <!-- <td><a href="#" ng-click="updatePantent()">修改</a></td> -->
+                                    <td><a href="#" ng-click="removePatent($index)" id = "removePDFpaper">移除</a></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+    
+                            </tbody>
+                        </table>
+                        <div class="row justify-content-center">
+                            <div class="my-3">
+                                <button class="btn btn-primary" id="btn-patent" type="button" data-toggle="modal"
+                                    data-target="#addPatent">
+                                    <h5>新增資料</h5>
+                                </button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>技術競爭性</label>
-                            <textarea class="form-control col-md-10 CommercializationFields" rows="5"
-                                ng-model="competitiveness"></textarea>
+    
+                        <div class="modal fade" id="addPatent" tabindex="-1" role="dialog" aria-labelledby="addPatentTitle"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addPatentTitle">新增專利資訊</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>專利主題名稱</label>
+                                            <input class="form-control" type="text" ng-model="patentName">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>專利申請國籍</label>
+                                            <input class="form-control" type="text" ng-model="patentCountry">
+                                        </div>
+                                        <label>專利申請狀況</label>
+                                        <div class="form-group">
+                                            <label class="radio-inline"></label>
+                                            <input type="radio" name="patentStatusRadio" value="已核准"
+                                                ng-model="patentStatus">已核准
+                                            <label class="radio-inline"></label>
+                                            <input type="radio" name="patentStatusRadio" value="申請中"
+                                                ng-model="patentStatus">申請中
+                                        </div>
+                                        <div class="form-group">
+                                            <label>佐證資料上傳(限pdf)</label>
+                                            <div id="drop-area" class="dm-uploader">
+                                                <input type="file" title="選擇檔案" accept=".pdf" id="patent-file"
+                                                    name="myPatent">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                        <button type="button" class="btn btn-primary" ng-click="UploadPatent()">送出</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>商品化成本規劃</label>
-                            <textarea class="form-control col-md-10 CommercializationFields" rows="5"
-                                ng-model="cost"></textarea>
-                        </div>                        
+    
                     </div>
                 </div>
-
-                <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="save()"
-                    id="savebt">暫存</button>
-                <input type="submit" class="btn btn-primary m-auto col-md-2" id="submitbtn" value="提交">
-                <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="test()"
-                    id="savebt">測試</button>
-
-
-                    <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalTitle"
+    
+    
+                <label>論文相關資訊</label>
+                <div class="form-group">
+                    <label class="radio-inline"></label>
+                    <input type="radio" name="paperRadio" class="PaperInfoRadio" value="有" ng-model="HavePapers">有
+                    <label class="radio-inline"></label>
+                    <input type="radio" name="paperRadio" class="PaperInfoRadio" value="無" ng-model="HavePapers" checked>無
+                </div>
+    
+                <div id="paperInfo" class="panel-collapse collapse">
+                    <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
+    
+                        <table class="table mt-3">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">序號</th>
+                                    <th scope="col">名稱</th>
+                                    <th scope="col">領域</th>
+                                    <th scope="col">狀況</th>
+                                    <th scope="col">檢視</th>
+                                    <th scope="col">移除</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in Papers">
+                                    <td scope="row">{{$index+1}}</th>
+                                    <td>{{data.Name}}</td>
+                                    <td>{{data.Journal}}</td>
+                                    <td>{{data.Status}}</td>
+                                    <td ng-if="data.Status=='已發表'"><a href={{data.File}} target="_blank">檢視</a></td>
+                                    <td ng-if="data.Status!='已發表'">無</td>
+                                    <td><a href="#" ng-click="removePaper($index)">移除</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+    
+                        <div class="row justify-content-center">
+                            <div class="my-3">
+                                <button class="btn btn-warning" id="btn-paper" type="button" data-toggle="modal"
+                                    data-target="#addPaper">
+                                    <h5>新增資料</h5>
+                                </button>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="modal fade" id="addPaper" tabindex="-1" role="dialog" aria-labelledby="addPatentTitle"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="saveModalTitle">儲存成功</h5>
+                                <h5 class="modal-title" id="addPaperTitle">新增論文資訊</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
     
-                            <div class="modal-body">                            
-                                <p>員工編號：{{TeacherNum}}</p>                                                                                                                      
-                                <p>表單編號：{{FormId}}</p>
-                                <p class="text-danger">請記住以上資料進入修改</p>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label>論文主題名稱</label>
+                                    <input class="form-control col-md-10" type="text" ng-model="paperName">
+                                </div>
+                                <label>學術期刊領域</label>
+                                <div class="form-group">
+                                    <label class="radio-inline"></label>
+                                    <input type="radio" name="paperFieldRadio" value="SCI" ng-model="paperJournal">SCI
+                                    <label class="radio-inline"></label>
+                                    <input type="radio" name="paperFieldRadio" value="SSCI" ng-model="paperJournal">SSCI
+                                    <label class="radio-inline"></label>
+                                    <input type="radio" name="paperFieldRadio" value="EI" ng-model="paperJournal">EI
+                                    <label class="radio-inline"></label>
+                                    <input type="radio" name="paperFieldRadio" value="AHCI" ng-model="paperJournal">AHCI
+                                    <label class="radio-inline"></label>
+                                    <input type="radio" name="paperFieldRadio" value="TSSCI" ng-model="paperJournal">TSSCI
+                                    <label class="radio-inline"></label>
+                                    <input type="radio" name="paperFieldRadio" value="研討會" ng-model="paperJournal">研討會
+                                    <label class="radio-inline"></label>
+                                    <input type="radio" name="paperFieldRadio" value="其他" ng-model="paperJournal">其他
+                                </div>
+                                <label>論文申請狀況</label>
+                                <div class="form-group">
+                                    <label class="radio-inline"></label>
+                                    <input type="radio" name="paperStatusRadio" value="已發表" ng-model="paperStatus"
+                                        id="paperPublished">已發表
+                                    <label class="radio-inline"></label>
+                                    <input type="radio" name="paperStatusRadio" value="審查中" ng-model="paperStatus"
+                                        class="paperUnPublished">審查中
+                                    <label class="radio-inline"></label>
+                                    <input type="radio" name="paperStatusRadio" value="撰寫中" ng-model="paperStatus"
+                                        class="paperUnPublished">撰寫中
+                                </div>
+                                <div id="paperFileField" class="panel-collapse collapse">
+                                    <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
+                                        <div class="form-group">
+                                            <label class="mb-0">佐證資料上傳(限pdf)</label>
+                                            <div id="drop-area" class="dm-uploader">
+                                                <input type="file" title="選擇檔案" accept=".pdf" id="paper-file">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
                             </div>
     
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">完成</button>                                
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" ng-click="UploadPaper()">送出</button>
                             </div>
                         </div>
                     </div>
-                </div>    
+                </div>
+    
+                <div class="form-group">
+                    <label>成果技術摘要說明</label>
+                    <textarea class="form-control col-md-10" rows="5" id="description" ng-model="description"
+                        required></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label>應用範圍及產業效益評估</label>
+                    <textarea class="form-control col-md-10" rows="5" id="evaluation" ng-model="evaluation"
+                        required></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label>成果照片上傳</label>
+                    <div id="drop-area" class="dm-uploader">
+                        <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="image" id="image"
+                            name="myImage">
+                    </div>
+                    <img ng-src="{{imageSrc}}" id="image-preview" style="height: auto; display: none;" class="col-md-10">
+                </div>
+    
+                <div class="form-group">
+                    <label>成果影片上傳(限制100MB) <span class="text-danger">建議解析度：720p | 建議長度：1分鐘以上</span></label>
+                    <div id="drop-area" class="dm-uploader">
+                        <input type="file" title="選擇檔案" accept=".AVI,.FLV,.WMV,.MOV,.MP4" id="video" name='myVideo'>
+                    </div>
+                    <div class="progress my-1">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                            aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" id="progress-bar"
+                            style="display: none;">
+                            <span class="sr-only">70% Complete</span>
+                        </div>
+                    </div>
+                    <video src="" class="col-md-10" style="height: auto;display: none;" id="video-preview" controls></video>
+                </div>
+                <div class="col-md-10" id="LevelTable">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="table-primary">需求成熟度</th>
+                                <th class="table-primary">市場成熟度</th>
+                                <th class="table-primary">投資成熟度</th>
+                                <th class="table-primary">製造成熟度</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th class="table-warning"></th>
+                                <td class="td1 table-info">不適用</td>
+                                <td class="td1 table-info">不適用</td>
+                                <td class="td1 table-info">不適用</td>
+                                <td class="td1 table-info">不適用</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 1</th>
+                                <td class="td1">發現需求</td>
+                                <td class="td1">潛在商機</td>
+                                <td class="td1">研發探究</td>
+                                <td class="td1">製造分析</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 2</th>
+                                <td class="td1">需求確認</td>
+                                <td class="td1">市場分析</td>
+                                <td class="td1">自籌款項</td>
+                                <td class="td1">製程評估</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 3</th>
+                                <td class="td1">功能預期</td>
+                                <td class="td1">市場預測</td>
+                                <td class="td1">創業投資</td>
+                                <td class="td1">實驗試做</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 4</th>
+                                <td class="td1">量產預期</td>
+                                <td class="td1">客群確認</td>
+                                <td class="td1">政府投資</td>
+                                <td class="td1">組件製造</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 5</th>
+                                <td class="td1">品質確認</td>
+                                <td class="td1">成效分析</td>
+                                <td class="td1">產學投資</td>
+                                <td class="td1">原型製造</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 6</th>
+                                <td class="td1">需求驗證</td>
+                                <td class="td1">競爭分析</td>
+                                <td class="td1">天使投資</td>
+                                <td class="td1">量產評估</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 7</th>
+                                <td class="td1">資源挹注</td>
+                                <td class="td1">價值創造</td>
+                                <td class="td1">投資機構</td>
+                                <td class="td1">試少量產</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 8</th>
+                                <td class="td1">需求延續</td>
+                                <td class="td1">服務模式</td>
+                                <td class="td1">私募基金</td>
+                                <td class="td1">全速量產</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 9</th>
+                                <td class="td1">需求成熟</td>
+                                <td class="td1">商業模式</td>
+                                <td class="td1">國際財團</td>
+                                <td class="td1">品質控管</td>
+                            </tr>
+    
+                            <tr>
+                                <th></th>
+                                <th class="table-primary">技術成熟度</th>
+                                <th class="table-primary">組織成熟度</th>
+                                <th class="table-primary">科學成熟度</th>
+                                <th class="table-primary">社會貢獻成熟度</th>
+                            </tr>
+                            <tr>
+                                <th class="table-warning"></th>
+                                <td class="td2 table-info">不適用</td>
+                                <td class="td2 table-info">不適用</td>
+                                <td class="td2 table-info">不適用</td>
+                                <td class="td2 table-info">不適用</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 1</th>
+                                <td class="td2">創意發現</td>
+                                <td class="td2">組織目標</td>
+                                <td class="td2">科學發想</td>
+                                <td class="td2">問題評調</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 2</th>
+                                <td class="td2">構想產生</td>
+                                <td class="td2">體系建立</td>
+                                <td class="td2">文獻探究</td>
+                                <td class="td2">影響評估</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 3</th>
+                                <td class="td2">構想驗證</td>
+                                <td class="td2">團隊形成</td>
+                                <td class="td2">觀察理解</td>
+                                <td class="td2">方案試擬</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 4</th>
+                                <td class="td2">基礎技術</td>
+                                <td class="td2">關鍵人物</td>
+                                <td class="td2">概念假設</td>
+                                <td class="td2">初步測試</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 5</th>
+                                <td class="td2">技術整合</td>
+                                <td class="td2">團隊整合</td>
+                                <td class="td2">系統模擬</td>
+                                <td class="td2">試點驗證</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 6</th>
+                                <td class="td2">原型製作</td>
+                                <td class="td2">組織試行</td>
+                                <td class="td2">產品試作</td>
+                                <td class="td2">利益驗修</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 7</th>
+                                <td class="td2">應用測試</td>
+                                <td class="td2">經營運作</td>
+                                <td class="td2">科學驗證</td>
+                                <td class="td2">場域示範</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 8</th>
+                                <td class="td2">系統驗證</td>
+                                <td class="td2">效能控管</td>
+                                <td class="td2">理論確定</td>
+                                <td class="td2">成效反饋</td>
+                            </tr>
+                            <tr>
+                                <th class="table-warning">Level 9</th>
+                                <td class="td2">技術成熟</td>
+                                <td class="td2">組織改造</td>
+                                <td class="td2">衝擊影響</td>
+                                <td class="td2">問題解決</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="chart m-5">
+                        <canvas id="myChart"></canvas>
+                    </div>
+    
+                    <label>是否需要進入商品化審查</label>
+                    <div class="form-group">
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="CommercializationRadio" class="CommercializationRadio" id="CommercializationTrue" value="是"
+                            ng-model="isCommercialization">是
+                        <label class="radio-inline"></label>
+                        <input type="radio" name="CommercializationRadio" class="CommercializationRadio" id="CommercializationFalse" value="否"
+                            ng-model="isCommercialization" checked>否
+                    </div>
+    
+                    <div id="CommercializationPanel" class="panel-collapse collapse">
+                        <div class="panel-body border border-primary fit-content rounded col-md-12 mb-3">
+                            <div class="form-group">
+                                <label>市場需求價值</label>
+                                <textarea class="form-control col-md-10 CommercializationFields" rows="5"
+                                    ng-model="marketDemand"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>技術競爭性</label>
+                                <textarea class="form-control col-md-10 CommercializationFields" rows="5"
+                                    ng-model="competitiveness"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>商品化成本規劃</label>
+                                <textarea class="form-control col-md-10 CommercializationFields" rows="5"
+                                    ng-model="cost"></textarea>
+                            </div>                        
+                        </div>
+                    </div>
+    
+                    <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="save()"
+                        id="savebt">暫存</button>
+                    <input type="submit" class="btn btn-primary m-auto col-md-2" id="submitbtn" value="提交">
+                    <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="test()"
+                        id="savebt" ng-show="false">測試</button>
+    
+    
+                        <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalTitle"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="saveModalTitle">儲存成功</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+        
+                                <div class="modal-body">                            
+                                    <p>員工編號：{{TeacherNum}}</p>                                                                                                                      
+                                    <p>表單編號：{{FormId}}</p>
+                                    <p class="text-danger">請記住以上資料進入修改</p>
+                                </div>
+        
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">完成</button>                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
             </div>
         </div>
     </form>

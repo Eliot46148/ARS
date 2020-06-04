@@ -386,7 +386,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 .replace('{password}', $scope.FormId)
                 .replace('{date_start}', $scope.date_start)
                 .replace('{date_end}', $scope.date_end)
-                .replace('{url}', 'https://www.google.com/');
+                .replace('{url}', 'http://127.0.0.1:3000/committee/#accountID=' + $scope.Email + '&passwordID=' + $scope.FormID);
 
             $http.post('/mailServerSecret/send', {
                 'to': $scope.Email,
