@@ -1,42 +1,63 @@
 var express = require('express');
 var router = express.Router();
-userModel = require('../models/userModel');
+var bcrypt = require('bcrypt');
+var userModel = require('../models/userModel');
+const saltRounds = 10;
+
+default_user = { "account": "admin", "password": "admin12345"};
+
+bcrypt.hash(default_user.password, saltRounds).then(function (hashPass) {
+    var newUser = new userModel({
+        account: default_user.account,
+        password: hashPass
+    });
+    userModel.count({ account: default_user.account }, function (err, data) {
+        if (data == 0) {
+            newUser.save(function (err, data) {
+                if (!err)
+                    console.log("success");
+            });
+        }
+    })
+  });
 
 router.post('/login', function (req, res) {
-    userModel.find({}, function(err, data){console.log(data);})
     userModel.findOne({
         account: req.body.account,
-        password: req.body.password
     }, function (err, data) {
-        if (data == null)
-            res.json({ "status": 1, "msg": "員工號碼或代碼錯誤!" });
+        if (data == null || err)
+            res.json({ "status": 1, "msg": "Error" });
         else {
-            if (err)
-                res.json({ "status": 1, "msg": "Error" });
-            else {
-                res.json({ "status": 1, "msg": "success", "data": data });
-            }
+            bcrypt.compare(req.body.password, data.password).then(function (respond) {
+                if (respond){
+                    res.json({ "status": 0, "msg": "success", "account": req.body.account });
+                }else{
+                    res.json({ "status": 1, "msg": "Error" });
+                }
+            });
         }
     })
 });
 
 router.post('/register', function (req, res) {
-    var newUser = new userModel({
-        account: req.body.account,
-        password: req.body.password
-    });
-    userModel.count({ account: req.body.account }, function (err, data) {
-        if (data > 0)
-            res.json({ "status": 0, "msg": "帳號已被註冊" });
-        else {
-            newUser.save(function (err, data) {
-                if (err)
-                    res.json({ "status": 1, "msg": "Error" });
-                else
-                    res.json({ "status": 0, "msg": "success", "data": data });
-            });
-        }
-    })
+    bcrypt.hash(req.body.password, saltRounds).then(function (hashPass) {
+        var newUser = new userModel({
+            account: req.body.account,
+            password: hashPass
+        });
+        userModel.count({ account: req.body.account }, function (err, data) {
+            if (data > 0)
+                res.json({ "status": 0, "msg": "帳號已被註冊" });
+            else {
+                newUser.save(function (err, data) {
+                    if (err)
+                        res.json({ "status": 1, "msg": "Error" });
+                    else
+                        res.json({ "status": 0, "msg": "success", "data": data });
+                });
+            }
+        })
+      });
 })
 
 router.post('/test', function (req, res) {

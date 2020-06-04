@@ -4,10 +4,6 @@ var router = express.Router();
 
 var id = 'rnpp';
 
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
 for (var i=0; i<systems.length; i++){
   var system = systems[i], functions = system.functions;
   if (system.id == id){
