@@ -41,7 +41,7 @@ router.post('/testest',(req,res)=>{
   })
 })
 
-// get form data
+/** get form data */ 
 router.get('/data', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
     if (err)
@@ -78,13 +78,15 @@ router.post('/', function (req, res, next) {
   });
 });
 
-// save form data
+/** save form data */
 router.put('/', function (req, res, next) {
   formModel.update({ _id: req.query.FormId },
     {
       ResearchTopic: req.body.ResearchTopic,
       HIGHER: req.body.HIGHER,
+      HIGHER2: req.body.HIGHER2,
       Industry: req.body.Industry,
+      Industry2: req.body.Industry2,
       Industry5n: req.body.Industry5n,
       Name: req.body.Name,
       College: req.body.College,
@@ -93,6 +95,9 @@ router.put('/', function (req, res, next) {
       Email: req.body.Email,
       Description: req.body.Description,
       Evaluation: req.body.Evaluation,
+      MarketDemand: req.body.MarketDemand,
+      Competitiveness: req.body.Competitiveness,
+      Cost: req.body.Cost,
       SubmitDate: req.body.SubmitDate,
       ChartData: req.body.ChartData,
       Status: 0
@@ -112,7 +117,9 @@ router.put('/submit', function (req, res, next) {
     {
       ResearchTopic: req.body.ResearchTopic,
       HIGHER: req.body.HIGHER,
+      HIGHER2: req.body.HIGHER2,
       Industry: req.body.Industry,
+      Industry2: req.body.Industry2,
       Industry5n: req.body.Industry5n,
       Name: req.body.Name,
       College: req.body.College,
@@ -121,6 +128,9 @@ router.put('/submit', function (req, res, next) {
       Email: req.body.Email,
       Description: req.body.Description,
       Evaluation: req.body.Evaluation,
+      MarketDamand: req.body.MarketDamand,
+      Competitiveness: req.body.Competitiveness,
+      Cost: req.body.Cost,
       SubmitDate: req.body.SubmitDate,
       Submitted: true,
       ChartData: req.body.ChartData,
@@ -181,7 +191,7 @@ router.delete('/patent', (req, res, next) => {
   });
 });
 
-// upload paper data
+// upload paper data with files
 router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
   formModel.findByIdAndUpdate({ _id: req.query.FormId },
     {
@@ -197,6 +207,24 @@ router.patch('/paper', upload.single('myPaper'), function (req, res, next) {
       if (err) res.json({ "status": 1, "msg": "Error" });
       else
         res.json({ "status": 0, "msg": "Success", "filename": req.file.filename, "id": data._id });
+    });
+});
+
+// upload paper data without files
+router.patch('/paper/nofile', function (req, res, next) {
+  formModel.findByIdAndUpdate({ _id: req.query.FormId },
+    {
+      $push: {
+        Paper: {
+          Name: req.query.Name,
+          Journal: req.query.Journal,
+          Status: req.query.Status,          
+        }
+      }
+    }, function (err, data) {
+      if (err) res.json({ "status": 1, "msg": "Error" });
+      else
+        res.json({ "status": 0, "msg": "Success","id": data._id });
     });
 });
 

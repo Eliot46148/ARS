@@ -19,7 +19,7 @@ function creatTable(){
                 tableData+="<td><h3>"+testform[i].paperType+"<h3></td>";
                 tableData+="<td><h3>"+testform[i].paperTheme+"<h3></td>";
                 if(testform[i].isPass)
-                    tableData+="<td><h4>finish<h4></td>";
+                    tableData+="<td><h4>已送出<h4></td>";
                 else
                     tableData+="<td><a class = 'btn btn-info' href ='./review' onclick='aclick(this)' id ="+i+">click!</td>";
                 tableData+="</tr></form>";
