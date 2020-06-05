@@ -42,6 +42,7 @@
                     <th scope="col">日期時間</th>
                     <th scope="col">教師姓名</th>
                     <th scope="col">主題</th>
+                    <th scope="col">是否需要商品化審查</th>
                     <th scope="col">送審功能</th>
                     <th scope="col">審查意見</th>
                 </tr>
@@ -51,6 +52,7 @@
                     <td ng-bind="form.UploadDate.substring(0, 10)"></td>
                     <td ng-bind="form.Name"></td>
                     <td ng-bind="form.ResearchTopic"></td>
+                    <td ng-bind="form.MarketDemand ? '是' : '否'"></td>
                     <td>
                         <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#examModal" ng-click="triggerExam(form._id, 0)">點選</a>
                     </td>
