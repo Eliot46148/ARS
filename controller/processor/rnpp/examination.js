@@ -35,14 +35,19 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
         if (state==0)
             $scope.triggerExam.id = id;
         else{
+            var sDate = new Date($scope.date_start), eDate = new Date($scope.date_end);
+            sDate.setHours(sDate.getHours() - 8);
+            eDate.setHours(eDate.getHours() + 16);
+            eDate.setSeconds(eDate.getSeconds() - 1);
+
             set_state(true);
             var form = $scope.forms.find(element=>element._id==$scope.triggerExam.id);
             var params = {
                 'name':$scope.name,
                 'email':$scope.email,
                 'formOid':$scope.triggerExam.id,
-                'submitDate':$scope.date_start,
-                'deadLine':$scope.date_end,
+                'submitDate':sDate.toISOString(),
+                'deadLine':eDate.toISOString(),
                 'paperType':'研發能量展現平台',
                 'paperTheme':form.ResearchTopic,
                 'fromType':parseInt($scope.selectedForm)+1
@@ -176,23 +181,18 @@ $( function() {
     var sDate,eDate;
     ds.on('changeDate',function(e){
         sDate = new Date($(this).val());
-        sDate.setHours(sDate.getHours() - 8);
         if (!checkDate())
             $(this).val("").datepicker("update");
     });
 
     de.on('changeDate',function(date){
         eDate = new Date($(this).val());
-        eDate.setHours(eDate.getHours() + 16);
-        eDate.setSeconds(eDate.getSeconds() - 1);
         if (!checkDate())
             $(this).val("").datepicker("update");
     });
 
     function checkDate()
     {
-        console.log(sDate);
-        console.log(eDate);
         if(sDate && eDate && (eDate<sDate))
         {
             alert('結束日期應大於起始日期');
