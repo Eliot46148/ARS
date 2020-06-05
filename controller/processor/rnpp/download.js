@@ -245,10 +245,10 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 var st = ""
                                 switch (isSubmit){
                                     case 0:
-                                        st = "建議";
+                                        st = "推薦";
                                         break;
                                     case 1:
-                                        st = "不建議";
+                                        st = "不推薦";
                                         break;
                                     case 2:
                                         st ="修改";
