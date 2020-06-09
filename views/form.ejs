@@ -25,7 +25,7 @@
     <form role="form" ng-submit="submit()" enctype="multipart/form-data">
         <div class="container offset-md-1">
             <h1 class="mb-4" id="title">研發能量展現平台 > 表單填寫</h1>
-            <div class="shadow-sm offset-md-3 p-4" id="formStyle">
+            <div class="shadow-sm p-4" id="formStyle">
                 <div class="form-group" id="teachernum">
                     <label>教師員工編號</label>
                     <h2 ng-bind="TeacherNum"></h2>
@@ -35,9 +35,10 @@
                     <h2 ng-bind="FormId"></h2>
                 </div>
                 <div class="form-group">
-                    
+
                     <label>研究成果主題</label>
-                    <input class="form-control col-md-10" type="text" id="ResearchTopic" ng-model="ResearchTopic" required>
+                    <input class="form-control col-md-10" type="text" id="ResearchTopic" ng-model="ResearchTopic"
+                        required>
                 </div>
                 <div class="form-group">
                     <label>商品化研發導向(主要)</label>
@@ -135,8 +136,8 @@
                 </div>
                 <div class="form-group">
                     <label>教師隸屬學院</label>
-                    <select class="form-control col-md-10" id="college" ng-model="college" ng-change="changeDepartments()"
-                        required>
+                    <select class="form-control col-md-10" id="college" ng-model="college"
+                        ng-change="changeDepartments()" required>
                         <option value="">請選擇</option>
                         <option>機電學院</option>
                         <option>電資學院</option>
@@ -164,17 +165,17 @@
                     <label>教師電子郵件</label>
                     <input class="form-control col-md-10" type="text" id="Email" ng-model="Email" required>
                 </div>
-    
+
                 <label>專利相關資訊</label>
                 <div class="form-group">
                     <label class="radio-inline"></label>
                     <input type="radio" name="patentRadio" class="PatentInfoRadio" value="有" ng-model="HavePatents"
                         required>有
                     <label class="radio-inline"></label>
-                    <input type="radio" name="patentRadio" class="PatentInfoRadio" value="無" checked ng-model="HavePatents"
-                        required>無
+                    <input type="radio" name="patentRadio" class="PatentInfoRadio" value="無" checked
+                        ng-model="HavePatents" required>無
                 </div>
-    
+
                 <div id="patentInfo" class="panel-collapse collapse">
                     <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
                         <table class="table mt-3" id="patent-table">
@@ -195,11 +196,11 @@
                                     <td>{{data.Status}}</td>
                                     <td><a href={{data.File}} target="_blank">檢視</a></td>
                                     <!-- <td><a href="#" ng-click="updatePantent()">修改</a></td> -->
-                                    <td><a href="#" ng-click="removePatent($index)" id = "removePDFpaper">移除</a></td>
+                                    <td><a href="#" ng-click="removePatent($index)" id="removePDFpaper">移除</a></td>
                                 </tr>
                             </thead>
                             <tbody>
-    
+
                             </tbody>
                         </table>
                         <div class="row justify-content-center">
@@ -210,9 +211,9 @@
                                 </button>
                             </div>
                         </div>
-    
-                        <div class="modal fade" id="addPatent" tabindex="-1" role="dialog" aria-labelledby="addPatentTitle"
-                            aria-hidden="true">
+
+                        <div class="modal fade" id="addPatent" tabindex="-1" role="dialog"
+                            aria-labelledby="addPatentTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -249,27 +250,29 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                                        <button type="button" class="btn btn-primary" ng-click="UploadPatent()">送出</button>
+                                        <button type="button" class="btn btn-primary"
+                                            ng-click="UploadPatent()">送出</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-    
+
                     </div>
                 </div>
-    
-    
+
+
                 <label>論文相關資訊</label>
                 <div class="form-group">
                     <label class="radio-inline"></label>
                     <input type="radio" name="paperRadio" class="PaperInfoRadio" value="有" ng-model="HavePapers">有
                     <label class="radio-inline"></label>
-                    <input type="radio" name="paperRadio" class="PaperInfoRadio" value="無" ng-model="HavePapers" checked>無
+                    <input type="radio" name="paperRadio" class="PaperInfoRadio" value="無" ng-model="HavePapers"
+                        checked>無
                 </div>
-    
+
                 <div id="paperInfo" class="panel-collapse collapse">
                     <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
-    
+
                         <table class="table mt-3">
                             <thead class="thead-dark">
                                 <tr>
@@ -293,7 +296,7 @@
                                 </tr>
                             </tbody>
                         </table>
-    
+
                         <div class="row justify-content-center">
                             <div class="my-3">
                                 <button class="btn btn-warning" id="btn-paper" type="button" data-toggle="modal"
@@ -302,10 +305,10 @@
                                 </button>
                             </div>
                         </div>
-    
+
                     </div>
                 </div>
-    
+
                 <div class="modal fade" id="addPaper" tabindex="-1" role="dialog" aria-labelledby="addPatentTitle"
                     aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -316,7 +319,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-    
+
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>論文主題名稱</label>
@@ -333,7 +336,8 @@
                                     <label class="radio-inline"></label>
                                     <input type="radio" name="paperFieldRadio" value="AHCI" ng-model="paperJournal">AHCI
                                     <label class="radio-inline"></label>
-                                    <input type="radio" name="paperFieldRadio" value="TSSCI" ng-model="paperJournal">TSSCI
+                                    <input type="radio" name="paperFieldRadio" value="TSSCI"
+                                        ng-model="paperJournal">TSSCI
                                     <label class="radio-inline"></label>
                                     <input type="radio" name="paperFieldRadio" value="研討會" ng-model="paperJournal">研討會
                                     <label class="radio-inline"></label>
@@ -361,9 +365,9 @@
                                         </div>
                                     </div>
                                 </div>
-    
+
                             </div>
-    
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                                 <button type="button" class="btn btn-primary" ng-click="UploadPaper()">送出</button>
@@ -371,28 +375,29 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="form-group">
                     <label>成果技術摘要說明</label>
                     <textarea class="form-control col-md-10" rows="5" id="description" ng-model="description"
                         required></textarea>
                 </div>
-    
+
                 <div class="form-group">
                     <label>應用範圍及產業效益評估</label>
                     <textarea class="form-control col-md-10" rows="5" id="evaluation" ng-model="evaluation"
                         required></textarea>
                 </div>
-    
+
                 <div class="form-group">
                     <label>成果照片上傳(限制10MB) <span class="text-danger">建議比例：4:3</span></label>
                     <div id="drop-area" class="dm-uploader">
                         <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="image" id="image"
                             name="myImage">
                     </div>
-                    <img ng-src="{{imageSrc}}" id="image-preview" style="height: auto; display: none;" class="col-md-10">
+                    <img ng-src="{{imageSrc}}" id="image-preview" style="height: auto; display: none;"
+                        class="col-md-10">
                 </div>
-    
+
                 <div class="form-group">
                     <label>成果影片上傳(限制100MB) <span class="text-danger">建議解析度：720p | 建議長度：1分鐘以上</span></label>
                     <div id="drop-area" class="dm-uploader">
@@ -405,17 +410,18 @@
                             <span class="sr-only">70% Complete</span>
                         </div>
                     </div>
-                    <video src="" class="col-md-10" style="height: auto;display: none;" id="video-preview" controls></video>
+                    <video src="" class="col-md-10" style="height: auto;display: none;" id="video-preview"
+                        controls></video>
                 </div>
                 <div class="col-md-10" id="LevelTable">
                     <table class="table table-bordered text-center">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th class="table-primary">需求成熟度</th>
-                                <th class="table-primary">市場成熟度</th>
-                                <th class="table-primary">投資成熟度</th>
-                                <th class="table-primary">製造成熟度</th>
+                                <th style="width: 20%;"></th>
+                                <th class="table-primary" style="width: 20%;">需求成熟度</th>
+                                <th class="table-primary" style="width: 20%;">市場成熟度</th>
+                                <th class="table-primary" style="width: 20%;">投資成熟度</th>
+                                <th class="table-primary" style="width: 20%;">製造成熟度</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -489,7 +495,7 @@
                                 <td class="td1">國際財團</td>
                                 <td class="td1">品質控管</td>
                             </tr>
-    
+
                             <tr>
                                 <th></th>
                                 <th class="table-primary">技術成熟度</th>
@@ -572,17 +578,17 @@
                     <div class="chart m-5">
                         <canvas id="myChart"></canvas>
                     </div>
-    
+
                     <label>是否需要進入商品化審查</label>
                     <div class="form-group">
                         <label class="radio-inline"></label>
-                        <input type="radio" name="CommercializationRadio" class="CommercializationRadio" id="CommercializationTrue" value="是"
-                            ng-model="isCommercialization">是
+                        <input type="radio" name="CommercializationRadio" class="CommercializationRadio"
+                            id="CommercializationTrue" value="是" ng-model="isCommercialization">是
                         <label class="radio-inline"></label>
-                        <input type="radio" name="CommercializationRadio" class="CommercializationRadio" id="CommercializationFalse" value="否"
-                            ng-model="isCommercialization" checked>否
+                        <input type="radio" name="CommercializationRadio" class="CommercializationRadio"
+                            id="CommercializationFalse" value="否" ng-model="isCommercialization" checked>否
                     </div>
-    
+
                     <div id="CommercializationPanel" class="panel-collapse collapse">
                         <div class="panel-body border border-primary fit-content rounded col-md-12 mb-3">
                             <div class="form-group">
@@ -599,18 +605,18 @@
                                 <label>商品化成本規劃</label>
                                 <textarea class="form-control col-md-10 CommercializationFields" rows="5"
                                     ng-model="cost"></textarea>
-                            </div>                        
+                            </div>
                         </div>
                     </div>
-    
+
                     <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="save()"
                         id="savebt">暫存</button>
                     <input type="submit" class="btn btn-primary m-auto col-md-2" id="submitbtn" value="提交">
-                    <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="test()"
-                        id="savebt" ng-show="false">測試</button>
-    
-    
-                        <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalTitle"
+                    <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="test()" id="savebt"
+                        ng-show="false">測試</button>
+
+
+                    <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalTitle"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -620,19 +626,18 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-        
-                                <div class="modal-body">                            
-                                    <p>員工編號：{{TeacherNum}}</p>                                                                                                                      
+                                <div class="modal-body">
+                                    <p>員工編號：{{TeacherNum}}</p>
                                     <p>表單編號：{{FormId}}</p>
                                     <p class="text-danger">請記住以上資料進入修改</p>
+                                    <p class="text-danger">若已填寫電子郵件，表單編號將同步寄送至信箱</p>
                                 </div>
-        
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">完成</button>                                
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">完成</button>
                                 </div>
                             </div>
                         </div>
-                    </div>    
+                    </div>
                 </div>
             </div>
         </div>

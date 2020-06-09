@@ -146,6 +146,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 console.log(res);
                 // $scope.sendMail();                
                 $('#saveModal').modal('show');
+                $scope.sendMail();
             }, (err) => {
                 alert(err.msg);
             });
@@ -349,7 +350,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 let url = `/form/paper/nofile?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
                 $.ajax({
                     url: url,
-                    type: 'patch',                    
+                    type: 'patch',
                     processData: false,
                     contentType: false,
                     success: function (res) {
@@ -361,7 +362,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                                 _id: res.id,
                                 Name: $scope.paperName,
                                 Journal: $scope.paperJournal,
-                                Status: $scope.paperStatus,                                
+                                Status: $scope.paperStatus,
                             }
                         );
                         $scope.$apply();
@@ -379,21 +380,30 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.sendMail = function (id, state) {
-        $http.get('/mailServerSecret/template').success(function (rawhtml) {
-            html = rawhtml
-                .replace('{name}', $scope.Name)
-                .replace('{topic}', $scope.ResearchTopic)
-                .replace('{password}', $scope.FormId)
-                .replace('{date_start}', $scope.date_start)
-                .replace('{date_end}', $scope.date_end)
-                .replace('{url}', 'http://127.0.0.1:3000/committee/#accountID=' + $scope.Email + '&passwordID=' + $scope.FormID);
+        if ($scope.Email != null) {
+            $http.get('/mailServerSecret/template/saveInfo').success(function (rawhtml) {
+                let name = '未填寫';
+                let topic = '未填寫';
 
-            $http.post('/mailServerSecret/send', {
-                'to': $scope.Email,
-                'subject': '委員通知',
-                'html': html
+                if ($scope.Name != null)
+                    name = $scope.Name;
+
+                if ($scope.ResearchTopic != null)
+                    name = $scope.ResearchTopic;
+
+                html = rawhtml
+                    .replace('{name}', name)
+                    .replace('{topic}', topic)
+                    .replace('{password}', $scope.FormId)
+                    .replace('{url}', `http://localhost:3000/form?TeacherNum=${$scope.TeacherNum}&FormId=${$scope.FormId}`);
+
+                $http.post('/mailServerSecret/send/formInfo', {
+                    'to': $scope.Email,
+                    'subject': '研發能量展現平台-表單暫存資訊',
+                    'html': html
+                });
             });
-        });
+        }
     }
 
     $scope.removePaper = (patentIndex) => {

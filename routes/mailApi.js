@@ -21,12 +21,12 @@ const accessToken = oauth2Client.getAccessToken()
 const smtpTransport = nodemailer.createTransport({
     service: "gmail",
     auth: {
-         type: "OAuth2",
-         user: credentials.user,
-         clientId: credentials.clientID,
-         clientSecret: credentials.clientSecret,
-         refreshToken: credentials.refreshToken,
-         accessToken: accessToken
+        type: "OAuth2",
+        user: credentials.user,
+        clientId: credentials.clientID,
+        clientSecret: credentials.clientSecret,
+        refreshToken: credentials.refreshToken,
+        accessToken: accessToken
     },
     secure: false,
     tls: {
@@ -46,17 +46,42 @@ router.post('/send', function (req, res) {
         error ? console.log(error) : console.log(response);
         smtpTransport.close();
         res.send(response);
-   });
+    });
+});
+
+router.post('/send/formInfo', function (req, res) {
+    const mailOptions = {
+        from: '85stixwebsite@gmail.com',
+        to: req.body.to,
+        subject: req.body.subject,
+        generateTextFromHTML: true,
+        html: req.body.html
+    };
+    smtpTransport.sendMail(mailOptions, (error, response) => {
+        error ? console.log(error) : console.log(response);
+        smtpTransport.close();
+        res.send(response);
+    });
 });
 
 router.get('/template', function (req, res) {
     fs.readFile('./public/static/email.html', function (err, html) {
         if (err) {
-            throw err; 
+            throw err;
         }
         res.send(html);
     });
 });
+
+router.get('/template/saveInfo', function (req, res) {
+    fs.readFile('./public/static/formInfoMail.html', function (err, html) {
+        if (err) {
+            throw err;
+        }
+        res.send(html);
+    });
+});
+
 router.get('/template_img', function (req, res) {
     res.set('Content-Type', 'image/jpeg');
     res.sendfile('./public/img/Invite_Illustration.png', function (err, data) {
