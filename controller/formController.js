@@ -153,7 +153,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.submit = () => {
-        if (confirm("確認送出？")) {
+        if (confirm("送出後無法再進行修改\n確認送出？")) {
             $http.put('/form/submit?FormId=' + $scope.FormId,
                 {
                     'TeacherNum': $scope.TeacherNum,

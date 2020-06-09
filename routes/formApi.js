@@ -18,30 +18,34 @@ var upload = multer({ storage: storage });
 
 router.get('/', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
+    console.log(data);
     if (err || data == null)
       res.render('404');
     else if (req.query.TeacherNum == data.TeacherNum)
-      res.render('form');
+      if (!data.Submitted)
+        res.render('form');
+      else
+        res.render('blocked');
     else
       res.render('404');
   });
 });
 
-router.post('/testest',(req,res)=>{
+router.post('/testest', (req, res) => {
   console.log(req.body.email);
 
   var committeeModel = require('../models/committeeMode');
-  committeeModel.findOne({email : req.body.email,password:req.body.password},function(merr,mdata){
-    formModel.findById(mdata.needtestform[req.body.index].formOid,(ferr,fdata)=>{
-      if ( ferr)
+  committeeModel.findOne({ email: req.body.email, password: req.body.password }, function (merr, mdata) {
+    formModel.findById(mdata.needtestform[req.body.index].formOid, (ferr, fdata) => {
+      if (ferr)
         res.json({ "status": 1, "msg": "Error", 'data': fdata });
       else
-        res.json({ "status": 0, "msg":"success" , 'data': fdata });
+        res.json({ "status": 0, "msg": "success", 'data': fdata });
     })
   })
 })
 
-/** get form data */ 
+/** get form data */
 router.get('/data', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
     if (err)
@@ -218,13 +222,13 @@ router.patch('/paper/nofile', function (req, res, next) {
         Paper: {
           Name: req.query.Name,
           Journal: req.query.Journal,
-          Status: req.query.Status,          
+          Status: req.query.Status,
         }
       }
     }, function (err, data) {
       if (err) res.json({ "status": 1, "msg": "Error" });
       else
-        res.json({ "status": 0, "msg": "Success","id": data._id });
+        res.json({ "status": 0, "msg": "Success", "id": data._id });
     });
 });
 
