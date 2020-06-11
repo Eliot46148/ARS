@@ -57,7 +57,6 @@ app.controller('formCtrl', ($scope, $http, $location) => {
 
     $scope.FormId = $location.search().FormId;
 
-
     $scope.changeDepartments = () => {
         if ($scope.college != '請選擇') {
             $scope.departments = departmentDict[$scope.college];
@@ -252,39 +251,72 @@ app.controller('formCtrl', ($scope, $http, $location) => {
 
     $scope.UploadPatent = () => {
         var formData = new FormData();
-        formData.append('myPatent', $('#patent-file')[0].files[0]);
-        var url = `/form/patent?FormId=${$scope.FormId}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
         if (!$scope.IsPatentRequiredFieldValid()) return;
         else {
-            $.ajax({
-                url: url,
-                type: 'patch',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (res) {
-                    console.log(res);
-                    alert('送出成功');
-                    $('#addPatent').modal('hide');
-                    $scope.Patents.push(
-                        {
-                            _id: res.id,
-                            Name: $scope.patentName,
-                            Country: $scope.patentCountry,
-                            Status: $scope.patentStatus,
-                            File: res.filename
-                        }
-                    );
-                    $scope.$apply();
-                },
-                error: function (res) {
-                    console.log(res);
-                    alert('送出失敗');
-                },
-                complete: function () {
-                    $scope.resetPatent();
-                }
-            });
+            if ($scope.patentStatus == "已核准") {
+                let formData = new FormData();
+                formData.append('myPatent', $('#patent-file')[0].files[0]);
+                let url = `/form/patent?FormId=${$scope.FormId}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
+                $.ajax({
+                    url: url,
+                    type: 'patch',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        console.log(res);
+                        alert('送出成功');
+                        $('#addPatent').modal('hide');
+                        $scope.Patents.push(
+                            {
+                                _id: res.id,
+                                Name: $scope.patentName,
+                                Country: $scope.patentCountry,
+                                Status: $scope.patentStatus,
+                                File: res.filename
+                            }
+                        );
+                        $scope.$apply();
+                    },
+                    error: function (res) {
+                        console.log(res);
+                        alert('送出失敗');
+                    },
+                    complete: function () {
+                        $scope.resetPatent();
+                    }
+                });
+            }
+            else {
+                let url = `/form/patent/nofile?FormId=${$scope.FormId}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
+                $.ajax({
+                    url: url,
+                    type: 'patch',
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        console.log(res);
+                        alert('送出成功');
+                        $('#addPatent').modal('hide');
+                        $scope.Patents.push(
+                            {
+                                _id: res.id,
+                                Name: $scope.patentName,
+                                Country: $scope.patentCountry,
+                                Status: $scope.patentStatus,
+                            }
+                        );
+                        $scope.$apply();
+                    },
+                    error: function (res) {
+                        console.log(res);
+                        alert('送出失敗');
+                    },
+                    complete: function () {
+                        $scope.resetPatent();
+                    }
+                });
+            }
         }
     }
 
@@ -433,7 +465,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             alert("請輸入完整資訊");
             return false;
         }
-        else if ($('#patent-file')[0].value == '') {
+        else if ($scope.patentStatus == "已核准" && $('#patent-file')[0].value == '') {
             alert("請上傳佐證資料");
             return false;
         }
@@ -478,10 +510,12 @@ function showImage(data) {
     if (data == null) return;
     $('#image-preview').attr('src', data);
     $('#image-preview').show();
+    $('#image').prop('required', false);
 }
 
 function showVideo(data) {
     if (data == null) return;
     $('#video-preview').attr('src', data);
     $('#video-preview').show();
+    $('#video').prop('required', false);
 }

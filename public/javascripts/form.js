@@ -9,7 +9,7 @@ departmentDict['體育室'] = ['體育室'];
 departmentDict['通識中心'] = ['通識中心'];
 departmentDict['師培中心'] = ['師培中心'];
 
-var chartData = [0,0,0,0,0,0,0,0];
+var chartData = [0, 0, 0, 0, 0, 0, 0, 0];
 
 var ctx = document.getElementById('myChart');
 var marksData = {
@@ -53,7 +53,7 @@ radarChart.options.legend.display = false;
 $('td.td1, td.td2').click(function () {
     var $this = $(this);
     var col = $this.index();
-    var row = $this.closest('tr').index();    
+    var row = $this.closest('tr').index();
     var chartRow;
     var chartCol;
     var part = '';
@@ -66,14 +66,14 @@ $('td.td1, td.td2').click(function () {
         chartRow = row;
         chartCol = col;
         part = 'td1';
-    }    
+    }
     radarChart.data.datasets[0].data[chartCol - 1] = chartRow;
     radarChart.update();
-    chartData[chartCol-1]=chartRow;
+    chartData[chartCol - 1] = chartRow;
     // console.log(`selected col: ${col}, row: ${row}, part:${part}`);    
-    
+
     $('table tr td[class="' + part + ' table-info"]:nth-child(' + (col + 1) + ')').removeClass('table-info');
-    $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')[class="'+part+'"]').addClass('table-info');
+    $('table tr:nth-child(' + (row + 1) + ') td:nth-child(' + (col + 1) + ')[class="' + part + '"]').addClass('table-info');
 });
 
 // $('#college').change(function () {
@@ -88,7 +88,6 @@ $('td.td1, td.td2').click(function () {
 //         $('#department').append("<option>請先選擇學院</option>");
 // });
 
-
 $('.PatentInfoRadio').change(function () {
     $('#patentInfo').collapse('toggle');
 });
@@ -96,6 +95,8 @@ $('.PatentInfoRadio').change(function () {
 $('.PaperInfoRadio').change(function () {
     $('#paperInfo').collapse('toggle');
 });
+
+
 
 $('#paperPublished').change(function () {
     $('#paperFileField').collapse('show');
@@ -105,21 +106,33 @@ $('.paperUnPublished').change(function () {
     $('#paperFileField').collapse('hide');
 });
 
-$('.CommercializationRadio').change(function(){
+
+
+$('#patentPublished').change(function () {
+    $('#patentFileField').collapse('show');
+});
+
+$('#patentUnPublished').change(function () {
+    $('#patentFileField').collapse('hide');
+});
+
+
+
+$('.CommercializationRadio').change(function () {
     $('#CommercializationPanel').collapse('toggle');
 });
 
-$('#CommercializationTrue').click(function(){
-    $('.CommercializationFields').prop('required',true);
+$('#CommercializationTrue').click(function () {
+    $('.CommercializationFields').prop('required', true);
 });
 
-$('#CommercializationFalse').click(function(){
-    $('.CommercializationFields').prop('required',false);
+$('#CommercializationFalse').click(function () {
+    $('.CommercializationFields').prop('required', false);
 });
 
 function show_confirm() {
-    if(!confirm("Do you really want to do this?")) {
-      return false;
+    if (!confirm("Do you really want to do this?")) {
+        return false;
     }
     this.form.submit();
-  }
+}

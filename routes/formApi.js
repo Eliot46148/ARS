@@ -167,6 +167,27 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
     });
 });
 
+// upload patent data without files
+router.patch('/patent/nofile', function (req, res, next) {
+  console.log(req.query);
+  formModel.findByIdAndUpdate({ _id: req.query.FormId },
+    {
+      $push: {
+        Patent: {
+          Name: req.query.Name,
+          Country: req.query.Country,
+          Status: req.query.Status,
+        }
+      }
+    }, function (err, data) {
+      console.log(data);
+      if (err) res.json({ "status": 1, "msg": "Error" });
+      else
+        res.json({ "status": 0, "msg": "Success", "id": data._id });
+    });
+});
+
+
 // get patent data
 router.get('/patent', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {

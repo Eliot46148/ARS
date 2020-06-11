@@ -194,8 +194,8 @@
                                     <td>{{data.Name}}</td>
                                     <td>{{data.Country}}</td>
                                     <td>{{data.Status}}</td>
-                                    <td><a href={{data.File}} target="_blank">檢視</a></td>
-                                    <!-- <td><a href="#" ng-click="updatePantent()">修改</a></td> -->
+                                    <td ng-if="data.Status=='已核准'"><a href={{data.File}} target="_blank">檢視</a></td>
+                                    <td ng-if="data.Status!='已核准'">無</td>
                                     <td><a href="#" ng-click="removePatent($index)" id="removePDFpaper">移除</a></td>
                                 </tr>
                             </thead>
@@ -235,18 +235,24 @@
                                         <div class="form-group">
                                             <label class="radio-inline"></label>
                                             <input type="radio" name="patentStatusRadio" value="已核准"
-                                                ng-model="patentStatus">已核准
+                                                id="patentPublished" ng-model="patentStatus">已核准
                                             <label class="radio-inline"></label>
                                             <input type="radio" name="patentStatusRadio" value="申請中"
-                                                ng-model="patentStatus">申請中
+                                                id="patentUnPublished" ng-model="patentStatus">申請中
                                         </div>
-                                        <div class="form-group">
-                                            <label>佐證資料上傳(限pdf)</label>
-                                            <div id="drop-area" class="dm-uploader">
-                                                <input type="file" title="選擇檔案" accept=".pdf" id="patent-file"
-                                                    name="myPatent">
+
+                                        <div id="patentFileField" class="panel-collapse collapse">
+                                            <div
+                                                class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
+                                                <div class="form-group">
+                                                    <label class="mb-0">佐證資料上傳(限pdf)</label>
+                                                    <div id="drop-area" class="dm-uploader">
+                                                        <input type="file" title="選擇檔案" accept=".pdf" id="patent-file">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -392,7 +398,7 @@
                     <label>成果照片上傳(限制10MB) <span class="text-danger">建議比例：4:3</span></label>
                     <div id="drop-area" class="dm-uploader">
                         <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="image" id="image"
-                            name="myImage">
+                            name="myImage" required>
                     </div>
                     <img ng-src="{{imageSrc}}" id="image-preview" style="height: auto; display: none;"
                         class="col-md-10">
@@ -401,7 +407,8 @@
                 <div class="form-group">
                     <label>成果影片上傳(限制100MB) <span class="text-danger">建議解析度：720p | 建議長度：1分鐘以上</span></label>
                     <div id="drop-area" class="dm-uploader">
-                        <input type="file" title="選擇檔案" accept=".AVI,.FLV,.WMV,.MOV,.MP4" id="video" name='myVideo'>
+                        <input type="file" title="選擇檔案" accept=".AVI,.FLV,.WMV,.MOV,.MP4" id="video" name='myVideo'
+                            required>
                     </div>
                     <div class="progress my-1">
                         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
