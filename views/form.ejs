@@ -196,7 +196,7 @@
                                     <td>{{data.Status}}</td>
                                     <td ng-if="data.Status=='已核准'"><a href={{data.File}} target="_blank">檢視</a></td>
                                     <td ng-if="data.Status!='已核准'">無</td>
-                                    <td><a href="#" ng-click="removePatent($index)" id="removePDFpaper">移除</a></td>
+                                    <td><a href="#" ng-click="removePatent($index)" id="removePDFPatents">移除</a></td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -298,7 +298,7 @@
                                     <td>{{data.Status}}</td>
                                     <td ng-if="data.Status=='已發表'"><a href={{data.File}} target="_blank">檢視</a></td>
                                     <td ng-if="data.Status!='已發表'">無</td>
-                                    <td><a href="#" ng-click="removePaper($index)">移除</a></td>
+                                    <td><a href="#" id="removePDFpaper" ng-click="removePaper($index)">移除</a></td>
                                 </tr>
                             </tbody>
                         </table>

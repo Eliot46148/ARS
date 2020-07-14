@@ -12,6 +12,8 @@ function frameload() {
     $contents.find('#submitbtn').remove();
     $contents.find('#btn-patent').remove();
     $contents.find('#removePDFpaper').remove();
+    $contents.find('#btn-paper').remove();
+    $contents.find('#removePDFPatents').remove();
 
     $contents.find("input").prop("disabled", true);
     $contents.find("select").prop("disabled", true);
