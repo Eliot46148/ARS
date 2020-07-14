@@ -22,8 +22,20 @@ router.get('/', (req, res, next) => {
     if (err || data == null)
       res.render('404');
     else if (req.query.TeacherNum == data.TeacherNum)
+      res.render('form');
+    else
+      res.render('404');
+  });
+});
+
+router.get('/check', (req, res, next) => {
+  formModel.findById(req.query.FormId, (err, data) => {
+    console.log(data);
+    if (err || data == null)
+      res.render('404');
+    else if (req.query.TeacherNum == data.TeacherNum)
       if (!data.Submitted)
-        res.render('form');
+        res.redirect('/form?TeacherNum=' + req.query.TeacherNum + '&FormId=' + req.query.FormId);
       else
         res.render('blocked');
     else
@@ -102,6 +114,9 @@ router.put('/', function (req, res, next) {
       MarketDemand: req.body.MarketDemand,
       Competitiveness: req.body.Competitiveness,
       Cost: req.body.Cost,
+      MarketDemandType: req.body.MarketDemandType,
+      CompetitivenessType: req.body.CompetitivenessType,
+      CostType: req.body.CostType,
       SubmitDate: req.body.SubmitDate,
       ChartData: req.body.ChartData,
       Status: 0
@@ -135,6 +150,9 @@ router.put('/submit', function (req, res, next) {
       MarketDamand: req.body.MarketDamand,
       Competitiveness: req.body.Competitiveness,
       Cost: req.body.Cost,
+      MarketDemandType: req.body.MarketDemandType,
+      CompetitivenessType: req.body.CompetitivenessType,
+      CostType: req.body.CostType,
       SubmitDate: req.body.SubmitDate,
       Submitted: true,
       ChartData: req.body.ChartData,
@@ -342,6 +360,67 @@ router.patch('/video', upload.single('myVideo'), function (req, res, next) {
     });
   });
 });
+
+// upload marketDemandFile
+router.patch('/marketDemandFile', upload.single('marketDemandFile'), function (req, res, next) {
+  formModel.findById(req.query.FormId, (err, data) => {
+    if (data == null) {
+      res.json({ 'status': 1, 'msg': 'can not find document' });
+      return;
+    }
+    data.MarketDemandFile = req.file.filename;
+    data.markModified('MarketDemandFile');
+    data.save(function (err) {
+      if (err) {
+        res.json({ 'status': 1, 'msg': err });
+      }
+      else {
+        res.json({ 'status': 0, 'msg': 'success', 'data': data });
+      }
+    });
+  });
+});
+
+// upload competitivenessFile
+router.patch('/competitivenessFile', upload.single('competitivenessFile'), function (req, res, next) {
+  formModel.findById(req.query.FormId, (err, data) => {
+    if (data == null) {
+      res.json({ 'status': 1, 'msg': 'can not find document' });
+      return;
+    }
+    data.CompetitivenessFile = req.file.filename;
+    data.markModified('CompetitivenessFile');
+    data.save(function (err) {
+      if (err) {
+        res.json({ 'status': 1, 'msg': err });
+      }
+      else {
+        res.json({ 'status': 0, 'msg': 'success', 'data': data });
+      }
+    });
+  });
+});
+
+// upload costFile
+router.patch('/costFile', upload.single('costFile'), function (req, res, next) {
+  formModel.findById(req.query.FormId, (err, data) => {
+    if (data == null) {
+      res.json({ 'status': 1, 'msg': 'can not find document' });
+      return;
+    }
+    data.CostFile = req.file.filename;
+    data.markModified('CostFile');
+    data.save(function (err) {
+      if (err) {
+        res.json({ 'status': 1, 'msg': err });
+      }
+      else {
+        res.json({ 'status': 0, 'msg': 'success', 'data': data });
+      }
+    });
+  });
+});
+
 
 // update form status
 // 0 : 暫存

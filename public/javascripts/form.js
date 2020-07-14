@@ -117,7 +117,6 @@ $('#patentUnPublished').change(function () {
 });
 
 
-
 $('.CommercializationRadio').change(function () {
     $('#CommercializationPanel').collapse('toggle');
 });
@@ -128,6 +127,38 @@ $('#CommercializationTrue').click(function () {
 
 $('#CommercializationFalse').click(function () {
     $('.CommercializationFields').prop('required', false);
+});
+
+
+
+$('#marketDemandFileRadio').change(function () {
+    $('#marketDemandTextField').collapse('hide');
+    $('#marketDemandFileField').collapse('show');
+});
+
+$('#marketDemandTextRadio').change(function () {
+    $('#marketDemandTextField').collapse('show');
+    $('#marketDemandFileField').collapse('hide');
+});
+
+$('#competitivenessFileRadio').change(function () {
+    $('#competitivenessTextField').collapse('hide');
+    $('#competitivenessFileField').collapse('show');
+});
+
+$('#competitivenessTextRadio').change(function () {
+    $('#competitivenessTextField').collapse('show');
+    $('#competitivenessFileField').collapse('hide');
+});
+
+$('#costFileRadio').change(function () {
+    $('#costTextField').collapse('hide');
+    $('#costFileField').collapse('show');
+});
+
+$('#costTextRadio').change(function () {
+    $('#costTextField').collapse('show');
+    $('#costFileField').collapse('hide');
 });
 
 function show_confirm() {

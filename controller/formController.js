@@ -33,6 +33,12 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.marketDemand = data.MarketDemand;
                     $scope.competitiveness = data.Competitiveness;
                     $scope.cost = data.Cost;
+                    $scope.marketDemandFile = data.MarketDemandFile;
+                    $scope.competitivenessFile = data.CompetitivenessFile;
+                    $scope.costFile = data.CostFile;
+                    $scope.marketDemandType = data.MarketDemandType;
+                    $scope.competitivenessType = data.CompetitivenessType;
+                    $scope.costType = data.CostType;
                     showImage(data.Image);
                     showVideo(data.Video);
                     $scope.changeDepartments();
@@ -86,6 +92,24 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         if ($scope.marketDemand != null || $scope.competitiveness != null || $scope.cost != null) {
             $scope.isCommercialization = "是";
             $('#CommercializationPanel').collapse('toggle');
+            if ($scope.marketDemandType == "檔案") {
+                $('#marketDemandFileField').collapse('show');
+            }
+            else {
+                $('#marketDemandTextField').collapse('show');
+            }
+            if ($scope.competitivenessType == "檔案") {
+                $('#competitivenessFileField').collapse('show');
+            }
+            else {
+                $('#competitivenessTextField').collapse('show');
+            }
+            if ($scope.marketDemandType == "檔案") {
+                $('#costFileField').collapse('show');
+            }
+            else {
+                $('#costTextField').collapse('show');
+            }
         }
         else
             $scope.isCommercialization = "否";
@@ -138,12 +162,14 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "MarketDemand": $scope.marketDemand,
                 "Competitiveness": $scope.competitiveness,
                 "Cost": $scope.cost,
+                "MarketDemandType": $scope.marketDemandType,
+                "CompetitivenessType": $scope.competitivenessType,
+                "CostType": $scope.costType,
                 "SubmitDate": new Date(),
                 "ChartData": chartData
             })
             .then((res) => {
                 console.log(res);
-                // $scope.sendMail();                
                 $('#saveModal').modal('show');
                 $scope.sendMail();
             }, (err) => {
@@ -169,9 +195,12 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     "Email": $scope.Email,
                     "Description": $scope.description,
                     "Evaluation": $scope.evaluation,
-                    "MarketDamand": $scope.marketDemand,
+                    "MarketDemand": $scope.marketDemand,
                     "Competitiveness": $scope.competitiveness,
                     "Cost": $scope.cost,
+                    "MarketDemandType": $scope.marketDemandType,
+                    "CompetitivenessType": $scope.competitivenessType,
+                    "CostType": $scope.costType,
                     "SubmitDate": new Date(),
                     "ChartData": chartData
                 })
@@ -459,6 +488,75 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         });
     };
 
+    $('#marketDemandFile').change(() => {
+        var formData = new FormData();
+        formData.append('marketDemandFile', $("#marketDemandFile")[0].files[0]);
+        var url = '/form/marketDemandFile?FormId=' + $scope.FormId;
+        $.ajax({
+            url: url,
+            type: 'patch',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                console.log(res);
+                $scope.marketDemandFile = res.data.MarketDemandFile;
+                $scope.$apply();
+                alert('上傳成功');
+            },
+            error: function (res) {
+                console.log(res);
+                alert("上傳失敗");
+            }
+        });
+    });
+
+    $('#competitivenessFile').change(() => {
+        var formData = new FormData();
+        formData.append('competitivenessFile', $("#competitivenessFile")[0].files[0]);
+        var url = '/form/competitivenessFile?FormId=' + $scope.FormId;
+        $.ajax({
+            url: url,
+            type: 'patch',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                console.log(res);
+                $scope.competitivenessFile = res.data.competitivenessFile;
+                $scope.$apply();
+                alert('上傳成功');
+            },
+            error: function (res) {
+                console.log(res);
+                alert("上傳失敗");
+            }
+        });
+    });
+
+    $('#costFile').change(() => {
+        var formData = new FormData();
+        formData.append('costFile', $("#costFile")[0].files[0]);
+        var url = '/form/costFile?FormId=' + $scope.FormId;
+        $.ajax({
+            url: url,
+            type: 'patch',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                console.log(res);
+                $scope.costFile = res.data.costFile;
+                $scope.$apply();
+                alert('上傳成功');
+            },
+            error: function (res) {
+                console.log(res);
+                alert("上傳失敗");
+            }
+        });
+    });
+
     /** Validate the required fields of patent */
     $scope.IsPatentRequiredFieldValid = function () {
         if ($scope.patentName == "" || $scope.patentCountry == "" || $scope.Status == false) {
@@ -502,6 +600,10 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         $('#paper-file')[0].value = '';
         $scope.$apply();
     };
+
+    $scope.resetVariable = function (x) {
+        x = "";
+    }
 
     $scope.init();
 });
