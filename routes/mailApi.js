@@ -21,12 +21,8 @@ const accessToken = oauth2Client.getAccessToken()
 const smtpTransport = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        type: "OAuth2",
-        user: credentials.user,
-        clientId: credentials.clientID,
-        clientSecret: credentials.clientSecret,
-        refreshToken: credentials.refreshToken,
-        accessToken: accessToken
+        user: "85stixwebsite@gmail.com",
+        pass: "85stix123"
     },
     secure: false,
     tls: {
