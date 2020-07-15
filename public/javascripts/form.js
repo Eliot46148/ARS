@@ -161,6 +161,10 @@ $('#costTextRadio').change(function () {
     $('#costFileField').collapse('hide');
 });
 
+$("#btnFinishSaving").click(function () {
+    window.location.replace("/");
+});
+
 function show_confirm() {
     if (!confirm("Do you really want to do this?")) {
         return false;
