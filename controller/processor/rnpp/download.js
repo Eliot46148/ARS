@@ -54,6 +54,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                     var id = data.data[i];
                     $http.get('/form/data', {'params': {'FormId':id}}).success(function(data){
                         var form = JSON.parse(JSON.stringify(data.data));
+                        var added = false;
                         form.committees = [];
         
                         if (form.ChartData.length < 8){
@@ -129,6 +130,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 "是否有檔案": "-"
                             };
                             $scope.forms.push($.extend({}, fields1, fields2, fields3));
+                            added = true;
                         });
 
                         form.Paper.forEach(function(paper, index, array){
@@ -149,7 +151,28 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 "是否有檔案": "File" in paper ? "是" : "否"
                             };
                             $scope.forms.push($.extend({}, fields1, fields2, fields3));
+                            added = true;
                         });
+
+                        if (!added){
+                            var fields2 = {
+                                "專利相關資訊": "-",
+                                "專利數": "-",
+                                "專利序號": "-",
+                                "專利主題名稱": "-",
+                                "專利申請國籍": "-",
+                                "專利申請狀況": "-",
+                                "是否有上傳檔案": "-",
+                                "學術論文相關資訊": "-",
+                                "論文數": "-",
+                                "論文序號": "-",
+                                "論文主題名稱": "-",
+                                "學術期刊領域": "-",
+                                "論文申請狀況": "-",
+                                "是否有檔案": "-"
+                            };
+                            $scope.forms.push($.extend({}, fields1, fields2, fields3));
+                        }
 
                         form.committees.forEach(function(committee, index, array){
                             var c_fields1 = pick(fields1, ["成果序號", "員工編號", "表單編號", "教師姓名", "學院", "系所", "電話", "郵件", "研究成果"]);
