@@ -2,21 +2,21 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 const nodemailer = require("nodemailer");
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
+// const { google } = require("googleapis");
+// const OAuth2 = google.auth.OAuth2;
 
-var credentials = require('./credentials');
+// var credentials = require('./credentials');
 
-const oauth2Client = new OAuth2(
-    credentials.clientID, // ClientID
-    credentials.clientSecret, // Client Secret
-    credentials.redirectUrl // Redirect URL
-);
+// const oauth2Client = new OAuth2(
+//     credentials.clientID, // ClientID
+//     credentials.clientSecret, // Client Secret
+//     credentials.redirectUrl // Redirect URL
+// );
 
-oauth2Client.setCredentials({
-    refresh_token: credentials.refreshToken
-});
-const accessToken = oauth2Client.getAccessToken()
+// oauth2Client.setCredentials({
+//     refresh_token: credentials.refreshToken
+// });
+// const accessToken = oauth2Client.getAccessToken()
 
 const smtpTransport = nodemailer.createTransport({
     service: "gmail",

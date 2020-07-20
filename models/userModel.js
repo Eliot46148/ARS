@@ -1,5 +1,4 @@
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/ARS',{useNewUrlParser: true});
+var mongoose = require('./mongo.js');
 
 var userSchema = new mongoose.Schema({
     account: String,
