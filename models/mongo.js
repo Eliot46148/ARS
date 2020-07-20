@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var production = process.env.NODE_ENV == 'production';
-var mongodb_path = `mongodb://localhost:27017/${ production ? 'ARS' : 'ARS_TEST'}`;
+var development = process.env.NODE_ENV == 'development';
+var mongodb_path = `mongodb://localhost:27017/${ production || development ? 'ARS' : 'ARS_TEST'}`;
 
 mongoose.connect(mongodb_path,{useNewUrlParser: true, useUnifiedTopology: true});
 
