@@ -1,10 +1,9 @@
 process.env.PORT = 7000;
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'testing';
+process.env.LOG_LEVEL = 'silent';
 
 const app = require("../app.js");
-// const path = require("path");
-// process.env['PATH'] = process.env['PATH'].substring(0, process.env['PATH'].length-1);
-// process.env['PATH']+=`${__dirname};.`;
+console.log = function() {}
 
 require('chromedriver');
 const { webdriver, Builder, By, Key, until } = require('selenium-webdriver');
@@ -21,7 +20,7 @@ describe('教職員入口', function(){
     });
 
     it('填寫表單', async () => {
-        await driver.get('localhost:3000');
+        await driver.get(`localhost:${process.env.PORT}`);
         await driver.findElement(By.xpath('/html/body/div[2]/div[1]/a/div/div')).click();
         
         await driver.findElement(By.xpath('/html/body/div[1]/div[2]/div/a[1]')).click();
@@ -37,7 +36,7 @@ describe('教職員入口', function(){
 
     describe('進度查詢', function(){
         it('暫存中', async () => {
-            await driver.get('localhost:3000');
+            await driver.get(`localhost:${process.env.PORT}`);
             await driver.findElement(By.xpath('/html/body/div[2]/div[1]/a/div/div')).click();
             
             await driver.findElement(By.xpath('/html/body/div[1]/div[2]/div/a[1]')).click();
@@ -67,7 +66,7 @@ describe('教職員入口', function(){
             expect(html).to.contains('暫存中');
         });
         it('查詢錯誤', async () => {
-            await driver.get('localhost:3000');
+            await driver.get(`localhost:${process.env.PORT}`);
             await driver.findElement(By.xpath('/html/body/div[2]/div[1]/a/div/div')).click();
             
             await driver.findElement(By.xpath('/html/body/div[1]/div[2]/div/a[4]')).click();
@@ -80,7 +79,6 @@ describe('教職員入口', function(){
     });
 
     after(() => {
-        
         mongoose.connection.db.dropDatabase().then(()=>{
             driver.quit().then(()=>process.exit());
         });

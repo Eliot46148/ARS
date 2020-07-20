@@ -12,6 +12,7 @@ var functionRouter = require('./routes/functionApi');
 var committeeRouter = require('./routes/committeeAPI');
 var mailRouter = require('./routes/mailApi');
 var progressRouter = require('./routes/progressApi');
+var logger = require("morgan");
 
 var app = express();
 
@@ -21,7 +22,7 @@ process.env.TZ = "Asia/Taipei";
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(logger('dev'));
+app.use(logger('dev', { skip: (req, res) => process.env.NODE_ENV === 'testing' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
