@@ -13,7 +13,8 @@ var functionRouter = require('./routes/functionApi');
 var committeeRouter = require('./routes/committeeAPI');
 var mailRouter = require('./routes/mailApi');
 var progressRouter = require('./routes/progressApi');
-var logger = require("morgan");
+
+var adminMongo = require("./adminMongo/app.js");
 
 var app = express();
 
