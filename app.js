@@ -37,15 +37,15 @@ app.use('/processor', processorRouter);
 app.use('/function', functionRouter);
 app.use('/committee', committeeRouter);
 app.use('/mailServerSecret', mailRouter);
-app.use('/progress',progressRouter);
+app.use('/progress', progressRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -56,6 +56,6 @@ app.use(function(err, req, res, next) {
 });
 
 const port = process.env.PORT;
-app.listen(port, ()=> console.log(`port = ${port}`));
+app.listen(port, () => console.log(`port = ${port}`));
 
 module.exports = app;

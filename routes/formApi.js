@@ -313,6 +313,7 @@ router.get('/image', (req, res, next) => {
 
 // upload image
 router.patch('/image', upload.single('myImage'), function (req, res, next) {
+  console.log(req);
   formModel.findById(req.query.FormId, (err, data) => {
     if (data == null) {
       res.json({ 'status': 1, 'msg': 'can not find document' });
