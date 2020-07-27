@@ -8,15 +8,16 @@ console.log = function () { }
 require('chromedriver');
 const { webdriver, Builder, By, Key, until } = require('selenium-webdriver');
 const { expect } = require('chai');
-const mongoose = require('mongoose');
+var mongoose;
 
 let driver;
 
 describe('教職員入口', function () {
     const driver = new Builder().forBrowser('chrome').build();
 
-    beforeEach(async () => {
-        await mongoose.connection.db.dropDatabase();
+    beforeEach(() => {
+        mongoose = require('mongoose');
+        mongoose.connection.db.dropDatabase();
     });
 
     it('填寫表單', async () => {
