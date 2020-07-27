@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 const nodemailer = require("nodemailer");
+const previewEmail = require('preview-email');
 // const { google } = require("googleapis");
 // const OAuth2 = google.auth.OAuth2;
 
@@ -19,10 +20,10 @@ const nodemailer = require("nodemailer");
 // const accessToken = oauth2Client.getAccessToken()
 
 const smtpTransport = nodemailer.createTransport({
-    service: "gmail",
+    service: process.env.EMAIL_SERVICE,
     auth: {
-        user: "85stixwebsite@gmail.com",
-        pass: "85stix123"
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASS
     },
     secure: false,
     tls: {
@@ -30,9 +31,19 @@ const smtpTransport = nodemailer.createTransport({
     }
 });
 
+if (process.env.NODE_ENV != 'production'){
+    smtpTransport.sendMail = function(options, callback){
+        previewEmail(options).then(console.log).catch(console.error);
+        callback(undefined, {status: 200, data: options});
+    };
+    smtpTransport.close = function(){
+        console.log('Closing email service...');
+    }
+}
+
 router.post('/send', function (req, res) {
     const mailOptions = {
-        from: '85stixwebsite@gmail.com',
+        from: process.env.EMAIL_FROM,
         to: req.body.to,
         subject: req.body.subject,
         generateTextFromHTML: true,
@@ -47,7 +58,7 @@ router.post('/send', function (req, res) {
 
 router.post('/send/formInfo', function (req, res) {
     const mailOptions = {
-        from: '85stixwebsite@gmail.com',
+        from: process.env.EMAIL_FROM,
         to: req.body.to,
         subject: req.body.subject,
         generateTextFromHTML: true,

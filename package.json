@@ -33,6 +33,7 @@
     "multer-gridfs-storage": "^4.0.2",
     "nodemailer": "^6.4.6",
     "path": "^0.12.7",
+    "preview-email": "^2.0.2",
     "save": "^2.4.0",
     "xoauth2": "^1.2.0"
   },
