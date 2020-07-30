@@ -89,7 +89,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.initCommercializationRadio = function () {
-        if ($scope.marketDemand != null || $scope.competitiveness != null || $scope.cost != null) {
+        if ($scope.marketDemand != null || $scope.competitiveness != null || $scope.cost != null || $scope.marketDemandFile != null || $scope.competitivenessFile != null || $scope.costFile != null) {
             $scope.isCommercialization = "是";
             $('#CommercializationPanel').collapse('toggle');
             if ($scope.marketDemandType == "檔案") {
@@ -216,7 +216,6 @@ app.controller('formCtrl', ($scope, $http, $location) => {
 
     $('#image').change(() => {
         var formData = new FormData();
-        debugger;
         formData.append('myImage', $("#image")[0].files[0]);
         var url = '/form/image?FormId=' + $scope.FormId;
         $.ajax({

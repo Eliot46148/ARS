@@ -121,15 +121,13 @@ $('.CommercializationRadio').change(function () {
     $('#CommercializationPanel').collapse('toggle');
 });
 
-$('#CommercializationTrue').click(function () {
-    $('.CommercializationFields').prop('required', true);
-});
+// $('#CommercializationTrue').click(function () {
+//     $('.CommercializationFields').prop('required', true);
+// });
 
-$('#CommercializationFalse').click(function () {
-    $('.CommercializationFields').prop('required', false);
-});
-
-
+// $('#CommercializationFalse').click(function () {
+//     $('.CommercializationFields').prop('required', false);
+// });
 
 $('#marketDemandFileRadio').change(function () {
     $('#marketDemandTextField').collapse('hide');
