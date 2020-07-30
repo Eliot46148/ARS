@@ -524,7 +524,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             contentType: false,
             success: function (res) {
                 console.log(res);
-                $scope.competitivenessFile = res.data.competitivenessFile;
+                $scope.competitivenessFile = res.data.CompetitivenessFile;
                 $scope.$apply();
                 alert('上傳成功');
             },
@@ -547,7 +547,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             contentType: false,
             success: function (res) {
                 console.log(res);
-                $scope.costFile = res.data.costFile;
+                $scope.costFile = res.data.CostFile;
                 $scope.$apply();
                 alert('上傳成功');
             },

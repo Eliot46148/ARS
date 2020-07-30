@@ -18,7 +18,6 @@ var upload = multer({ storage: storage });
 
 router.get('/', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
-    console.log(data);
     if (err || data == null)
       res.render('404');
     else if (req.query.TeacherNum == data.TeacherNum)
@@ -30,7 +29,6 @@ router.get('/', (req, res, next) => {
 
 router.get('/check', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
-    console.log(data);
     if (err || data == null)
       res.render('404');
     else if (req.query.TeacherNum == data.TeacherNum)
@@ -44,8 +42,6 @@ router.get('/check', (req, res, next) => {
 });
 
 router.post('/testest', (req, res) => {
-  console.log(req.body.email);
-
   var committeeModel = require('../models/committeeMode');
   committeeModel.findOne({ email: req.body.email, password: req.body.password }, function (merr, mdata) {
     formModel.findById(mdata.needtestform[req.body.index].formOid, (ferr, fdata) => {
@@ -125,7 +121,6 @@ router.put('/', function (req, res, next) {
         res.json({ "status": 1, "msg": "Error", 'data': data });
       else {
         res.json({ "status": 0, "msg": "success", 'data': req.body });
-        console.log(data);
       }
     });
 });
@@ -167,7 +162,6 @@ router.put('/submit', function (req, res, next) {
 
 // upload patent data
 router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
-  console.log("save");
   formModel.findByIdAndUpdate({ _id: req.query.FormId },
     {
       $push: {
@@ -187,7 +181,6 @@ router.patch('/patent', upload.single('myPatent'), function (req, res, next) {
 
 // upload patent data without files
 router.patch('/patent/nofile', function (req, res, next) {
-  console.log(req.query);
   formModel.findByIdAndUpdate({ _id: req.query.FormId },
     {
       $push: {
@@ -198,7 +191,6 @@ router.patch('/patent/nofile', function (req, res, next) {
         }
       }
     }, function (err, data) {
-      console.log(data);
       if (err) res.json({ "status": 1, "msg": "Error" });
       else
         res.json({ "status": 0, "msg": "Success", "id": data._id });
@@ -209,7 +201,6 @@ router.patch('/patent/nofile', function (req, res, next) {
 // get patent data
 router.get('/patent', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
-    console.log(data._id.toString());
     res.sendFile(path.join(__dirname, `../uploads/${data.Patent[0].File}`), (err) => {
       if (err)
         res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
@@ -274,7 +265,6 @@ router.patch('/paper/nofile', function (req, res, next) {
 // get paper data
 router.get('/paper', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
-    console.log(data._id.toString());
     res.sendFile(path.join(__dirname, `../uploads/${data.Patent[0].File}`), (err) => {
       if (err)
         res.json({ 'status': 0, 'msg': 'send patent file error', 'detail': err });
@@ -313,7 +303,6 @@ router.get('/image', (req, res, next) => {
 
 // upload image
 router.patch('/image', upload.single('myImage'), function (req, res, next) {
-  console.log(req);
   formModel.findById(req.query.FormId, (err, data) => {
     if (data == null) {
       res.json({ 'status': 1, 'msg': 'can not find document' });
@@ -389,6 +378,7 @@ router.patch('/competitivenessFile', upload.single('competitivenessFile'), funct
       res.json({ 'status': 1, 'msg': 'can not find document' });
       return;
     }
+    console.log(req);
     data.CompetitivenessFile = req.file.filename;
     data.markModified('CompetitivenessFile');
     data.save(function (err) {
