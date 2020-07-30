@@ -155,7 +155,7 @@
                                 <th scope="col">委員姓名</th>
                                 <th scope="col">委員郵件</th>
                                 <th scope="col">回收狀況</th>
-                                <th scope="col">查看建議</th>
+                                <th scope="col">查看或編輯建議</th>
                                 <th scope="col">刪除</th>
                             </thead>
                             <tbody>
@@ -166,7 +166,7 @@
                                     <td ng-bind="response.email"></td>
                                     <td ng-bind="response.isPass ? '已回傳' : '尚未回傳'">已回傳</td>
                                     <td>
-                                        <a type="button" class="btn btn-primary text-white" ng-click="seeRespond(response._id)" ng-class="response.isPass ? '' : 'disabled'">點選</a>
+                                        <a type="button" class="btn btn-primary text-white" ng-click="seeRespond(response._id)">點選</a>
                                     </td>
                                     <td>
                                         <a type="button" class="btn btn-danger text-white" ng-click="deleteExamination(response.email, response.formOid)">點選</a>

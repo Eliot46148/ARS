@@ -36,9 +36,7 @@ if (process.env.NODE_ENV != 'production'){
         previewEmail(options).then(console.log).catch(console.error);
         callback(undefined, {status: 200, data: options});
     };
-    smtpTransport.close = function(){
-        console.log('Closing email service...');
-    }
+    smtpTransport.close = function(){;}
 }
 
 router.post('/send', function (req, res) {
@@ -50,7 +48,7 @@ router.post('/send', function (req, res) {
         html: req.body.html
     };
     smtpTransport.sendMail(mailOptions, (error, response) => {
-        error ? console.log(error) : console.log(response);
+        error ? console.log(error) : console.log('Send to', response.data.to);
         smtpTransport.close();
         res.send(response);
     });
