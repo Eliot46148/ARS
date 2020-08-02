@@ -41,10 +41,10 @@ router.get('/check', (req, res, next) => {
   });
 });
 
-router.post('/testest', (req, res) => {
+router.get('/testest', (req, res) => {
   var committeeModel = require('../models/committeeMode');
-  committeeModel.findOne({ email: req.body.email, password: req.body.password }, function (merr, mdata) {
-    formModel.findById(mdata.needtestform[req.body.index].formOid, (ferr, fdata) => {
+  committeeModel.findOne({ email: req.query.email, password: req.query.password }, function (merr, mdata) {
+    formModel.findById(mdata.needtestform[req.query.index].formOid, (ferr, fdata) => {
       if (ferr)
         res.json({ "status": 1, "msg": "Error", 'data': fdata });
       else

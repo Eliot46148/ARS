@@ -80,17 +80,20 @@ function loadfinish() {
                 break;
         }
         $('#ReviewForm').attr('src', ReviewFormSrc);
+        var reviewsrc = "./reviewForm?email="+retdata.email+"&password="+retdata.password+"&index="+cookieData.index;
+        $('#needReviewForm').attr('src', reviewsrc);
 
-
+/*
         $.post("../form/testest", {
             email: retdata.email,
             password: retdata.password,
             index: cookieData.index,
             FormId: retdata.formOid
         }, function (sdata) {
-            var reviewsrc = "../form?TeacherNum=" + sdata.data.TeacherNum + "&FormId=" + sdata.data._id;
+            //var reviewsrc = "../form?TeacherNum=" + sdata.data.TeacherNum + "&FormId=" + sdata.data._id;
+            var reviewsrc = "./reviewForm";
             $('#needReviewForm').attr('src', reviewsrc);
-        })
+        })*/
     })
 
 }

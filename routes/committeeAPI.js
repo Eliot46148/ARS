@@ -12,6 +12,8 @@ router.get('/reviewT1',(req,res)=>res.render('ReviewForm/committeeReviewT1',{tit
 
 router.get('/reviewT2',(req,res)=>res.render('ReviewForm/committeeReviewT2',{title:"Express"}));
 
+router.get('/reviewForm',(req,res)=>res.render('committeeReviewForm',{title:"Express"}));
+
 router.post('/committeeregistered',function(req,res){
     var keylist="abcdefghijklmnopqrstuvwxyz123456789"
     var thepassword = ''
