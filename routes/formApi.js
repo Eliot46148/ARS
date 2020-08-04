@@ -18,26 +18,16 @@ var upload = multer({ storage: storage });
 
 router.get('/', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
-    if (err || data == null)
+    console.log(req.query);
+    console.log(data);
+    if (err || data == null || req.query.TeacherNum != data.TeacherNum) {
       res.render('404');
-    else if (req.query.TeacherNum == data.TeacherNum)
-      res.render('form');
-    else
-      res.render('404');
-  });
-});
+    }
+    if (data.Submitted) {
+      res.render('blocked');
+    }
 
-router.get('/check', (req, res, next) => {
-  formModel.findById(req.query.FormId, (err, data) => {
-    if (err || data == null)
-      res.render('404');
-    else if (req.query.TeacherNum == data.TeacherNum)
-      if (!data.Submitted)
-        res.redirect('/form?TeacherNum=' + req.query.TeacherNum + '&FormId=' + req.query.FormId);
-      else
-        res.render('blocked');
-    else
-      res.render('404');
+    res.render('form');
   });
 });
 

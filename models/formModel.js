@@ -43,7 +43,11 @@ var formSchema = new mongoose.Schema({
     }],
     Image: String,                  // 成果照片
     Video: String,                  // 成果影片
-    Submitted: Boolean,             // 使用者已確認送出
+    Submitted: {                    // 使用者已確認送出
+        type: Boolean,
+        default: false
+    },
+
     Ended: Boolean,                 // 審查流程結束
     ChartData: [],                  // 成熟度數值
     Status: Number,                 // 表單送審狀態
