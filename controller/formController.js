@@ -221,7 +221,6 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 type: 'delete',
                 data: { "FormId": $scope.FormId },
                 success: function (res) {
-                    debugger;
                     alert(res.msg);
                     if (res.status == "0") {
                         window.location.assign("/");
