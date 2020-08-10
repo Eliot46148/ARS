@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 var path = require('path');
-formModel = require('../models/formModel');
+const formModel = require('../models/formModel');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -78,6 +78,17 @@ router.post('/', function (req, res, next) {
     else
       res.json({ "status": 1, "msg": "success", "id": data._id });
   });
+});
+
+router.delete('/', function (req, res, next) {
+  formModel.deleteOne({ _id: req.body.FormId }, function (err) {
+    if (err) {
+      res.json({ "status": "1", "msg": "系統發生錯誤" });
+    }
+    else {
+      res.json({ "status": "0", "msg": "刪除成功" });
+    }
+  })
 });
 
 /** save form data */

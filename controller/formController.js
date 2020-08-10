@@ -214,6 +214,26 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         }
     }
 
+    $scope.delete = function () {
+        if (confirm("刪除後將無法恢復，確認刪除？")) {
+            $.ajax({
+                url: "/form",
+                type: 'delete',
+                data: { "FormId": $scope.FormId },
+                success: function (res) {
+                    debugger;
+                    alert(res.msg);
+                    if (res.status == "0") {
+                        window.location.assign("/");
+                    }
+                },
+                error: function (res) {
+                    alert("系統發生錯誤");
+                }
+            });
+        }
+    }
+
     $('#image').change(() => {
         var formData = new FormData();
         formData.append('myImage', $("#image")[0].files[0]);
