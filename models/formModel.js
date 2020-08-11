@@ -15,15 +15,16 @@ var formSchema = new mongoose.Schema({
     Email: String,                  // 教師電子郵件
     Description: String,            // 成果技術摘要說明
     Evaluation: String,             // 應用範圍及產業效益評估
+    IsCommercialization: String,    // 是否進入商品化審查
     MarketDemand: String,           // 市場需求價值
     Competitiveness: String,        // 技術競爭性
     Cost: String,                   // 商品化成本規劃
     MarketDemandFile: String,       // 市場需求價值(檔案)
     CompetitivenessFile: String,    // 技術競爭性(檔案)
     CostFile: String,               // 商品化成本規劃(檔案)
-    MarketDemandType: String,
-    CompetitivenessType: String,
-    CostType: String,
+    MarketDemandType: String,       // 技術競爭性類型
+    CompetitivenessType: String,    // 市場需求價值類型
+    CostType: String,               // 商品化成本規劃類型
     UploadDate: {                   // 建立日期
         type: Date,
         default: Date.now
