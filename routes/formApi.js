@@ -18,12 +18,10 @@ var upload = multer({ storage: storage });
 
 router.get('/', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
-    console.log(req.query);
-    console.log(data);
     if (err || data == null || req.query.TeacherNum != data.TeacherNum) {
       res.render('404');
     }
-    if (data.Submitted) {
+    if (data.Status != 0 && data.Status != 3) {
       res.render('blocked');
     }
 
@@ -70,13 +68,14 @@ router.post('/', function (req, res, next) {
   var newForm = new formModel({
     TeacherNum: req.body.TeacherNum,
     UploadDate: req.body.UploadDate,
+    IsCommercialization: "否",
     Status: 0
   });
   newForm.save(function (err, data) {
     if (err)
       res.json({ "status": 1, "msg": "Error" });
     else
-      res.json({ "status": 1, "msg": "success", "id": data._id });
+      res.json({ "status": 0, "msg": "success", "id": data._id });
   });
 });
 
