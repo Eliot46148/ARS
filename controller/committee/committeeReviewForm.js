@@ -45,6 +45,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.costFile = "../"+data.CostFile;
                     $scope.marketDemandType = data.MarketDemandType;
                     $scope.competitivenessType = data.CompetitivenessType;
+                    $scope.isCommercialization = data.IsCommercialization;
                     $scope.costType = data.CostType;
                     showImage(data.Image);
                     showVideo(data.Video);
@@ -96,25 +97,28 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.initCommercializationRadio = function () {
-        if ($scope.marketDemand != null || $scope.competitiveness != null || $scope.cost != null || $scope.marketDemandFile != null || $scope.competitivenessFile != null || $scope.costFile != null) {
-            $scope.isCommercialization = "是";
+        console.log($scope.isCommercialization)
+        if ($scope.isCommercialization == "是") {
             $('#CommercializationPanel').collapse('toggle');
             if ($scope.marketDemandType == "檔案") {
                 $('#marketDemandFileField').collapse('show');
             }
             else {
+                $scope.marketDemandType = "文字";
                 $('#marketDemandTextField').collapse('show');
             }
             if ($scope.competitivenessType == "檔案") {
                 $('#competitivenessFileField').collapse('show');
             }
             else {
+                $scope.competitivenessType = "文字";
                 $('#competitivenessTextField').collapse('show');
             }
-            if ($scope.marketDemandType == "檔案") {
+            if ($scope.costType == "檔案") {
                 $('#costFileField').collapse('show');
             }
             else {
+                $scope.costType = "文字"
                 $('#costTextField').collapse('show');
             }
         }
