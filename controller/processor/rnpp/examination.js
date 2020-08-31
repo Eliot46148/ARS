@@ -77,7 +77,8 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 'to':$scope.email,
                                 'subject':'委員通知',
                                 'html': html
-                            }).success(function(data){
+                            }).then(function(data){
+                                console.log(data)
                                 set_state(true, 1);
                                 $timeout(function() {
                                     //console.log(data);
@@ -155,16 +156,6 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
             language: 'zh-TW'
         });
     };
-
-    $scope.deleteExamination = function(email, index){
-        $.post("/committee/committeeupdate", {
-            email: email,
-            index: index,
-            delete: 1
-        }, function (data) {
-            $('#respondModal').modal('hide');
-        })
-    }
 });
 
 if (!$.cookie('account')){window.location='/processor';}
