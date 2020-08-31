@@ -30,6 +30,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     chartData = data.ChartData;
                     $scope.Patents = data.Patent;
                     $scope.Papers = data.Paper;
+                    $scope.isCommercialization = data.IsCommercialization;
                     $scope.marketDemand = data.MarketDemand;
                     $scope.competitiveness = data.Competitiveness;
                     $scope.cost = data.Cost;
@@ -89,30 +90,30 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.initCommercializationRadio = function () {
-        if ($scope.marketDemand != null || $scope.competitiveness != null || $scope.cost != null || $scope.marketDemandFile != null || $scope.competitivenessFile != null || $scope.costFile != null) {
-            $scope.isCommercialization = "是";
+        if ($scope.isCommercialization == "是") {
             $('#CommercializationPanel').collapse('toggle');
             if ($scope.marketDemandType == "檔案") {
                 $('#marketDemandFileField').collapse('show');
             }
             else {
+                $scope.marketDemandType = "文字";
                 $('#marketDemandTextField').collapse('show');
             }
             if ($scope.competitivenessType == "檔案") {
                 $('#competitivenessFileField').collapse('show');
             }
             else {
+                $scope.competitivenessType = "文字";
                 $('#competitivenessTextField').collapse('show');
             }
-            if ($scope.marketDemandType == "檔案") {
+            if ($scope.costType == "檔案") {
                 $('#costFileField').collapse('show');
             }
             else {
+                $scope.costType = "文字";
                 $('#costTextField').collapse('show');
             }
         }
-        else
-            $scope.isCommercialization = "否";
     };
 
     /** Initialize the radar chart via data from DB*/
@@ -159,6 +160,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "Email": $scope.Email,
                 "Description": $scope.description,
                 "Evaluation": $scope.evaluation,
+                "IsCommercialization": $scope.isCommercialization,
                 "MarketDemand": $scope.marketDemand,
                 "Competitiveness": $scope.competitiveness,
                 "Cost": $scope.cost,
@@ -195,6 +197,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     "Email": $scope.Email,
                     "Description": $scope.description,
                     "Evaluation": $scope.evaluation,
+                    "IsCommercialization": $scope.isCommercialization,
                     "MarketDemand": $scope.marketDemand,
                     "Competitiveness": $scope.competitiveness,
                     "Cost": $scope.cost,
@@ -211,6 +214,25 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 }, (err) => {
                     alert(err.msg);
                 });
+        }
+    }
+
+    $scope.delete = function () {
+        if (confirm("刪除後將無法恢復，確認刪除？")) {
+            $.ajax({
+                url: "/form",
+                type: 'delete',
+                data: { "FormId": $scope.FormId },
+                success: function (res) {
+                    alert(res.msg);
+                    if (res.status == "0") {
+                        window.location.assign("/");
+                    }
+                },
+                error: function (res) {
+                    alert("系統發生錯誤");
+                }
+            });
         }
     }
 

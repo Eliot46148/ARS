@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 var path = require('path');
-formModel = require('../models/formModel');
+const formModel = require('../models/formModel');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -18,26 +18,14 @@ var upload = multer({ storage: storage });
 
 router.get('/', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {
-    if (err || data == null)
+    if (err || data == null || req.query.TeacherNum != data.TeacherNum) {
       res.render('404');
-    else if (req.query.TeacherNum == data.TeacherNum)
-      res.render('form');
-    else
-      res.render('404');
-  });
-});
+    }
+    if (data.Status != 0 && data.Status != 3) {
+      res.render('blocked');
+    }
 
-router.get('/check', (req, res, next) => {
-  formModel.findById(req.query.FormId, (err, data) => {
-    if (err || data == null)
-      res.render('404');
-    else if (req.query.TeacherNum == data.TeacherNum)
-      if (!data.Submitted)
-        res.redirect('/form?TeacherNum=' + req.query.TeacherNum + '&FormId=' + req.query.FormId);
-      else
-        res.render('blocked');
-    else
-      res.render('404');
+    res.render('form');
   });
 });
 
@@ -80,14 +68,26 @@ router.post('/', function (req, res, next) {
   var newForm = new formModel({
     TeacherNum: req.body.TeacherNum,
     UploadDate: req.body.UploadDate,
+    IsCommercialization: "否",
     Status: 0
   });
   newForm.save(function (err, data) {
     if (err)
       res.json({ "status": 1, "msg": "Error" });
     else
-      res.json({ "status": 1, "msg": "success", "id": data._id });
+      res.json({ "status": 0, "msg": "success", "id": data._id });
   });
+});
+
+router.delete('/', function (req, res, next) {
+  formModel.deleteOne({ _id: req.body.FormId }, function (err) {
+    if (err) {
+      res.json({ "status": "1", "msg": "系統發生錯誤" });
+    }
+    else {
+      res.json({ "status": "0", "msg": "刪除成功" });
+    }
+  })
 });
 
 /** save form data */
@@ -107,6 +107,7 @@ router.put('/', function (req, res, next) {
       Email: req.body.Email,
       Description: req.body.Description,
       Evaluation: req.body.Evaluation,
+      IsCommercialization: req.body.IsCommercialization,
       MarketDemand: req.body.MarketDemand,
       Competitiveness: req.body.Competitiveness,
       Cost: req.body.Cost,
@@ -142,6 +143,7 @@ router.put('/submit', function (req, res, next) {
       Email: req.body.Email,
       Description: req.body.Description,
       Evaluation: req.body.Evaluation,
+      IsCommercialization: req.body.IsCommercialization,
       MarketDamand: req.body.MarketDamand,
       Competitiveness: req.body.Competitiveness,
       Cost: req.body.Cost,
