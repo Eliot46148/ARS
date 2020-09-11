@@ -96,8 +96,6 @@ $('.PaperInfoRadio').change(function () {
     $('#paperInfo').collapse('toggle');
 });
 
-
-
 $('#paperPublished').change(function () {
     $('#paperFileField').collapse('show');
 });
@@ -106,57 +104,12 @@ $('.paperUnPublished').change(function () {
     $('#paperFileField').collapse('hide');
 });
 
-
-
 $('#patentPublished').change(function () {
     $('#patentFileField').collapse('show');
 });
 
 $('#patentUnPublished').change(function () {
     $('#patentFileField').collapse('hide');
-});
-
-
-$('.CommercializationRadio').change(function () {
-    $('#CommercializationPanel').collapse('toggle');
-});
-
-// $('#CommercializationTrue').click(function () {
-//     $('.CommercializationFields').prop('required', true);
-// });
-
-// $('#CommercializationFalse').click(function () {
-//     $('.CommercializationFields').prop('required', false);
-// });
-
-$('#marketDemandFileRadio').change(function () {
-    $('#marketDemandTextField').collapse('hide');
-    $('#marketDemandFileField').collapse('show');
-});
-
-$('#marketDemandTextRadio').change(function () {
-    $('#marketDemandTextField').collapse('show');
-    $('#marketDemandFileField').collapse('hide');
-});
-
-$('#competitivenessFileRadio').change(function () {
-    $('#competitivenessTextField').collapse('hide');
-    $('#competitivenessFileField').collapse('show');
-});
-
-$('#competitivenessTextRadio').change(function () {
-    $('#competitivenessTextField').collapse('show');
-    $('#competitivenessFileField').collapse('hide');
-});
-
-$('#costFileRadio').change(function () {
-    $('#costTextField').collapse('hide');
-    $('#costFileField').collapse('show');
-});
-
-$('#costTextRadio').change(function () {
-    $('#costTextField').collapse('show');
-    $('#costFileField').collapse('hide');
 });
 
 $("#btnFinishSaving").click(function () {

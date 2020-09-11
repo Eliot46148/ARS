@@ -68,7 +68,6 @@ router.post('/', function (req, res, next) {
   var newForm = new formModel({
     TeacherNum: req.body.TeacherNum,
     UploadDate: req.body.UploadDate,
-    IsCommercialization: "否",
     Status: 0
   });
   newForm.save(function (err, data) {
