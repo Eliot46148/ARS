@@ -40,9 +40,9 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.marketDemand = data.MarketDemand;
                     $scope.competitiveness = data.Competitiveness;
                     $scope.cost = data.Cost;
-                    $scope.marketDemandFile = "../"+data.MarketDemandFile;
-                    $scope.competitivenessFile = "../"+data.CompetitivenessFile;
-                    $scope.costFile = "../"+data.CostFile;
+                    $scope.marketDemandFile = "../" + data.MarketDemandFile;
+                    $scope.competitivenessFile = "../" + data.CompetitivenessFile;
+                    $scope.costFile = "../" + data.CostFile;
                     $scope.marketDemandType = data.MarketDemandType;
                     $scope.competitivenessType = data.CompetitivenessType;
                     $scope.isCommercialization = data.IsCommercialization;
@@ -83,48 +83,27 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     $scope.initPatentAndPaper = () => {
         if ($scope.Patents.length > 0) {
             $('#patentInfo').collapse('toggle');
-            $scope.HavePatents = '有';
+            $scope.HavePatents = 'Y';
         }
         else
-            $scope.HavePatents = '無';
+            $scope.HavePatents = 'N';
 
         if ($scope.Papers.length > 0) {
             $('#paperInfo').collapse('toggle');
-            $scope.HavePapers = '有';
+            $scope.HavePapers = 'Y';
         }
         else
-            $scope.HavePapers = '無';
+            $scope.HavePapers = 'N';
     }
 
-    $scope.initCommercializationRadio = function () {
-        console.log($scope.isCommercialization)
-        if ($scope.isCommercialization == "是") {
-            $('#CommercializationPanel').collapse('toggle');
-            if ($scope.marketDemandType == "檔案") {
-                $('#marketDemandFileField').collapse('show');
-            }
-            else {
-                $scope.marketDemandType = "文字";
-                $('#marketDemandTextField').collapse('show');
-            }
-            if ($scope.competitivenessType == "檔案") {
-                $('#competitivenessFileField').collapse('show');
-            }
-            else {
-                $scope.competitivenessType = "文字";
-                $('#competitivenessTextField').collapse('show');
-            }
-            if ($scope.costType == "檔案") {
-                $('#costFileField').collapse('show');
-            }
-            else {
-                $scope.costType = "文字"
-                $('#costTextField').collapse('show');
-            }
+    $scope.initCommercializationRadios = function () {
+        if (!($scope.isCommercialization)) {
+            $scope.isCommercialization = 'N';
+            $scope.marketDemandType = 'file';
+            $scope.competitivenessType = 'file';
+            $scope.costType = 'file';
         }
-        else
-            $scope.isCommercialization = "否";
-    };
+    }
 
     /** Initialize the radar chart via data from DB*/
     $scope.initRadarChart = () => {
