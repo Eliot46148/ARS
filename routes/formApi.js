@@ -21,10 +21,12 @@ router.get('/', (req, res, next) => {
     if (err || data == null || req.query.TeacherNum != data.TeacherNum) {
       res.render('404');
     }
+    if(req.query.isProcess == 'process'){
+      res.render('form');
+    }
     if (data.Status != 0 && data.Status != 3) {
       res.render('blocked');
     }
-
     res.render('form');
   });
 });

@@ -20,7 +20,7 @@ app.controller('MainCtrl', function($scope, $http, $window) {
     });
 
     $scope.triggerView = function(tNum, id){
-        $window.open('/form?'+new URLSearchParams({TeacherNum:tNum, FormId:id}).toString(), '_blank');
+        $window.open('/form?'+new URLSearchParams({TeacherNum:tNum, FormId:id,isProcess:'process'}).toString(), '_blank');
     };
     
     $scope.triggerRespond = function(id, state=0){
