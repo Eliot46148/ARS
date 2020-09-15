@@ -229,7 +229,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label>專利申請國籍</label>
-                                            <input class="form-control" type="text" ng-model="patentCountry">
+                                            <input class="form-control" type="text" list='countries' ng-model="patentCountry">
+                                            <datalist id="countries">
+                                                <option>歐盟</option>
+                                                <option>日本</option>
+                                            </datalist>
                                         </div>
                                         <label>專利申請狀況</label>
                                         <div class="form-group">
