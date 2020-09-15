@@ -77,7 +77,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 'to':$scope.email,
                                 'subject':'委員通知',
                                 'html': html
-                            }).then(function(data){
+                            }).success(function(data){
                                 console.log(data)
                                 set_state(true, 1);
                                 $timeout(function() {
@@ -109,6 +109,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                 var form = $scope.forms.find(element=>element._id==$scope.triggerRespond.id);
                 $scope.radio = form.Status;
                 $scope.respond = data.data;
+                $scope.triggerRespondForm = form;
                 set_state(false);
             });
         }
@@ -122,12 +123,27 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                 update.deadline = new Date($scope.deadline);
                 update.deadline.setHours(update.deadline.getHours() + 16);
                 update.deadline.setSeconds(update.deadline.getSeconds() - 1);
-            }
+            };
             $http.put('/form/status', update).success(function(respond){
                 //console.log(respond);
-                $scope.forms.find(element=>element._id==$scope.triggerRespond.id).Status = $scope.radio;
-                set_state(true, 1);
-                $timeout(function() { set_state(false);}, 1500);
+                var html = '';
+                $http.get('/mailServerSecret/template/examination_completed').success(function(rawhtml){
+                    html = rawhtml
+                    .replace('{name}', $scope.triggerRespondForm.Name)
+                    .replace('{topic}', $scope.triggerRespondForm.ResearchTopic)
+                    .replace('{url}','http://127.0.0.1:3000/progress?TeacherNum=' + $scope.triggerRespondForm.TeacherNum);
+                    
+                    $http.post('/mailServerSecret/send', {
+                        'to': $scope.triggerRespondForm.Email,
+                        'subject':'審查結果通知',
+                        'html': html
+                    }).success(function(data){
+                        console.log(data)
+                        $scope.forms.find(element=>element._id==$scope.triggerRespond.id).Status = $scope.radio;
+                        set_state(true, 1);
+                        $timeout(function() { set_state(false)}, 1500);
+                    });
+                });
             });
             set_state(false);
         }
@@ -173,7 +189,8 @@ $( function() {
         constrainInput: false,
         format: "yyyy-mm-dd",
         autoclose: true,
-        language: 'zh-TW'
+        language: 'zh-TW',
+        orientation: "top"
     });
     var sDate,eDate;
     ds.on('changeDate',function(e){

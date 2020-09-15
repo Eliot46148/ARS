@@ -97,11 +97,11 @@
                         </div>
                         <div class="form-group d-flex">
                             <label for="date-start" class="col-4">審查日期起始</label>
-                            <input type="text" class="col-8" id="date-start" ng-model="date_start" required>
+                            <input type="text" class="col-8" id="date-start" ng-model="date_start" autocomplete="off" required>
                         </div>
                         <div class="form-group d-flex">
                             <label for="date-end" class="col-4">審查日期終止</label>
-                            <input type="text" class="col-8" id="date-end" ng-model="date_end" required>
+                            <input type="text" class="col-8" id="date-end" ng-model="date_end" autocomplete="off" required>
                         </div>
                         <select class="form-control form-group" id="inputGroupSelect04" ng-model="selectedForm" required>
                             <option value="">-審查表單選擇-</option>
@@ -187,7 +187,7 @@
                                         <p>修改截止日期</p>
                                     </td>
                                     <td class="d-flex justify-content-between">
-                                        <input type="text" class="col-8" id="deadline" ng-model="$parent.deadline" required>
+                                        <input type="text" class="col-8" id="deadline" ng-model="$parent.deadline" autocomplete="off" required>
                                     </td>
                                 </tr>
                             </tbody>

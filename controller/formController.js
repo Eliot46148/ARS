@@ -460,7 +460,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     .replace('{password}', $scope.FormId)
                     .replace('{url}', `http://localhost:3000/form?TeacherNum=${$scope.TeacherNum}&FormId=${$scope.FormId}`);
 
-                $http.post('/mailServerSecret/send/formInfo', {
+                $http.post('/mailServerSecret/send', {
                     'to': $scope.Email,
                     'subject': '研發能量展現平台-表單暫存資訊',
                     'html': html

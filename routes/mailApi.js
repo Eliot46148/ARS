@@ -48,21 +48,6 @@ router.post('/send', function (req, res) {
         html: req.body.html
     };
     smtpTransport.sendMail(mailOptions, (error, response) => {
-        error ? console.log(error) : console.log('Send to', response.data.to);
-        smtpTransport.close();
-        res.send(response);
-    });
-});
-
-router.post('/send/formInfo', function (req, res) {
-    const mailOptions = {
-        from: process.env.EMAIL_FROM,
-        to: req.body.to,
-        subject: req.body.subject,
-        generateTextFromHTML: true,
-        html: req.body.html
-    };
-    smtpTransport.sendMail(mailOptions, (error, response) => {
         error ? console.log(error) : console.log(response);
         smtpTransport.close();
         res.send(response);
@@ -80,6 +65,15 @@ router.get('/template', function (req, res) {
 
 router.get('/template/saveInfo', function (req, res) {
     fs.readFile('./public/static/formInfoMail.html', function (err, html) {
+        if (err) {
+            throw err;
+        }
+        res.send(html);
+    });
+});
+
+router.get('/template/examination_completed', function (req, res) {
+    fs.readFile('./public/static/examination_completed.html', function (err, html) {
         if (err) {
             throw err;
         }
