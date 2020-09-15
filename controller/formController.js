@@ -452,7 +452,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     name = $scope.Name;
 
                 if ($scope.ResearchTopic != null)
-                    name = $scope.ResearchTopic;
+                    topic = $scope.ResearchTopic;
 
                 html = rawhtml
                     .replace('{name}', name)
