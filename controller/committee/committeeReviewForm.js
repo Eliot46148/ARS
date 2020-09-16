@@ -52,7 +52,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.changeDepartments();
                     $scope.initPatentAndPaper();
                     $scope.initRadarChart();
-                    $scope.initCommercializationRadio();
+                    $scope.initCommercializationRadios();
                 }
             },
             (err) => {
@@ -97,12 +97,16 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.initCommercializationRadios = function () {
+        console.log(1)
+        console.log($scope.isCommercialization)
         if (!($scope.isCommercialization)) {
+            console.log(2)
             $scope.isCommercialization = 'N';
             $scope.marketDemandType = 'file';
             $scope.competitivenessType = 'file';
             $scope.costType = 'file';
         }
+        console.log(3)
     }
 
     /** Initialize the radar chart via data from DB*/

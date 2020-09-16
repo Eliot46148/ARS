@@ -561,33 +561,40 @@
                     <label>是否需要進入商品化審查</label>
                     <div class="form-group">
                         <input type="radio" name="CommercializationRadio" class="CommercializationRadio"
-                            id="CommercializationTrue" value="是" ng-model="isCommercialization">是
+                            id="CommercializationTrue" value="Y" ng-model="isCommercialization">是
                         <input type="radio" name="CommercializationRadio" class="CommercializationRadio"
-                            id="CommercializationFalse" value="否" ng-model="isCommercialization" checked>否
+                            id="CommercializationFalse" value="N" ng-model="isCommercialization" checked>否
                     </div>
 
-                    <div id="CommercializationPanel" class="panel-collapse collapse">
-                        <div class="panel-body border border-primary fit-content rounded col-md-12 mb-3">
+                    <div id="CommercializationPanel" ng-show="isCommercialization=='Y'">
+                        <div class="border border-primary fit-content rounded col-md-12 mb-3">
                             <div class="form-group">
                                 <label>市場需求價值</label>
                                 <div class="form-group ml-1">
-                                    <input type="radio" name="marketDemandRadio" id="marketDemandFileRadio" value="檔案"
+                                    <input type="radio" name="marketDemandRadio" id="marketDemandFileRadio" value="file"
                                         ng-model="marketDemandType">檔案
-                                    <input type="radio" name="marketDemandRadio" id="marketDemandTextRadio" value="文字"
+                                    <input type="radio" name="marketDemandRadio" id="marketDemandTextRadio" value="text"
                                         ng-model="marketDemandType">文字
                                 </div>
-                                <div id="marketDemandFileField" class="panel-collapse collapse">
-                                    <div class="panel-body border border-warning fit-content rounded col-md-10 mb-3">
+                                <div ng-show="marketDemandType=='file'">
+                                    <div class="border border-warning fit-content rounded col-md-10 mb-3">
                                         <div class="form-group">
+                                            <label class="mb-0">資料上傳(限pdf)</label>
+                                            <div id="drop-area" class="dm-uploader">
+                                                <input type="file" title="選擇檔案" accept=".pdf" id="marketDemandFile"
+                                                    name="marketDemandFile" class="mt-3"
+                                                    ng-required="marketDemandType == 'file' && isCommercialization == 'Y' && marketDemandFile==undefined">
+                                            </div>
                                             <a href={{marketDemandFile}} class="btn btn-warning mt-3"
                                                 ng-if="marketDemandFile!=undefined" target="_blank">檢視已上傳檔案</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="marketDemandTextField" class="panel-collapse collapse">
-                                    <div class="panel-body border border-warning fit-content rounded col-md-10 mb-3">
+                                <div ng-show="marketDemandType=='text'">
+                                    <div class="border border-warning fit-content rounded col-md-10 mb-3">
                                         <textarea class="form-control col-md-12 CommercializationFields my-3" rows="5"
-                                            ng-model="marketDemand" placeholder="請輸入說明敘述"></textarea>
+                                            ng-model="marketDemand" placeholder="請輸入說明敘述"
+                                            ng-required="marketDemandType == 'text' && isCommercialization == 'Y'"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -595,51 +602,65 @@
                                 <label>技術競爭性</label>
                                 <div class="form-group ml-1">
                                     <input type="radio" name="competitivenessRadio" id="competitivenessFileRadio"
-                                        value="檔案" ng-model="competitivenessType">檔案
+                                        value="file" ng-model="competitivenessType">檔案
                                     <input type="radio" name="competitivenessRadio" id="competitivenessTextRadio"
-                                        value="文字" ng-model="competitivenessType">文字
+                                        value="text" ng-model="competitivenessType">文字
                                 </div>
-                                <div id="competitivenessFileField" class="panel-collapse collapse">
-                                    <div class="panel-body border border-warning fit-content rounded col-md-10 mb-3">
+                                <div ng-show="competitivenessType=='file'">
+                                    <div class="border border-warning fit-content rounded col-md-10 mb-3">
                                         <div class="form-group">
+                                            <label class="mb-0">資料上傳(限pdf)</label>
+                                            <div id="drop-area" class="dm-uploader">
+                                                <input type="file" title="選擇檔案" accept=".pdf" id="competitivenessFile"
+                                                    name="competitivenessFile" class="mt-3"
+                                                    ng-required="competitivenessType == 'file' && isCommercialization == 'Y' && competitivenessFile==undefined">
+                                            </div>
                                             <a href={{competitivenessFile}} class="btn btn-warning mt-3"
                                                 ng-if="competitivenessFile!=undefined" target="_blank">檢視已上傳檔案</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="competitivenessTextField" class="panel-collapse collapse">
-                                    <div class="panel-body border border-warning fit-content rounded col-md-10 mb-3">
+                                <div ng-show="competitivenessType=='text'">
+                                    <div class="border border-warning fit-content rounded col-md-10 mb-3">
                                         <textarea class="form-control col-md-12 CommercializationFields my-3" rows="5"
-                                            ng-model="competitiveness" placeholder="請輸入說明敘述"></textarea>
+                                            ng-model="competitiveness" placeholder="請輸入說明敘述"
+                                            ng-required="competitivenessType == 'text' && isCommercialization == 'Y'"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>商品化成本規劃</label>
                                 <div class="form-group ml-1">
-                                    <input type="radio" name="costRadio" id="costFileRadio" value="檔案"
+                                    <input type="radio" name="costRadio" id="costFileRadio" value="file"
                                         ng-model="costType">檔案
-                                    <input type="radio" name="costRadio" id="costTextRadio" value="文字"
+                                    <input type="radio" name="costRadio" id="costTextRadio" value="text"
                                         ng-model="costType">文字
                                 </div>
-                                <div id="costFileField" class="panel-collapse collapse">
-                                    <div class="panel-body border border-warning fit-content rounded col-md-10 mb-3">
+                                <div ng-show="costType=='file'">
+                                    <div class="border border-warning fit-content rounded col-md-10 mb-3">
                                         <div class="form-group">
+                                            <label class="mb-0">資料上傳(限pdf)</label>
+                                            <div id="drop-area" class="dm-uploader">
+                                                <input type="file" title="選擇檔案" accept=".pdf" id="costFile"
+                                                    name="costFile" class="mt-3"
+                                                    ng-required="costType == 'file' && isCommercialization == 'Y' && costFile==undefined">
+                                            </div>
                                             <a href={{costFile}} class="btn btn-warning mt-3"
                                                 ng-if="costFile!=undefined" target="_blank">檢視已上傳檔案</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="costTextField" class="panel-collapse collapse">
-                                    <div class="panel-body border border-warning fit-content rounded col-md-10 mb-3">
+                                <div ng-show="costType=='text'">
+                                    <div class="border border-warning fit-content rounded col-md-10 mb-3">
                                         <textarea class="form-control col-md-12 CommercializationFields my-3" rows="5"
-                                            ng-model="cost" placeholder="請輸入說明敘述"></textarea>
+                                            ng-model="cost" placeholder="請輸入說明敘述"
+                                            ng-required="costType == 'text' && isCommercialization == 'Y'"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalTitle"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
