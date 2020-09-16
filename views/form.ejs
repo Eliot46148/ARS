@@ -229,10 +229,16 @@
                                         </div>
                                         <div class="form-group">
                                             <label>專利申請國籍</label>
-                                            <input class="form-control" type="text" list='countries' ng-model="patentCountry">
+
+                                            <input class="form-control" type="text" list='countries'
+                                                ng-model="patentCountry">
                                             <datalist id="countries">
                                                 <option>歐盟</option>
                                                 <option>日本</option>
+                                                <option>美國</option>
+                                                <option>中華民國</option>
+                                                <option>中國大陸</option>
+
                                             </datalist>
                                         </div>
                                         <label>專利申請狀況</label>
@@ -589,7 +595,7 @@
                         <canvas id="myChart"></canvas>
                     </div>
 
-                    <label>是否需要進入商品化審查</label>
+                    <label>是否需要進入商品化審查<br><span class="text-danger">(符合商品化開發潛能者，將列為校方優先廣宣與協助媒合名單)</span></label>
                     <div class="form-group">
                         <input type="radio" name="CommercializationRadio" class="CommercializationRadio"
                             id="CommercializationTrue" value="Y" ng-model="isCommercialization">是
