@@ -1,4 +1,5 @@
 var express = require('express');
+const { where } = require('../models/committeeMode');
 var router = express.Router();
 var committeeModel = require('../models/committeeMode');
 
@@ -49,7 +50,8 @@ router.post('/committeeregistered',function(req,res){
                         ManufacturingEvaluation : -1,
                         FinancialEvaluation:-1,
                         opinion: "",
-                        isSubmit : -1
+                        isSubmit : -1,
+                        finalResult : "-"
                     }
                 
                 })
@@ -78,7 +80,8 @@ router.post('/committeeregistered',function(req,res){
                             ManufacturingEvaluation : -1,
                             FinancialEvaluation:-1,
                             opinion: "",
-                            isSubmit : -1
+                            isSubmit : -1,
+                            finalResult : "-"
                         }
                     }
                 },function(err,ndata){
@@ -205,6 +208,29 @@ router.post('/committeeupdate',function(req,res){
                 return res.send(500, {error: err});
         }
     });
+})
+
+router.put('/setFinalResult',function(req,res){
+    committeeModel.find({},function(err,data){
+        data.forEach(forms => {
+            console.log(forms.email)
+            var form = JSON.parse(JSON.stringify(forms.needtestform));
+
+            form.forEach( item => {
+                if(req.body.FormId == item.formOid && item.finalResult == '-')
+                {
+                   item.finalResult = req.body.status==3?"修改":req.body.status==4?"未通過":req.body.status==5?"通過":'-'
+                }
+            });
+            committeeModel.findOneAndUpdate({
+                email: forms.email
+            }, {'needtestform':form}, function(err, doc) {
+                if (err) return res.send(500, {error: err});
+            });
+        });
+        
+    })
+    res.status(200).send();
 })
 
 module.exports = router;

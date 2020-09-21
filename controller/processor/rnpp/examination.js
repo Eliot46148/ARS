@@ -145,6 +145,9 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                     });
                 });
             });
+            $http.put('/committee/setFinalResult',update).success(function(res){
+                console.log(res)
+            })
             set_state(false);
         }
     };

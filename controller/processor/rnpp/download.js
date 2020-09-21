@@ -185,7 +185,8 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 "委員郵件": committee.email,
                                 "填寫表單密碼": committee.password,
                                 "表單類型": "表單" + committee.fromType.toString(),
-                                "綜整審查結果": (form.Status==3?"修改":form.Status==4?"未通過":form.Status==5?"通過":"-")
+                                //"綜整審查結果": (form.Status==3?"修改":form.Status==4?"未通過":form.Status==5?"通過":"-")
+                                "綜整審查結果": committee.finalResult
                             };
 
                             var opinion = committee.opinion;

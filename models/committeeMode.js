@@ -1,3 +1,4 @@
+const { stringify } = require('csv');
 var mongoose = require('./mongo.js');
 
 var patentSchema = new mongoose.Schema({
@@ -18,7 +19,8 @@ var patentSchema = new mongoose.Schema({
         ManufacturingEvaluation : Number,
         FinancialEvaluation:Number,
         opinion: String,
-        isSubmit : Number
+        isSubmit : Number,
+        finalResult : String
     }]
 });
 
