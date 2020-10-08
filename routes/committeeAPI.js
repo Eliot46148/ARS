@@ -219,7 +219,7 @@ router.put('/setFinalResult',function(req,res){
             form.forEach( item => {
                 if(req.body.FormId == item.formOid && item.finalResult == '-')
                 {
-                   item.finalResult = req.body.status==3?"修改":req.body.status==4?"未通過":req.body.status==5?"通過":'-'
+                   item.finalResult = req.body.status==3?"修改":req.body.status==4?"未獲推薦":req.body.status==5?"推薦":'-'
                 }
             });
             committeeModel.findOneAndUpdate({

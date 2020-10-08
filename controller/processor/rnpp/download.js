@@ -81,7 +81,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                             "送出時間": formatDate(form.SubmitDate),
                             "員工編號": form.TeacherNum,
                             "表單編號": form._id,
-                            "填寫狀態": (form.Status==3?"修改":form.Status==4?"未通過":form.Status==5?"通過":"尚未送出"),
+                            "填寫狀態": (form.Status==3?"修改":form.Status==4?"未獲推薦":form.Status==5?"推薦":"尚未送出"),
                             "教師姓名": form.Name,
                             "學院": form.College,
                             "系所": form.Department,
@@ -222,11 +222,15 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 var st = ""
                                 switch (Marketassessment){
                                     case 0:
-                                        st = "Yes";
+                                        st = "高";
                                         break;
                                     case 1:
-                                        st = "No";
+                                        st = "低";
                                         break;
+                                    case 2:
+                                        st = "待定";
+                                        break;
+                                        
                                 }
 
                                 committee.Marketassessment = st;
@@ -238,10 +242,13 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 var st = ""
                                 switch (ManufacturingEvaluation){
                                     case 0:
-                                        st = "Yes";
+                                        st = "高";
                                         break;
                                     case 1:
-                                        st = "No";
+                                        st = "低";
+                                        break;
+                                    case 2:
+                                        st = "待定";
                                         break;
                                 }
                                 committee.ManufacturingEvaluation = st;
@@ -253,10 +260,13 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 var st = ""
                                 switch (FinancialEvaluation){
                                     case 0:
-                                        st = "Yes";
+                                        st = "高";
                                         break;
                                     case 1:
-                                        st = "No";
+                                        st = "低";
+                                        break;
+                                    case 2:
+                                        st = "待定";
                                         break;
                                 }
 

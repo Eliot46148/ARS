@@ -9,7 +9,7 @@ app.config(function ($locationProvider) {
 
 app.controller('progressCtrl', ($scope, $http, $location, $window) => {
     $scope.init = () => {
-        $scope.statusDict = ['暫存中', '已送出', '審查中', '需修改', '未通過', '已通過'];
+        $scope.statusDict = ['暫存中', '已送出', '審查中', '需修改', '未獲推薦', '推薦'];
         $scope.TeacherNum = $location.search().TeacherNum;
         $http.get('/form/progress?TeacherNum=' + $scope.TeacherNum).then(
             (res) => {
