@@ -181,9 +181,10 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 "送審時間": formatDate(committee.submitDate),
                                 "審查截止時間": formatDate(committee.deadLine),
                                 "審查送出時間": "respondDate" in committee ? formatDate(committee.respondDate) : "-",
-                                "委員姓名": committee.name,
-                                "委員郵件": committee.email,
-                                "填寫表單密碼": committee.password,
+                                "委員序號": "委員" + index,
+                                //"委員姓名": committee.name,
+                                //"委員郵件": committee.email,
+                                //"填寫表單密碼": committee.password,
                                 "表單類型": "表單" + committee.fromType.toString(),
                                 //"綜整審查結果": (form.Status==3?"修改":form.Status==4?"未通過":form.Status==5?"通過":"-")
                                 "綜整審查結果": committee.finalResult
@@ -225,10 +226,10 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                         st = "高";
                                         break;
                                     case 1:
-                                        st = "低";
+                                        st = "中";
                                         break;
                                     case 2:
-                                        st = "待定";
+                                        st = "低";
                                         break;
                                         
                                 }
@@ -245,10 +246,10 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                         st = "高";
                                         break;
                                     case 1:
-                                        st = "低";
+                                        st = "中";
                                         break;
                                     case 2:
-                                        st = "待定";
+                                        st = "低";
                                         break;
                                 }
                                 committee.ManufacturingEvaluation = st;
@@ -263,10 +264,10 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                         st = "高";
                                         break;
                                     case 1:
-                                        st = "低";
+                                        st = "中";
                                         break;
                                     case 2:
-                                        st = "待定";
+                                        st = "低";
                                         break;
                                 }
 
@@ -305,9 +306,9 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                     "研究資料與佐證資料是否相符": committee.StudyandData,
                                     "審查意見1": committee.opinion,
                                     "總體審查1": committee.isSubmit,
-                                    "市場評估": "-",
-                                    "製造評估": "-",
-                                    "財務評估": "-",
+                                    "市場價值性	": "-",
+                                    "技術競爭力	": "-",
+                                    "財務規劃完整性	": "-",
                                     "審查意見2": "-",
                                     "總體審查2": "-",
                                 });
@@ -316,10 +317,10 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                     "研究資料與佐證資料是否相符": "-",
                                     "審查意見1": "-",
                                     "總體審查1": "-",
-                                    "市場評估": committee.Marketassessment,
-                                    "製造評估": committee.ManufacturingEvaluation,
+                                    "市場價值性	": committee.Marketassessment,
+                                    "技術競爭力	": committee.ManufacturingEvaluation,
                                     "財務評估": committee.FinancialEvaluation,
-                                    "審查意見2": committee.opinion,
+                                    "財務規劃完整性	": committee.opinion,
                                     "總體審查2": committee.isSubmit,
                                 });
                             }
@@ -380,16 +381,16 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                         "送審時間",
                         "審查截止時間",
                         "審查送出時間",
-                        "委員姓名",
-                        "委員郵件",
-                        "填寫表單密碼",
+                        "委員序號",
+                        //"委員郵件",
+                        //"填寫表單密碼",
                         "表單類型",
                         "研究資料與佐證資料是否相符",
                         "審查意見1",
                         "總體審查1",
-                        "市場評估",
-                        "製造評估",
-                        "財務評估",
+                        "市場價值性	",
+                        "技術競爭力	",
+                        "財務規劃完整性	",
                         "審查意見2",
                         "總體審查2",
                         "綜整審查結果"
