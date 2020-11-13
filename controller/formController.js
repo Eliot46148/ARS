@@ -40,6 +40,8 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.marketDemandType = data.MarketDemandType;
                     $scope.competitivenessType = data.CompetitivenessType;
                     $scope.costType = data.CostType;
+                    $scope.submitState = "Edit";
+
                     showImage(data.Image);
                     showVideo(data.Video);
                     $scope.changeDepartments();
@@ -160,40 +162,48 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     }
 
     $scope.submit = () => {
-        if (confirm("送出後無法再進行修改\n確認送出？")) {
-            $http.put('/form/submit?FormId=' + $scope.FormId,
-                {
-                    'TeacherNum': $scope.TeacherNum,
-                    "ResearchTopic": $scope.ResearchTopic,
-                    "HIGHER": $scope.HIGHER,
-                    "HIGHER2": $scope.HIGHER2,
-                    "Industry": $scope.Industry,
-                    "Industry2": $scope.Industry2,
-                    "Industry5n": $scope.Industry5n,
-                    "Name": $scope.Name,
-                    "College": $scope.college,
-                    "Department": $scope.department,
-                    "Phone": $scope.Phone,
-                    "Email": $scope.Email,
-                    "Description": $scope.description,
-                    "Evaluation": $scope.evaluation,
-                    "IsCommercialization": $scope.isCommercialization,
-                    "MarketDemand": $scope.marketDemand,
-                    "Competitiveness": $scope.competitiveness,
-                    "Cost": $scope.cost,
-                    "MarketDemandType": $scope.marketDemandType,
-                    "CompetitivenessType": $scope.competitivenessType,
-                    "CostType": $scope.costType,
-                    "SubmitDate": new Date(),
-                    "ChartData": chartData
-                })
-                .then((res) => {
-                    console.log(res);
-                    alert("送出表單成功");
-                    window.location.assign('/');
-                }, (err) => {
-                    alert(err.msg);
-                });
+        switch ($scope.submitState) {
+            case "Edit":
+                $scope.submitState = "Check";
+                $("html, body").animate({ scrollTop: 0 }, 500);
+                break;
+            case "Check":
+                if (confirm("送出後無法再進行修改\n確認送出？")) {
+                    $http.put('/form/submit?FormId=' + $scope.FormId,
+                        {
+                            'TeacherNum': $scope.TeacherNum,
+                            "ResearchTopic": $scope.ResearchTopic,
+                            "HIGHER": $scope.HIGHER,
+                            "HIGHER2": $scope.HIGHER2,
+                            "Industry": $scope.Industry,
+                            "Industry2": $scope.Industry2,
+                            "Industry5n": $scope.Industry5n,
+                            "Name": $scope.Name,
+                            "College": $scope.college,
+                            "Department": $scope.department,
+                            "Phone": $scope.Phone,
+                            "Email": $scope.Email,
+                            "Description": $scope.description,
+                            "Evaluation": $scope.evaluation,
+                            "IsCommercialization": $scope.isCommercialization,
+                            "MarketDemand": $scope.marketDemand,
+                            "Competitiveness": $scope.competitiveness,
+                            "Cost": $scope.cost,
+                            "MarketDemandType": $scope.marketDemandType,
+                            "CompetitivenessType": $scope.competitivenessType,
+                            "CostType": $scope.costType,
+                            "SubmitDate": new Date(),
+                            "ChartData": chartData
+                        })
+                        .then((res) => {
+                            console.log(res);
+                            alert("送出表單成功");
+                            window.location.assign('/');
+                        }, (err) => {
+                            alert(err.msg);
+                        });
+                }
+                break;
         }
     }
 
@@ -605,6 +615,11 @@ app.controller('formCtrl', ($scope, $http, $location) => {
 
     $scope.resetVariable = function (x) {
         x = "";
+    }
+
+    $scope.cancelSubmit = function () {
+        $scope.submitState = "Edit";
+        $("html, body").animate({ scrollTop: 0 }, 500);
     }
 
     $scope.init();

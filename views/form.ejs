@@ -26,6 +26,7 @@
         <div class="container offset-md-1">
             <h1 class="mb-4" id="title">研發能量展現平台 > 表單填寫</h1>
             <div class="shadow-sm p-4" id="formStyle">
+                <h2 class="text-danger" ng-show="submitState == 'Check'">請在檢查過後點選頁面下方提交按鈕</h2>
                 <div class="form-group" id="teachernum">
                     <label>教師員工編號</label>
                     <h2 ng-bind="TeacherNum"></h2>
@@ -35,7 +36,6 @@
                     <h2 ng-bind="FormId"></h2>
                 </div>
                 <div class="form-group">
-
                     <label>研究成果主題</label>
                     <input class="form-control col-md-10" type="text" id="ResearchTopic" ng-model="ResearchTopic"
                         required>
@@ -698,10 +698,13 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="save()"
-                        id="savebt">暫存</button>
+                    <button type="button" class="btn btn-secondary m-auto col-md-2" ng-click="save()" id="savebt"
+                        ng-show="submitState == 'Edit'">暫存</button>
                     <input type="submit" class="btn btn-primary m-auto col-md-2" id="submitbtn" value="提交">
-                    <button type="button" class="btn btn-danger m-auto col-md-2" ng-click="delete()">刪除</button>
+                    <button type="button" class="btn btn-danger m-auto col-md-2" ng-click="delete()"
+                        ng-show="submitState == 'Edit'">刪除</button>
+                    <button type="button" class="btn btn-danger m-auto col-md-2" ng-click="cancelSubmit()"
+                        ng-show="submitState == 'Check'">取消</button>
 
 
                     <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalTitle"
