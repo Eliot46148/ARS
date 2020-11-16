@@ -327,6 +327,37 @@ router.patch('/image', upload.single('myImage'), function (req, res, next) {
   });
 });
 
+// get product image
+router.get('/productImage', (req, res, next) => {
+  formModel.findById(req.query.FormId, (err, data) => {
+    res.sendFile(path.join(__dirname, `../uploads/${data.ProductImage}`), (err) => {
+      if (err)
+        res.json({ 'status': 0, 'msg': 'send productImage file error', 'detail': err });
+    }
+    );
+  });
+});
+
+// upload product image
+router.patch('/productImage', upload.single('productImage'), function (req, res, next) {
+  formModel.findById(req.query.FormId, (err, data) => {
+    if (data == null) {
+      res.json({ 'status': 1, 'msg': 'can not find document' });
+      return;
+    }
+    data.ProductImage = req.file.filename;
+    data.markModified('ProductImage');
+    data.save(function (err) {
+      if (err) {
+        res.json({ 'status': 1, 'msg': err });
+      }
+      else {
+        res.json({ 'status': 0, 'msg': 'success', 'data': data });
+      }
+    });
+  });
+});
+
 // get video
 router.get('/video', (req, res, next) => {
   formModel.findById(req.query.FormId, (err, data) => {

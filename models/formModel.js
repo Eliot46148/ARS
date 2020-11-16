@@ -44,6 +44,7 @@ var formSchema = new mongoose.Schema({
         File: String
     }],
     Image: String,                  // 成果照片
+    ProductImage: String,           // 實物照片
     Video: String,                  // 成果影片
     Submitted: {                    // 使用者已確認送出
         type: Boolean,

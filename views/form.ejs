@@ -416,6 +416,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label>實作物照片上傳(限制10MB) <span class="text-danger">建議比例：4:3</span></label>
+                    <div id="drop-area" class="dm-uploader">
+                        <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="productImage"
+                            id="productImage" name="ProductImage">
+                    </div>
+                    <img ng-src="{{imageSrc}}" id="productImage-preview" style="height: auto; display: none;"
+                        class="col-md-10">
+                </div>
+
+                <div class="form-group">
                     <label>成果影片上傳(限制100MB) <span class="text-danger">建議解析度：720p | 建議長度：1分鐘以上</span></label>
                     <div id="drop-area" class="dm-uploader">
                         <input type="file" title="選擇檔案" accept=".AVI,.FLV,.WMV,.MOV,.MP4" id="video" name='myVideo'>

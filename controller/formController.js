@@ -44,6 +44,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.submitState = "Edit";
 
                     showImage(data.Image);
+                    showProductImage(data.ProductImage);
                     showVideo(data.Video);
                     $scope.changeDepartments();
                     $scope.initPatentAndPaper();
@@ -245,6 +246,31 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     showImage(e.target.result);
                 }
                 reader.readAsDataURL($("#image")[0].files[0]);
+                console.log(res);
+            },
+            error: function (res) {
+                console.log(res);
+                alert("上傳失敗");
+            }
+        });
+    });
+
+    $('#productImage').change(() => {
+        var formData = new FormData();
+        formData.append('productImage', $("#productImage")[0].files[0]);
+        var url = '/form/productImage?FormId=' + $scope.FormId;
+        $.ajax({
+            url: url,
+            type: 'patch',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    showProductImage(e.target.result);
+                }
+                reader.readAsDataURL($("#productImage")[0].files[0]);
                 console.log(res);
             },
             error: function (res) {
@@ -631,6 +657,12 @@ function showImage(data) {
     $('#image-preview').attr('src', data);
     $('#image-preview').show();
     $('#image').prop('required', false);
+}
+
+function showProductImage(data) {
+    if (data == null) return;
+    $('#productImage-preview').attr('src', data);
+    $('#productImage-preview').show();
 }
 
 function showVideo(data) {
