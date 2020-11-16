@@ -14,7 +14,8 @@ var formSchema = new mongoose.Schema({
     Phone: String,                  // 教師連絡電話
     Email: String,                  // 教師電子郵件
     Description: String,            // 成果技術摘要說明
-    Evaluation: String,             // 應用範圍及產業效益評估
+    AppliedField: String,           // 應用範圍評估
+    IndustryEffect: String,         // 產業效益評估
     IsCommercialization: String,    // 是否進入商品化審查
     MarketDemand: String,           // 市場需求價值
     Competitiveness: String,        // 技術競爭性

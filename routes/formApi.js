@@ -21,7 +21,7 @@ router.get('/', (req, res, next) => {
     if (err || data == null || req.query.TeacherNum != data.TeacherNum) {
       res.render('404');
     }
-    if(req.query.isProcess == 'process'){
+    if (req.query.isProcess == 'process') {
       res.render('form');
     }
     if (data.Status != 0 && data.Status != 3) {
@@ -93,6 +93,7 @@ router.delete('/', function (req, res, next) {
 
 /** save form data */
 router.put('/', function (req, res, next) {
+  console.log(req);
   formModel.update({ _id: req.query.FormId },
     {
       ResearchTopic: req.body.ResearchTopic,
@@ -107,7 +108,8 @@ router.put('/', function (req, res, next) {
       Phone: req.body.Phone,
       Email: req.body.Email,
       Description: req.body.Description,
-      Evaluation: req.body.Evaluation,
+      AppliedField: req.body.AppliedField,
+      IndustryEffect: req.body.IndustryEffect,
       IsCommercialization: req.body.IsCommercialization,
       MarketDemand: req.body.MarketDemand,
       Competitiveness: req.body.Competitiveness,
@@ -143,7 +145,8 @@ router.put('/submit', function (req, res, next) {
       Phone: req.body.Phone,
       Email: req.body.Email,
       Description: req.body.Description,
-      Evaluation: req.body.Evaluation,
+      AppliedField: req.body.AppliedField,
+      IndustryEffect: req.body.IndustryEffect,
       IsCommercialization: req.body.IsCommercialization,
       MarketDamand: req.body.MarketDamand,
       Competitiveness: req.body.Competitiveness,

@@ -26,7 +26,8 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.Phone = data.Phone;
                     $scope.Email = data.Email;
                     $scope.description = data.Description;
-                    $scope.evaluation = data.Evaluation;
+                    $scope.appliedField = data.AppliedField;
+                    $scope.industryEffect = data.IndustryEffect;
                     chartData = data.ChartData;
                     $scope.Patents = data.Patent;
                     $scope.Papers = data.Paper;
@@ -141,7 +142,8 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                 "Phone": $scope.Phone,
                 "Email": $scope.Email,
                 "Description": $scope.description,
-                "Evaluation": $scope.evaluation,
+                "AppliedField": $scope.appliedField,
+                "IndustryEffect": $scope.industryEffect,
                 "IsCommercialization": $scope.isCommercialization,
                 "MarketDemand": $scope.marketDemand,
                 "Competitiveness": $scope.competitiveness,
@@ -184,7 +186,8 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                             "Phone": $scope.Phone,
                             "Email": $scope.Email,
                             "Description": $scope.description,
-                            "Evaluation": $scope.evaluation,
+                            "AppliedField": $scope.appliedField,
+                            "IndustryEffect": $scope.industryEffect,
                             "IsCommercialization": $scope.isCommercialization,
                             "MarketDemand": $scope.marketDemand,
                             "Competitiveness": $scope.competitiveness,
