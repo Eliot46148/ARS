@@ -96,22 +96,6 @@ $('.PaperInfoRadio').change(function () {
     $('#paperInfo').collapse('toggle');
 });
 
-$('#paperPublished').change(function () {
-    $('#paperFileField').collapse('show');
-});
-
-$('.paperUnPublished').change(function () {
-    $('#paperFileField').collapse('hide');
-});
-
-$('#patentPublished').change(function () {
-    $('#patentFileField').collapse('show');
-});
-
-$('#patentUnPublished').change(function () {
-    $('#patentFileField').collapse('hide');
-});
-
 $("#btnFinishSaving").click(function () {
     window.location.replace("/");
 });

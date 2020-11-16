@@ -294,70 +294,69 @@ app.controller('formCtrl', ($scope, $http, $location) => {
         var formData = new FormData();
         if (!$scope.IsPatentRequiredFieldValid()) return;
         else {
-            if ($scope.patentStatus == "已核准") {
-                let formData = new FormData();
-                formData.append('myPatent', $('#patent-file')[0].files[0]);
-                let url = `/form/patent?FormId=${$scope.FormId}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
-                $.ajax({
-                    url: url,
-                    type: 'patch',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (res) {
-                        console.log(res);
-                        alert('送出成功');
-                        $('#addPatent').modal('hide');
-                        $scope.Patents.push(
-                            {
-                                _id: res.id,
-                                Name: $scope.patentName,
-                                Country: $scope.patentCountry,
-                                Status: $scope.patentStatus,
-                                File: res.filename
-                            }
-                        );
-                        $scope.$apply();
-                    },
-                    error: function (res) {
-                        console.log(res);
-                        alert('送出失敗');
-                    },
-                    complete: function () {
-                        $scope.resetPatent();
-                    }
-                });
-            }
-            else {
-                let url = `/form/patent/nofile?FormId=${$scope.FormId}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
-                $.ajax({
-                    url: url,
-                    type: 'patch',
-                    processData: false,
-                    contentType: false,
-                    success: function (res) {
-                        console.log(res);
-                        alert('送出成功');
-                        $('#addPatent').modal('hide');
-                        $scope.Patents.push(
-                            {
-                                _id: res.id,
-                                Name: $scope.patentName,
-                                Country: $scope.patentCountry,
-                                Status: $scope.patentStatus,
-                            }
-                        );
-                        $scope.$apply();
-                    },
-                    error: function (res) {
-                        console.log(res);
-                        alert('送出失敗');
-                    },
-                    complete: function () {
-                        $scope.resetPatent();
-                    }
-                });
-            }
+            let formData = new FormData();
+            formData.append('myPatent', $('#patent-file')[0].files[0]);
+            let url = `/form/patent?FormId=${$scope.FormId}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
+            $.ajax({
+                url: url,
+                type: 'patch',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    alert('送出成功');
+                    $('#addPatent').modal('hide');
+                    $scope.Patents.push(
+                        {
+                            _id: res.id,
+                            Name: $scope.patentName,
+                            Country: $scope.patentCountry,
+                            Status: $scope.patentStatus,
+                            File: res.filename
+                        }
+                    );
+                    $scope.$apply();
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert('送出失敗');
+                },
+                complete: function () {
+                    $scope.resetPatent();
+                }
+            });
+
+            // else {
+            //     let url = `/form/patent/nofile?FormId=${$scope.FormId}&Name=${$scope.patentName}&Country=${$scope.patentCountry}&Status=${$scope.patentStatus}`;
+            //     $.ajax({
+            //         url: url,
+            //         type: 'patch',
+            //         processData: false,
+            //         contentType: false,
+            //         success: function (res) {
+            //             console.log(res);
+            //             alert('送出成功');
+            //             $('#addPatent').modal('hide');
+            //             $scope.Patents.push(
+            //                 {
+            //                     _id: res.id,
+            //                     Name: $scope.patentName,
+            //                     Country: $scope.patentCountry,
+            //                     Status: $scope.patentStatus,
+            //                 }
+            //             );
+            //             $scope.$apply();
+            //         },
+            //         error: function (res) {
+            //             console.log(res);
+            //             alert('送出失敗');
+            //         },
+            //         complete: function () {
+            //             $scope.resetPatent();
+            //         }
+            //     });
+            // }
         }
     }
 
@@ -385,70 +384,69 @@ app.controller('formCtrl', ($scope, $http, $location) => {
     $scope.UploadPaper = () => {
         if (!$scope.IsPaperRequiredFieldValid()) return;
         else {
-            if ($scope.paperStatus == "已發表") {
-                let formData = new FormData();
-                formData.append('myPaper', $('#paper-file')[0].files[0]);
-                let url = `/form/paper?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
-                $.ajax({
-                    url: url,
-                    type: 'patch',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (res) {
-                        console.log(res);
-                        alert('送出成功');
-                        $('#addPaper').modal('hide');
-                        $scope.Papers.push(
-                            {
-                                _id: res.id,
-                                Name: $scope.paperName,
-                                Journal: $scope.paperJournal,
-                                Status: $scope.paperStatus,
-                                File: res.filename
-                            }
-                        );
-                        $scope.$apply();
-                    },
-                    error: function (res) {
-                        console.log(res);
-                        alert('送出失敗');
-                    },
-                    complete: function () {
-                        $scope.resetPaper();
-                    }
-                });
-            }
-            else {
-                let url = `/form/paper/nofile?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
-                $.ajax({
-                    url: url,
-                    type: 'patch',
-                    processData: false,
-                    contentType: false,
-                    success: function (res) {
-                        console.log(res);
-                        alert('送出成功');
-                        $('#addPaper').modal('hide');
-                        $scope.Papers.push(
-                            {
-                                _id: res.id,
-                                Name: $scope.paperName,
-                                Journal: $scope.paperJournal,
-                                Status: $scope.paperStatus,
-                            }
-                        );
-                        $scope.$apply();
-                    },
-                    error: function (res) {
-                        console.log(res);
-                        alert('送出失敗');
-                    },
-                    complete: function () {
-                        $scope.resetPaper();
-                    }
-                });
-            }
+            let formData = new FormData();
+            formData.append('myPaper', $('#paper-file')[0].files[0]);
+            let url = `/form/paper?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
+            $.ajax({
+                url: url,
+                type: 'patch',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    console.log(res);
+                    alert('送出成功');
+                    $('#addPaper').modal('hide');
+                    $scope.Papers.push(
+                        {
+                            _id: res.id,
+                            Name: $scope.paperName,
+                            Journal: $scope.paperJournal,
+                            Status: $scope.paperStatus,
+                            File: res.filename
+                        }
+                    );
+                    $scope.$apply();
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert('送出失敗');
+                },
+                complete: function () {
+                    $scope.resetPaper();
+                }
+            });
+
+            // else {
+            //     let url = `/form/paper/nofile?FormId=${$scope.FormId}&Name=${$scope.paperName}&Journal=${$scope.paperJournal}&Status=${$scope.paperStatus}`;
+            //     $.ajax({
+            //         url: url,
+            //         type: 'patch',
+            //         processData: false,
+            //         contentType: false,
+            //         success: function (res) {
+            //             console.log(res);
+            //             alert('送出成功');
+            //             $('#addPaper').modal('hide');
+            //             $scope.Papers.push(
+            //                 {
+            //                     _id: res.id,
+            //                     Name: $scope.paperName,
+            //                     Journal: $scope.paperJournal,
+            //                     Status: $scope.paperStatus,
+            //                 }
+            //             );
+            //             $scope.$apply();
+            //         },
+            //         error: function (res) {
+            //             console.log(res);
+            //             alert('送出失敗');
+            //         },
+            //         complete: function () {
+            //             $scope.resetPaper();
+            //         }
+            //     });
+            // }
         }
     }
 
@@ -575,7 +573,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             alert("請輸入完整資訊");
             return false;
         }
-        else if ($scope.patentStatus == "已核准" && $('#patent-file')[0].value == '') {
+        else if ($('#patent-file')[0].value == '') {
             alert("請上傳佐證資料");
             return false;
         }
@@ -588,7 +586,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
             alert("請輸入完整資訊");
             return false;
         }
-        else if ($scope.paperStatus == "已發表" && $('#paper-file')[0].value == '') {
+        else if ($('#paper-file')[0].value == '') {
             alert("請上傳佐證資料");
             return false;
         }

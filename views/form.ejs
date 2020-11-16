@@ -194,8 +194,7 @@
                                     <td>{{data.Name}}</td>
                                     <td>{{data.Country}}</td>
                                     <td>{{data.Status}}</td>
-                                    <td ng-if="data.Status=='已核准'"><a href={{data.File}} target="_blank">檢視</a></td>
-                                    <td ng-if="data.Status!='已核准'">無</td>
+                                    <td><a href={{data.File}} target="_blank">檢視</a></td>
                                     <td><a href="#" ng-click="removePatent($index)" id="removePDFPatents">移除</a></td>
                                 </tr>
                             </thead>
@@ -247,11 +246,11 @@
                                             <input type="radio" name="patentStatusRadio" value="已核准"
                                                 id="patentPublished" ng-model="patentStatus">已核准
                                             <label class="radio-inline"></label>
-                                            <input type="radio" name="patentStatusRadio" value="審查中"
-                                                id="patentUnPublished" ng-model="patentStatus">審查中
+                                            <input type="radio" name="patentStatusRadio" value="申請中"
+                                                id="patentUnPublished" ng-model="patentStatus">申請中
                                         </div>
 
-                                        <div id="patentFileField" class="panel-collapse collapse">
+                                        <div id="patentFileField">
                                             <div
                                                 class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
                                                 <div class="form-group">
@@ -306,8 +305,7 @@
                                     <td>{{data.Name}}</td>
                                     <td>{{data.Journal}}</td>
                                     <td>{{data.Status}}</td>
-                                    <td ng-if="data.Status=='已發表'"><a href={{data.File}} target="_blank">檢視</a></td>
-                                    <td ng-if="data.Status!='已發表'">無</td>
+                                    <td><a href={{data.File}} target="_blank">檢視</a></td>
                                     <td><a href="#" id="removePDFpaper" ng-click="removePaper($index)">移除</a></td>
                                 </tr>
                             </tbody>
@@ -365,13 +363,10 @@
                                     <input type="radio" name="paperStatusRadio" value="已發表" ng-model="paperStatus"
                                         id="paperPublished">已發表
                                     <label class="radio-inline"></label>
-                                    <input type="radio" name="paperStatusRadio" value="審查中" ng-model="paperStatus"
-                                        class="paperUnPublished">審查中
-                                    <label class="radio-inline"></label>
-                                    <input type="radio" name="paperStatusRadio" value="撰寫中" ng-model="paperStatus"
-                                        class="paperUnPublished">撰寫中
+                                    <input type="radio" name="paperStatusRadio" value="申請中" ng-model="paperStatus"
+                                        class="paperUnPublished">申請中
                                 </div>
-                                <div id="paperFileField" class="panel-collapse collapse">
+                                <div id="paperFileField">
                                     <div class="panel-body border border-primary fit-content rounded col-md-10 mb-3">
                                         <div class="form-group">
                                             <label class="mb-0">佐證資料上傳(限pdf)</label>
