@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/function-style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap_datepicker.css">
     <script src="/library/angular.js"></script>
-    <script src="/processor/rnpp/examination.js"></script>
+    <script src="/processor/examination.js"></script>
     <link href="/library/bootstrap_datepicker/bootstrap-datepicker3.css" rel="stylesheet"/>
     <script src="/library/bootstrap_datepicker/bootstrap-datepicker.js"></script>
     <script src="/library/bootstrap_datepicker/bootstrap-datepicker.zh-TW.js"></script>
@@ -54,7 +54,7 @@
                     <td ng-bind="form.ResearchTopic"></td>
                     <td ng-bind="form.MarketDemand ? '是' : '否'"></td>
                     <td>
-                        <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#examModal" ng-click="triggerExam(form._id, 0)">點選</a>
+                        <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#examModal" ng-click="triggerExam(form._id)">點選</a>
                     </td>
                     <td>
                         <a type="button" class="btn btn-primary text-white" data-toggle="modal" data-target="#respondModal" ng-click="triggerRespond(form._id)">點選</a>
@@ -74,7 +74,7 @@
                 </div>
 
                 <div ng-show="loading">
-                    <div class="check_mark" ng-show="loading_state == 1">
+                    <div class="check_mark" ng-show="loading_state == true">
                         <div class="sa-icon sa-success animate">
                         <span class="sa-line sa-tip animateSuccessTip"></span>
                         <span class="sa-line sa-long animateSuccessLong"></span>
@@ -82,10 +82,10 @@
                         <div class="sa-fix"></div>
                         </div>
                     </div>
-                    <div class="w-100 d-flex justify-content-center" ng-show="loading_state == 0"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+                    <div class="w-100 d-flex justify-content-center" ng-show="loading_state == false"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
                 </div>
                       
-                <form ng-submit="triggerExam(form._id, 1)" ng-show="!loading">
+                <form ng-submit="sendExamination()" ng-show="!loading">
                     <div class="modal-body">
                         <div class="form-group d-flex">
                             <label for="name" class="col-4">姓名輸入</label>
@@ -135,10 +135,10 @@
                     </button>
                 </div>
                 
-                <form ng-submit="triggerRespond(0,1)">
+                <form ng-submit="sendRespond()">
                     <div class="modal-body">
                         <div ng-show="loading">
-                            <div class="check_mark" ng-show="loading_state == 1">
+                            <div class="check_mark" ng-show="loading_state == true">
                                 <div class="sa-icon sa-success animate">
                                 <span class="sa-line sa-tip animateSuccessTip"></span>
                                 <span class="sa-line sa-long animateSuccessLong"></span>
@@ -146,7 +146,7 @@
                                 <div class="sa-fix"></div>
                                 </div>
                             </div>
-                            <div class="w-100 d-flex justify-content-center" ng-show="loading_state == 0"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
+                            <div class="w-100 d-flex justify-content-center" ng-show="loading_state == false"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>
                         </div>
                         <table class="table table-bordered" ng-show="!loading">
                             <thead>

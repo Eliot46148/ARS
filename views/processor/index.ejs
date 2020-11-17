@@ -29,9 +29,17 @@
 
         <div class="row justify-content-center align-items-center">
             <div class="col-lg-12">
-                <a ng-repeat="func in functions" ng-href="{{func.href}}" class="{{func.classes}} text-white m-2" ng-hide="disabled">
-                    <i class="fa {{func.icon}} fa-5x"></i>
-                    <br/><br>{{func.name}}
+                <a href="/processor/edit" class="btn btn-sq-lg btn-primary text-white m-2" ng-hide="disabled">
+                    <i class="fa fa-plus-circle fa-5x"></i>
+                    <br/><br>查詢/修改資料
+                </a>
+                <a href="/processor/examination" class="btn btn-sq-lg btn-success text-white m-2" ng-hide="disabled">
+                    <i class="fa fa-user fa-5x"></i>
+                    <br/><br>審查發放/回收
+                </a>
+                <a href="/processor/download" class="btn btn-sq-lg btn-info text-white m-2" ng-hide="disabled">
+                    <i class="fa fa-file-alt fa-5x"></i>
+                    <br/><br>資料數據下載
                 </a>
                 <a href="" class="m-1 btn btn-sq-lg btn-warning text-white" ng-hide="!disabled" data-toggle="modal" data-target="#login">
                     <i class="fa fa-address-book fa-5x"></i><br />

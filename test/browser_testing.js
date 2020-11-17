@@ -21,6 +21,7 @@ describe('教職員入口', function () {
     });
 
     it('填寫表單', async () => {
+        await driver.sleep(1000);
         await driver.get(`localhost:${process.env.PORT}`);
         await driver.findElement(By.xpath('/html/body/div[2]/div[1]/a/div/div')).click();
 

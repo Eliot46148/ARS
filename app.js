@@ -3,12 +3,16 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var request = require('request');
 var logger = require('morgan');
+var passport = require('passport');
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/authApi');
 var formRouter = require('./routes/formApi');
-var processorRouter = require('./routes/processor');
+var processorRouter = require('./routes/processorApi');
 var functionRouter = require('./routes/functionApi');
 var committeeRouter = require('./routes/committeeAPI');
 var mailRouter = require('./routes/mailApi');
@@ -22,18 +26,36 @@ process.env.TZ = "Asia/Taipei";
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// environment library setup
 app.use(logger('dev', { skip: (req, res) => process.env.NODE_ENV === 'testing' }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'controller')));
 app.use(express.static(path.join(__dirname, 'uploads')));
 
+// passport authentication setup
+app.use(session({ 
+  secret: 'nksnfoiehhrekwqnrlkje',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// api routers setup
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/form', formRouter);
-app.use('/processor', processorRouter);
+app.use('/processor', function(req, res, next) {
+  res.render('processor/index', { title: 'Express' });
+});
+app.use('/processor', passport.authenticate('login', {
+  successRedirect: '/processor',
+  failureRedirect: '/'
+}), processorRouter);
 app.use('/function', functionRouter);
 app.use('/committee', committeeRouter);
 app.use('/mailServerSecret', mailRouter);
