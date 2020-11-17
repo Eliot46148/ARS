@@ -1,3 +1,7 @@
+<!--
+    committeeDashoard.ejs
+    committee Dashboard 頁面所使用的前端程式碼
+-->
 <!DOCTYPE html>
 
 <head>
@@ -9,21 +13,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
         integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
     <script src="../library/jquery.cookie.js"></script>
-
+    <script src="/library/angular.js"></script>
+    <script src="./committeeDashboard.js"></script>
 </head>
 
-<body onload="creatTable()" style="font-family:Microsoft JhengHei;" >
-    <div class =" container text-center">
+<body style="font-family:Microsoft JhengHei;" ng-app="committeeDashboard" ng-controller="MainCtrl">
+    <div class=" container text-center">
         <div class="card p-3">
             <div class="card-header">
                 <h3>評審狀況總覽</h3>
             </div>
-            <table> 
-                <tbody id = "tbody1">
-
+            <table>
+                <tbody id="tbody1">
+                    <tr>
+                        <td><h4>送出日期</h4></td>
+                        <td><h4>審查期限</h4></td>
+                        <td><h4>類型</h4></td>
+                        <td><h4>主題</h4></td>
+                        <td><h4>審查狀態</h4></td>
+                    </tr>
+                    <tr ng-repeat="row in array">
+                        <td>{{ row.submitDate }}</td>
+                        <td>{{ row.deadLine }}</td>
+                        <td>{{ row.paperType }}</td>
+                        <td>{{ row.paperTheme }}</td>
+                        <td>
+                            <a type="button" class='btn btn-info' href ='./review' ng-if="row.isDisable" ng-click="clickButton(row.index)">{{row.buttonText}}</a>
+                            <a type="text" ng-if="!row.isDisable" >{{row.buttonText}}</a>
+                        </td>
+                    </tr>
                 </tbody>
-            </table>            
+            </table>
         </div>
     </div>
-    <script src= "./committeeDashboard.js"></script>
 </body>

@@ -13,7 +13,7 @@ var patentSchema = new mongoose.Schema({
         respondDate : Date,
         paperType : String,
         paperTheme : String,
-        fromType : Number,
+        formType : Number,
         StudyandData: Number,
         Marketassessment : Number,
         ManufacturingEvaluation : Number,

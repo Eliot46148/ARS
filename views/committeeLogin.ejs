@@ -1,3 +1,8 @@
+<!--
+    committeeLogin.ejs
+    committeeLogin頁面所使用的前端程式碼
+-->
+
 <!DOCTYPE html>
 
 <head>
@@ -9,10 +14,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
         integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
     <script src="../library/jquery.cookie.js"></script>
-
+    <script src="/library/angular.js"></script>
+    <script src="./committeeLogin.js"></script>
 </head>
 
-<body style="font-family:Microsoft JhengHei;">
+<body style="font-family:Microsoft JhengHei;" ng-app="committeeLogin" ng-controller="MainCtrl">
     <div class=" container text-center">
         <div class="card p-3">
             <div class="card-header">
@@ -20,13 +26,12 @@
             </div>
             <div class="card-body">
                 <form>
-                    <p>Email <input type="Email" id="accountID" /></p>
-                    <p>密碼 <input type="password" id="passwordID" /></p>
+                    <p>Email <input type="text" id="accountID" ng-model="account" /></p>
+                    <p>密碼 <input type="password" id="passwordID" ng-model="password" /></p>
                 </form>
 
-                <input type="button" value="登入" id="LoginButton" />
+                <input type="button" value="登入" id="LoginButton" ng-click="login()" />
             </div>
         </div>
     </div>
-    <script src="./committeeLogin.js"></script>
 </body>

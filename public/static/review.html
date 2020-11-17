@@ -37,7 +37,7 @@
     <div class =' container text-center'>
         <h1>審查表</h1>
     </div>
-    <table class='table table-bordered' ng-if="review.fromType == 1">
+    <table class='table table-bordered' ng-if="review.formType == 1">
         <tr>
             <th scope='row' >研究資料與佐證資料是否相符</th>
             <td colspan='3'><input type='radio' name='isStudyandData' id="SDture" value='0' ng-model="review.StudyandData"> 符合</td>
@@ -55,7 +55,7 @@
         </tr>
     </table>
 
-    <table class='table table-bordered' ng-if="review.fromType == 2">
+    <table class='table table-bordered' ng-if="review.formType == 2">
         <tr>
             <th scope='row' >市場價值性</th>
             <td colspan='2'><input type='radio' name='isMarketassessment' id = "MAtrue" value='0' ng-model="review.Marketassessment">高</td>

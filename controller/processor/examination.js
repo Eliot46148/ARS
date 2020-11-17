@@ -63,7 +63,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
             'deadLine':eDate.toISOString(),
             'paperType':'研發能量展現平台',
             'paperTheme':form.ResearchTopic,
-            'fromType':parseInt($scope.selectedForm)+1
+            'formType':parseInt($scope.selectedForm)+1
         };
         
         $http.post('/committee/committeeregistered', params

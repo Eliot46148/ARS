@@ -185,7 +185,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 //"委員姓名": committee.name,
                                 //"委員郵件": committee.email,
                                 //"填寫表單密碼": committee.password,
-                                "表單類型": "表單" + committee.fromType.toString(),
+                                "表單類型": "表單" + committee.formType.toString(),
                                 //"綜整審查結果": (form.Status==3?"修改":form.Status==4?"未通過":form.Status==5?"通過":"-")
                                 "綜整審查結果": committee.finalResult
                             };
@@ -301,7 +301,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
                                 committee.opinion = "-";
                             }
 
-                            if (committee.fromType == 1){
+                            if (committee.formType == 1){
                                 c_fields2 = $.extend({}, c_fields2, {
                                     "研究資料與佐證資料是否相符": committee.StudyandData,
                                     "審查意見1": committee.opinion,

@@ -1,0 +1,75 @@
+<!--
+    committeeForm.ejs
+    committeeForm頁面所使用的前端程式碼
+-->
+
+<!DOCTYPE html>
+
+<head>
+    <script src="../library/jquery-3.4.1.min.js"></script>
+    <script src="../library/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../library/bootstrap.min.css">
+    <script src="../library/jquery.dm-uploader.min.js"></script>
+    <link rel="stylesheet" href="../library/jquery.dm-uploader.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
+        integrity="sha256-8zyeSXm+yTvzUN1VgAOinFgaVFEFTyYzWShOy9w7WoQ=" crossorigin="anonymous"></script>
+    <script src="../library/jquery.cookie.js"></script>
+    <script src="/library/angular.js"></script>
+    <script src="./committeeForm.js"></script>
+</head>
+
+<body style="font-family:Microsoft JhengHei;" ng-app="committeeForm" ng-controller="MainCtrl">
+    <div class=' container text-center'>
+        <h1 >審查表</h1>
+    </div>
+    <table class='table table-bordered'>
+        <tr ng-if="radio.FormType == 1">
+            <th scope='row'>研究資料與佐證資料是否相符</th>
+            <td colspan='3'><input type='radio' name='isStudyandData' id="SDture" ng-value='0'
+                    ng-model="radio.studyandData"> 符合</td>
+            <td colspan='3'><input type='radio' name='isStudyandData' id="SDfalse" ng-value='1'
+                    ng-model="radio.studyandData"> 不符合</td>
+        </tr>
+        <tr ng-if="radio.FormType == 2">
+            <th scope='row'>市場價值性</th>
+            <td colspan='2'><input type='radio' name='isMarketassessment' id="MAtrue" value='0'
+                    ng-model="radio.Marketassessment">高</td>
+            <td colspan='2'><input type='radio' name='isMarketassessment' id="MAfalse" value='1'
+                    ng-model="radio.Marketassessment"> 中</td>
+            <td colspan='2'><input type='radio' name='isMarketassessment' id="MANSure" value='2'
+                    ng-model="radio.Marketassessment"> 低</td>
+        </tr>
+        <tr ng-if="radio.FormType == 2">
+            <th scope='row'>技術競爭力</th>
+            <td colspan='2'><input type='radio' name='isManufacturingEvaluation' id="MEtrue" value='0'
+                    ng-model="radio.ManufacturingEvaluation">高</td>
+            <td colspan='2'><input type='radio' name='isManufacturingEvaluation' id="MEfalse" value='1'
+                    ng-model="radio.ManufacturingEvaluation"> 中</td>
+            <td colspan='2'><input type='radio' name='isManufacturingEvaluation' id="MENSure" value='2'
+                    ng-model="radio.ManufacturingEvaluation"> 低</td>
+        </tr>
+        <tr ng-if="radio.FormType == 2">
+            <th scope='row'>財務規劃完整性</th>
+            <td colspan='2'><input type='radio' name='isFinancialEvaluation' id="FEtrue" value='0'
+                    ng-model="radio.FinancialEvaluation">高</td>
+            <td colspan='2'><input type='radio' name='isFinancialEvaluation' id="FFfalse" value='1'
+                    ng-model="radio.FinancialEvaluation"> 中</td>
+            <td colspan='2'><input type='radio' name='isFinancialEvaluation' id="FFNSure" value='2'
+                    ng-model="radio.FinancialEvaluation"> 低</td>
+        </tr>
+        <tr>
+            <th scope='row'>審查意見填寫</th>
+            <td colspan='6' height=220px><textarea style='width:100%;height:200px;' id='theopinion'
+                    ng-model="radio.opinion"></textarea></td>
+        </tr>
+        <tr>
+            <th scope='row'>總體審查意見</th>
+            <td colspan='2'><input type='radio' name='reviewIsPass' id="reviewSuggest" value='0'
+                    ng-model="radio.isSubmit"> 推薦</td>
+            <td colspan='2'><input type='radio' name='reviewIsPass' id="reviewNSuggest" value='1'
+                    ng-model="radio.isSubmit"> 不推薦</td>
+            <td colspan='2'><input type='radio' name='reviewIsPass' id="reviewModify" value='2'
+                    ng-model="radio.isSubmit"> 修改</td>
+        </tr>
+    </table>
+</body>

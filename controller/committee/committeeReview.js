@@ -1,6 +1,74 @@
+
 var cookieData;
-var isPass = false;
 var comdata;
+
+var app = angular.module('committeeReview', []);
+
+app.config(['$locationProvider', function ($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);
+
+app.controller('MainCtrl', function ($scope, $http, $location) {
+
+    cookieData = JSON.parse($.cookie('committeeCookie'));
+    $.cookie("committeeCookie", "");
+
+    $http({
+        method: 'POST',
+        url: '/committee/GetID',
+        data: {
+            Oid: cookieData.objID
+        }
+    }).then(function (res) {
+        var retdata = res.data.data;
+        console.log(res);
+        console.log(cookieData.index)
+        var useinload = retdata.needtestform[cookieData.index];
+
+        comdata = {
+            Email: retdata.email,
+            Password: retdata.password,
+            respondDate: new Date(),
+            FormType: useinload.formType,
+            studyandData: useinload.StudyandData,
+            Marketassessment: useinload.Marketassessment,
+            ManufacturingEvaluation: useinload.ManufacturingEvaluation,
+            FinancialEvaluation: useinload.FinancialEvaluation,
+            opinion: useinload.opinion,
+            isSubmit: useinload.isSubmit,
+            index: cookieData.index
+        }
+        $scope.needReviewFormURL = "./reviewForm?email=" + retdata.email + "&password=" + retdata.password + "&index=" + cookieData.index;
+        $scope.committeeFormURL = "./committeeForm?" + new URLSearchParams(comdata).toString();
+    })
+
+    $scope.saveBtClick = function () {
+        UpdateDB(false);
+        backToPreviousPage();
+    }
+
+    $scope.submitBtClick = function () {
+        UpdateDB(true);
+        backToPreviousPage();
+    }
+
+    $scope.backBtClick = function () {
+        backToPreviousPage();
+    }
+
+    function UpdateDB(isPass) {
+        document.getElementById('committeeForm').contentWindow.saveToDB(isPass);
+
+    }
+    function backToPreviousPage() {
+        $.cookie("committeeCookie", JSON.stringify({ objID: cookieData.objID }))
+        window.history.back();
+    }
+});
+
 
 function frameload() {
     var $ifram = $('#needReviewForm');
@@ -24,121 +92,4 @@ function frameload() {
     $contents.find("#LevelTable").css("pointer-events", "none");
     $contents.find("#formStyle").removeClass("offset-md-3");
 
-}
-function reviewload() {
-    var $ifram = $('#ReviewForm');
-    var $contents = $ifram.contents();
-    var FormTypeN = comdata.FormTypeN;
-    if (FormTypeN == 1) {
-        if (comdata.studyandData != -1)
-            $contents.find('input[name="isStudyandData"]').get(comdata.studyandData).checked = true;
-
-    }
-    else if (FormTypeN == 2) {
-        if (comdata.Marketassessment != -1)
-            $contents.find('input[name="isMarketassessment"]').get(comdata.Marketassessment).checked = true;
-        if (comdata.ManufacturingEvaluation != -1)
-            $contents.find('input[name="isManufacturingEvaluation"]').get(comdata.ManufacturingEvaluation).checked = true;
-        if (comdata.FinancialEvaluation != -1)
-            $contents.find('input[name="isFinancialEvaluation"]').get(comdata.FinancialEvaluation).checked = true;
-    }
-
-    $contents.find('#theopinion').val(comdata.opinion);
-
-    if (comdata.isSubmit != -1)
-        $contents.find('input[name="reviewIsPass"]').get(comdata.isSubmit).checked = true;
-}
-
-function loadfinish() {
-    cookieData = JSON.parse($.cookie('committeeCookie'));
-    $.cookie("committeeCookie", "");
-    $.post('/committee/GetID', {
-        Oid: cookieData.objID
-    }, function (fdata) {
-        var retdata = fdata.data;
-        var ReviewFormSrc = "";
-        var useinload = retdata.needtestform[cookieData.index];
-        comdata = {
-            Email: retdata.email,
-            Password: retdata.password,
-            respondDate: new Date(),
-            FormTypeN: useinload.fromType,
-            studyandData: useinload.StudyandData,
-            Marketassessment: useinload.Marketassessment,
-            ManufacturingEvaluation: useinload.ManufacturingEvaluation,
-            FinancialEvaluation: useinload.FinancialEvaluation,
-            opinion: useinload.opinion,
-            isSubmit: useinload.isSubmit
-        }
-
-        switch (comdata.FormTypeN) {
-            case 1:
-                ReviewFormSrc = "./reviewT1";
-                break;
-            case 2:
-                ReviewFormSrc = "./reviewT2";
-                break;
-        }
-        $('#ReviewForm').attr('src', ReviewFormSrc);
-        var reviewsrc = "./reviewForm?email="+retdata.email+"&password="+retdata.password+"&index="+cookieData.index;
-        $('#needReviewForm').attr('src', reviewsrc);
-
-/*
-        $.post("../form/testest", {
-            email: retdata.email,
-            password: retdata.password,
-            index: cookieData.index,
-            FormId: retdata.formOid
-        }, function (sdata) {
-            //var reviewsrc = "../form?TeacherNum=" + sdata.data.TeacherNum + "&FormId=" + sdata.data._id;
-            var reviewsrc = "./reviewForm";
-            $('#needReviewForm').attr('src', reviewsrc);
-        })*/
-    })
-
-}
-
-function backBtClick() {
-    $.cookie("committeeCookie", JSON.stringify({ objID: cookieData.objID }))
-    window.history.back();
-}
-
-function saveBtClick() {
-    isPass = false;
-    UpdateDB();
-}
-
-function submitBtClick() {
-    isPass = true;
-    UpdateDB();
-}
-
-function UpdateDB() {
-    var $ifram = $('#ReviewForm');
-    var $contents = $ifram.contents();
-
-    var isStudyandData = $contents.find('input:radio[name="isStudyandData"]:checked').val();
-    var isMarketassessment = $contents.find('input:radio[name="isMarketassessment"]:checked').val();
-    var isManufacturingEvaluation = $contents.find('input:radio[name="isManufacturingEvaluation"]:checked').val();
-    var isFinancialEvaluation = $contents.find('input:radio[name="isFinancialEvaluation"]:checked').val();
-    var reviewIsPass = $contents.find('input:radio[name="reviewIsPass"]:checked').val();
-    var theopinion = $contents.find('#theopinion').val();
-    $.post("/committee/committeeupdate", {
-        email: comdata.Email,
-        password: comdata.Password,
-        respondDate: new Date(),
-        ispass: isPass,
-        index: cookieData.index,
-        StudyandData: (isStudyandData == undefined ? -1 : isStudyandData),
-        reMarketassessment: (isMarketassessment == undefined ? -1 : isMarketassessment),
-        ManufacturingEvaluation: (isManufacturingEvaluation == undefined ? -1 : isManufacturingEvaluation),
-        FinancialEvaluation: (isFinancialEvaluation == undefined ? -1 : isFinancialEvaluation),
-        opinion: theopinion,
-        isSubmit: (reviewIsPass == undefined ? -1 : reviewIsPass)
-    }, function (data) {
-        if (data.status == 1)
-            alert(data.msg);
-        else
-            backBtClick()
-    })
 }
