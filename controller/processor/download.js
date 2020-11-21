@@ -1,8 +1,5 @@
 var app = angular.module('ProcessorDownload', []);
 app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
-    // Redirect if not login
-    if (!$.cookie('account')){window.location='/processor';}
-
     var set_state = function(load, state=0){
         $scope.loading = load;
         $scope.loading_state = state;
@@ -409,7 +406,6 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
     });
 });
 
-if (!$.cookie('account')){window.location='/processor';}
 angular.module('Processor', []).controller('MainCtrl', function($scope, $http) {
 });
 

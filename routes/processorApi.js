@@ -2,25 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 /**
- * Index of processor.
- * @param  {} req
- * @param  {} res
- * @param  {} next
- */
-/*
-router.get('/', function(req, res, next) {
-  res.render('processor/index', { title: 'Express' });
-});
-*/
-
-/**
  * Edit page for processor with form functionality.
  * @param  {} req
  * @param  {} res
  * @param  {} next
  */
 router.get('/edit', function(req, res, next) {
-  res.render('processor/edit', { title: 'Express' });
+  res.render('processor/edit', { passport: req.session.passport });
 });
 
 /**
@@ -30,7 +18,7 @@ router.get('/edit', function(req, res, next) {
  * @param  {} next
  */
 router.get('/examination', function(req, res, next) {
-  res.render('processor/examination', { title: 'Express' });
+  res.render('processor/examination', { passport: req.session.passport });
 });
 
 /**
@@ -40,7 +28,7 @@ router.get('/examination', function(req, res, next) {
  * @param  {} next
  */
 router.get('/download', function(req, res, next) {
-  res.render('processor/download', { title: 'Express' });
+  res.render('processor/download', { passport: req.session.passport });
 });
 
 /**

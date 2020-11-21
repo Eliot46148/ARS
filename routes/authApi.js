@@ -8,13 +8,13 @@ var router = express.Router();
 const saltRounds = 12;
 
 // Set up default root user for server.
-default_user = { "account": "admin", "password": "admin12345"};
+default_user = { "username": "admin", "password": "admin12345"};
 bcrypt.hash(default_user.password, saltRounds).then(function (hashPass) {
     var newUser = new userModel({
-        account: default_user.account,
+        username: default_user.username,
         password: hashPass
     });
-    userModel.count({ account: default_user.account }, function (err, data) {
+    userModel.count({ username: default_user.username }, function (err, data) {
         if (data == 0) {
             newUser.save(function (err, data) {
                 if (!err)
@@ -29,18 +29,18 @@ router.post('/', function (req, res) {
     bcrypt.genSalt(saltRounds, function(err, salt) {
         bcrypt.hash(req.body.password, salt).then(function (hashPass) {
             var newUser = new userModel({
-                account: req.body.account,
+                username: req.body.username,
                 password: hashPass
             });
-            userModel.count({ account: req.body.account }, function (err, count) {
+            userModel.count({ username: req.body.username }, function (err, count) {
                 if (count > 0)
-                    res.json({ "status": 0, "msg": "帳號已被註冊" });
+                    res.status(200).send({ "msg": "帳號已被註冊" });
                 else {
                     newUser.save(function (err, data) {
                         if (err)
-                            res.json({ "status": 1, "msg": "Error" });
+                            res.status(500).send({ "msg": "Error" });
                         else
-                            res.json({ "status": 0, "msg": "success", "data": data });
+                            res.status(200).send({ "msg": "success", "data": data });
                     });
                 }
             })
@@ -48,64 +48,58 @@ router.post('/', function (req, res) {
     });
 });
 
-var login = function(account, password) {
+// Get current user information
+router.get('/', function (req, res) {
+    res.status(200).json({ session: req.session });
+});
+
+var login = function(username, password) {
     return new Promise((res, rej) => {
         userModel.findOne({
-            account: account,
+            username: username,
         }, function (err, data) {
             if (data == null || err)
                 res(false);
             else {
                 bcrypt.compare(password, data.password).then(function (respond) {
-                    res(respond);
+                    res(data);
                 });
             }
         });
     });
 };
 
-// Login request
-router.post('/login', function(req, res){
-    var result;
-    login(req.body.account, req.body.password).then(function(respond){
-       if (respond){
-           res.json({ "status": 0, "msg": "success", "account": req.body.account });
-       }else
-           res.json({ "status": 1, "msg": "Error" });
-    });
-});
-
 router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
 });
 
 // Passport.js authentication strategy setup
-passport.serializeUser(function (user, done) {
+
+var serializeUser = function (user, done) {
     done(null, user._id);
-});
+};
 
-passport.deserializeUser(function (id, done) {
+var deserializeUser = function (id, done) {
     userModel.findOne({
-        account: id,
-    }, function (err, data) {
-        done(err, data);
+        _id: id,
+    }, function (err, user) {
+        done(err, user);
     });
-});
+};
 
-passport.use('login', new LocalStrategy({
-        usernameField: 'account',
-        passwordField: 'password',
-    },
+var strategy = new LocalStrategy(
     function(username, password, done) {
-        login(username, password).then((respond) => {
-            console.log(username, password);
-            if (respond)
-                done(null, response);
+        login(username, password).then((data) => {
+            if (data)
+                return done(null, data);
             else
-                done(err);
+                return done(err);
         })
     }
-));
+);
 
-module.exports = router;
+module.exports.router = router;
+module.exports.login = login;
+module.exports.strategy = strategy;
+module.exports.serializeUser = serializeUser;
+module.exports.deserializeUser = deserializeUser;

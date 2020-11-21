@@ -1,9 +1,6 @@
 var app = angular.module('ProcessorEdit', []);
 
 app.controller('MainCtrl', function($scope, $http, $window) {
-    // Redirect if not login
-    if (!$.cookie('account')){window.location='/processor';}
-
     var set_state = function(load, state=0){
         $scope.loading = load;
         $scope.loading_state = state;
