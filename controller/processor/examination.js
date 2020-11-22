@@ -171,7 +171,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
         set_state(true);
         var found = $scope.respond.find(element=>element._id==id);
         if (found != null){
-            $http.post('/committee', {email: found.email, code: found.password}).success((data) => {
+            $http.post('/committee/login', {email: found.email, code: found.password}).success((data) => {
                 $http.post('/committee/GetID', {Oid : data.data._id}).success((response) => {
                     var found_index = response.data.needtestform.find(element=>element._id==id);
                     $.cookie("committeeCookie",JSON.stringify({objID : data.data._id , index : response.data.needtestform.indexOf(found_index)}), { path: '/committee' })
