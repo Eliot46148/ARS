@@ -82,19 +82,17 @@
                     </div>
                     <table class="table table-bordered" ng-show="!loading" ng-if="respond.length > 0">
                         <thead>
+                            <th scope="col">序號</th>
                             <th scope="col">送出時間</th>
                             <th scope="col">審查期限</th>
-                            <th scope="col">委員姓名</th>
-                            <th scope="col">委員郵件</th>
                             <th scope="col">回收狀況</th>
                             <th scope="col">查看建議</th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="response in respond">
+                                <td>{{$index+1}}</td>
                                 <td ng-bind="response.submitDate.substring(0, 10)"></td>
                                 <td ng-bind="response.deadLine.substring(0, 10)"></td>
-                                <td ng-bind="response.name"></td>
-                                <td ng-bind="response.email"></td>
                                 <td ng-bind="response.isPass ? '已回傳' : '尚未回傳'">已回傳</td>
                                 <td>
                                     <a type="button" class="btn btn-primary text-white" ng-click="seeRespond(response.opinion, response.isSubmit)" ng-class="response.isPass ? '' : 'disabled'">點選</a>
