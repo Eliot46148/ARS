@@ -160,10 +160,10 @@
                 <label>專利相關資訊</label>
                 <div class="form-group">
                     <label class="radio-inline"></label>
-                    <input type="radio" name="patentRadio" class="PatentInfoRadio" value="有" ng-model="HavePatents"
+                    <input type="radio" name="patentRadio" class="PatentInfoRadio" value="Y" ng-model="HavePatents"
                         required>有
                     <label class="radio-inline"></label>
-                    <input type="radio" name="patentRadio" class="PatentInfoRadio" value="無" checked
+                    <input type="radio" name="patentRadio" class="PatentInfoRadio" value="N" checked
                         ng-model="HavePatents" required>無
                 </div>
 
@@ -184,8 +184,7 @@
                                     <td>{{data.Name}}</td>
                                     <td>{{data.Country}}</td>
                                     <td>{{data.Status}}</td>
-                                    <td ng-if="data.Status=='已核准'"><a href={{data.File}} target="_blank">檢視</a></td>
-                                    <td ng-if="data.Status!='已核准'">無</td>
+                                    <td ><a href={{data.File}} target="_blank">檢視</a></td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -280,8 +279,7 @@
                                     <td>{{data.Name}}</td>
                                     <td>{{data.Journal}}</td>
                                     <td>{{data.Status}}</td>
-                                    <td ng-if="data.Status=='已發表'"><a href={{data.File}} target="_blank">檢視</a></td>
-                                    <td ng-if="data.Status!='已發表'">無</td>
+                                    <td ><a href={{data.File}} target="_blank">檢視</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -368,14 +366,29 @@
                 </div>
 
                 <div class="form-group">
-                    <label>應用範圍及產業效益評估</label>
-                    <textarea class="form-control col-md-10" rows="5" id="evaluation" ng-model="evaluation"
+                    <label>應用範圍</label>
+                    <textarea class="form-control col-md-10" rows="5" id="appliedField" ng-model="appliedField"
                         required></textarea>
                 </div>
 
                 <div class="form-group">
+                    <label>產業效益評估</label>
+                    <textarea class="form-control col-md-10" rows="5" id="industryEffect" ng-model="industryEffect"
+                        required></textarea>
+                </div>
+                <div class="form-group">
                     <label>成果照片上傳(限制10MB) <span class="text-danger">建議比例：4:3</span></label>
                     <img ng-src="{{imageSrc}}" id="image-preview" style="height: auto; display: none;"
+                        class="col-md-10">
+                </div>
+
+                <div class="form-group">
+                    <label>實作物照片上傳(限制10MB) <span class="text-danger">建議比例：4:3</span></label>
+                    <div id="drop-area" class="dm-uploader">
+                        <input type="file" title="選擇檔案" accept=".jpg,.jpeg,.png,.bmp,.tif" ng-model="productImage"
+                            id="productImage" name="ProductImage">
+                    </div>
+                    <img ng-src="{{imageSrc}}" id="productImage-preview" style="height: auto; display: none;"
                         class="col-md-10">
                 </div>
 

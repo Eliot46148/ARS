@@ -27,15 +27,10 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.Phone = data.Phone;
                     $scope.Email = data.Email;
                     $scope.description = data.Description;
-                    $scope.evaluation = data.Evaluation;
+                    $scope.appliedField = data.AppliedField;
+                    $scope.industryEffect = data.IndustryEffect;
                     chartData = data.ChartData;
-                    for (var i = 0; i < data.Patent.length; i++) {
-                        data.Patent[i].File = "../" + data.Patent[i].File;
-                    }
                     $scope.Patents = data.Patent;
-                    for (var i = 0; i < data.Paper.length; i++) {
-                        data.Paper[i].File = "../" + data.Paper[i].File;
-                    }
                     $scope.Papers = data.Paper;
                     $scope.marketDemand = data.MarketDemand;
                     $scope.competitiveness = data.Competitiveness;
@@ -48,6 +43,7 @@ app.controller('formCtrl', ($scope, $http, $location) => {
                     $scope.isCommercialization = data.IsCommercialization;
                     $scope.costType = data.CostType;
                     showImage(data.Image);
+                    showProductImage(data.ProductImage);
                     showVideo(data.Video);
                     $scope.changeDepartments();
                     $scope.initPatentAndPaper();
@@ -260,6 +256,13 @@ function showImage(data) {
     $('#image-preview').show();
     $('#image').prop('required', false);
 }
+
+function showProductImage(data) {
+    if (data == null) return;
+    $('#productImage-preview').attr('src', "../" + data);
+    $('#productImage-preview').show();
+}
+
 
 function showVideo(data) {
     if (data == null) return;
