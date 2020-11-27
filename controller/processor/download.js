@@ -12,7 +12,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
         }).success(function(data){
             var anchor = angular.element('<a/>');
             anchor.attr({
-                href: 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + encodeURI(data),
+                href: 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(data),
                 target: '_blank',
                 download: '成果填寫資料.csv'
             })[0].click();
@@ -23,7 +23,7 @@ app.controller('MainCtrl', function($scope, $http, $timeout, $window) {
         }).success(function(data){
             var anchor = angular.element('<a/>');
             anchor.attr({
-                href: 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + encodeURI(data),
+                href: 'data:attachment/csv;charset=utf-8,%EF%BB%BF' + encodeURIComponent(data),
                 target: '_blank',
                 download: '委員審查意見.csv'
             })[0].click();
